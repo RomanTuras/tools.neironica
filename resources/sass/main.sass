@@ -1,0 +1,163 @@
+@import vars
+@import fonts
+@import libs
+
+::placeholder
+	color: #666
+
+::selection
+	background-color: $accent
+	color: #fff
+
+input, textarea
+	outline: none
+	&:focus:required:invalid
+		border-color: red
+	&:required:valid
+		border-color: green
+
+body
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.65
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+	overflow-x: hidden
+	color: $text
+
+#result
+	text-align: left
+
+.vertical-mirror
+	transform: rotate(180deg)
+
+.horizontal-mirror
+	transform: rotateY(180deg)
+	text-align: left
+
+.h-v-mirror
+	transform: rotate(180deg)
+	transform: rotateX(180deg)
+
+.rotate-left
+	transform: rotate(-90deg)
+	width: 80vh
+	height: 90vh
+
+.margin-l-30
+  margin-left: 30px
+.padding-0
+  padding: 0
+.margin-0
+	margin: 0
+.h-34
+  height: 37px
+.float-r
+  float: right
+.border-c
+  border-style: solid
+  border-width: 1px
+  border-color: #ced4da
+  border-radius: 5px
+  padding: 3px
+.center-h
+	text-align: center
+
+// Custom Sass / Remove before use
+
+.navbar-nav
+	.menu-item
+		padding: 8px
+		
+.nav-right
+	display: inline-block !important
+	text-align: right
+
+.dropdown
+  display: inline-block
+  color: #495057
+  select
+    color: #495057
+
+.main-section
+	.input-group
+		margin-bottom: 20px
+
+.jumbotron
+	padding: 1rem 2rem
+	width: 100%
+	#control-panel
+		text-align: center
+		padding: 10px
+
+.tools-title
+  padding-left: 50px
+  padding-top: 10px
+  padding-bottom: 10px
+  color: gray
+
+textarea
+	margin-top: 20px
+
+
+//################# Shulte Table
+table
+  background-repeat: no-repeat
+  background-position: center
+  background-size: cover
+  
+.paddingRange
+	input
+    height: 12px
+
+.cell
+  text-align: center
+  line-height: 1
+  border-style: solid
+  border-width: 2px
+  border-color: gray
+
+.paddingRange
+  padding: 5px
+  label
+    text-align: left
+    display: block
+//################# END Shulte Table
+
+//################# Shulte Gorbova
+#labelIsGorbova
+  font-size: 10px
+  margin-left: 26px
+#checkboxIsGorbova
+  font-size: 10px
+// END Shulte Gorbova
+
+//########### Maze
+.rangeMaze
+	float: inherit
+
+//########### END Maze
+.img-responsive
+	display: block
+	max-width: 100%
+	height: auto
+
+.example-grid
+	display: grid
+	grid-gap: $gutter
+	grid-template-columns: 1fr 1fr
+	grid-template-areas: "left right"
+	> div:first-child
+		grid-area: left
+	> div:last-child
+		grid-area: right
+	+media-breakpoint-down(xs)
+		display: block
+		> div
+			padding: $gutter/2 0
+	
+.example-img
+	width: 100%
+
+.parent // Lazy Load Placeholder Generator: https://webdesign-master.ru/services/lazy/
+	background-image: url(data:image/gif;base64,R0lGODlhCgAIAIABAN3d3f///yH5BAEAAAEALAAAAAAKAAgAAAINjAOnyJv2oJOrVXrzKQA7)
