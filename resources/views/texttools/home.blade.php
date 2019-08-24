@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="row">
-              
+
               <div class="col-md-4">
                 <div class="card border-primary mb-3" >
                   <div class="card-header">Преобразователь текста</div>
@@ -39,7 +39,7 @@
           </div>
 
           <div class="row">
-            
+
             <div class="col-md-4">
               <div class="card border-primary mb-3" >
                 <div class="card-header">Генератор лабиринтов</div>
@@ -49,7 +49,17 @@
                 </div>
               </div>
             </div>
-            
+
+              <div class="col-md-4">
+                  <div class="card border-primary mb-3" >
+                      <div class="card-header">Примеры по математике</div>
+                      <div class="card-body text-primary">
+                          <p class="card-text">Сложение и вычитание, умножение и деление, сложность, цвет, столбцы.</p>
+                          <a href="{{ URL::route('texttools.math-examples') }}" class="btn btn-primary">Перейти</a>
+                      </div>
+                  </div>
+              </div>
+
           </div>
 
         </div>
