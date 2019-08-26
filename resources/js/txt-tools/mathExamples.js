@@ -61,7 +61,6 @@ $(function () {
             });
             $(inputFirstNumberType).change(function () {
                 firstNumberRange = this.value.split(',');
-                console.log(firstNumberRange[0], firstNumberRange[1]);
             });
             $(inputSecondNumberType).change(function () {
                 secondNumberRange = this.value.split(',');
@@ -159,6 +158,28 @@ $(function () {
         }
 
         /**
+         * Separate by three digit by space
+         * Working only with numbers < 10 digit
+         * @param number
+         * @returns {string}
+         */
+        function formatNumber(number) {
+            let charsArray = number.toString().split("");
+            let newNumber = [];
+            let n = 0;
+            for (let i = charsArray.length - 1; i > -1; i--) {
+                if (n === 3) {
+                    newNumber.push(" ");
+                    n = 0;
+                }
+                newNumber.push(charsArray[i]);
+                n++;
+            }
+            let reverse = newNumber.reverse();
+            return reverse.join("");
+        }
+
+        /**
          * Getting filled array of examples, depends from operations
          * @param operation - String, math operator
          * @param totalExamples - Integer, numbers of examples
@@ -176,21 +197,34 @@ $(function () {
 
                 switch (operation) {
                     case 'plus':
+                        firstNumber = formatNumber(firstNumber);
+                        secondNumber = formatNumber(secondNumber);
                         resultList.push(`${firstNumber} &plus; ${secondNumber}`);
                         break;
                     case 'minus':
                         if (isNegativeResult){ //check switch of applying a negative result example
                             if ((firstNumber - secondNumber) < 0){
+                                firstNumber = formatNumber(firstNumber);
+                                secondNumber = formatNumber(secondNumber);
                                 resultList.push(`${secondNumber} &minus; ${firstNumber}`);
-                            }else resultList.push(`${firstNumber} &minus; ${secondNumber}`);
-                        }else resultList.push(`${firstNumber} &minus; ${secondNumber}`);
+                            }else {
+                                firstNumber = formatNumber(firstNumber);
+                                secondNumber = formatNumber(secondNumber);
+                                resultList.push(`${firstNumber} &minus; ${secondNumber}`);
+                            }
+                        }else {
+                            firstNumber = formatNumber(firstNumber);
+                            secondNumber = formatNumber(secondNumber);
+                            resultList.push(`${firstNumber} &minus; ${secondNumber}`);
+                        }
                         break;
                     case 'multiply':
+                        firstNumber = formatNumber(firstNumber);
+                        secondNumber = formatNumber(secondNumber);
                         resultList.push(`${firstNumber} &times; ${secondNumber}`);
                         break;
                     case 'divide':
                         let divideResult = firstNumber / secondNumber;
-                        console.log(`${firstNumber} / ${secondNumber} = ${divideResult}`);
                         if (divideResult < 1) { //exchange first and second variables
                             let temp = firstNumber;
                             firstNumber = secondNumber;
@@ -198,10 +232,9 @@ $(function () {
                             divideResult = firstNumber / secondNumber;
                         }
                         let solid = Math.trunc(divideResult) + 1;
-                        console.log(`solid ${solid}`);
                         firstNumber = secondNumber * solid;
-                        console.log(`firstNumber ${firstNumber}`);
-
+                        firstNumber = formatNumber(firstNumber);
+                        secondNumber = formatNumber(secondNumber);
                         resultList.push(`${firstNumber} &divide; ${secondNumber}`);
                         break;
                 }
