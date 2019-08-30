@@ -60,6 +60,16 @@
                   </div>
               </div>
 
+              <div class="col-md-4">
+                  <div class="card border-primary mb-3" >
+                      <div class="card-header">Sudoku генератор</div>
+                      <div class="card-body text-primary">
+                          <p class="card-text">Генератор Sudoku различной сложности, цифры, картинки, различный шрифт.</p>
+                          <a href="{{ URL::route('texttools.sudoku') }}" class="btn btn-primary">Перейти</a>
+                      </div>
+                  </div>
+              </div>
+
           </div>
 
         </div>
