@@ -63,7 +63,7 @@ gulp.task('img-responsive', async function() {
 				width: '100%', quality: 90, rename: { prefix: '@2x/', },
 			}, {
 				// Produce @1x images
-				width: '50%', quality: 90, rename: { prefix: '@1x/', }
+				//width: '50%', quality: 90, rename: { prefix: '@1x/', }
 			}]
 		})).on('error', function () { console.log('No matching images found') })
 		.pipe(rename(function (path) {path.extname = path.extname.replace('jpeg', 'jpg')}))
@@ -105,4 +105,4 @@ gulp.task('watch', function() {
 	gulp.watch('resources/img/_src/**/*', gulp.parallel('img'));
 });
 
-gulp.task('default', gulp.parallel('img', 'styles', 'scripts', 'browser-sync', 'watch'));
+gulp.task('default', gulp.parallel('img', 'styles', 'scripts', 'watch'));

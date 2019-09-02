@@ -15,7 +15,7 @@
             <button type="button" id="answers-sudoku" class="btn btn-outline-secondary">Answers</button>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
 
             <div class="dropdown">
                 <div class="input-group h-34">
@@ -29,10 +29,37 @@
                     </select>
                 </div>
             </div>
-            <div class="dropdown margin-l-30">
-                <label class="form-check-label border-c">
-                    <input id="checkboxIsImage" type="checkbox" class="form-check-input" value="">Image
-                </label>
+
+            <div class="dropdown">
+                <div class="input-group h-34">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputImageSet">Images:</label>
+                    </div>
+                    <select class="font-select" id="inputImageSet">
+                        <option value="none">none</option>
+                        <option value="Airplanes-4">Самолеты</option>
+                        <option value="Airplanes-4-2">Самолеты-2</option>
+                        <option value="Airships-4">Дирижабли</option>
+                        <option value="Air-transport-4">Воздушный</option>
+                        <option value="Balls-4">Мячи</option>
+                        <option value="Balls-4-2">Мячи-2</option>
+                        <option value="Balls-4-3">Мячи-3</option>
+                        <option value="Balls-4-4">Мячи-4</option>
+                        <option value="Cars-4">Машины</option>
+                        <option value="Cars-4-2">Машины-2</option>
+                        <option value="Flowers-4">Цветы</option>
+                        <option value="Flowers-4-2">Цветы-2</option>
+                        <option value="Flowers-4-3">Цветы-3</option>
+                        <option value="Flowers-4-4">Цветы-4</option>
+                        <option value="Geometric-6" style="color: blue;">Фигуры</option>
+                        <option value="Helicopters-4">Вертолеты</option>
+                        <option value="Helicopters-4-2">Вертолеты-2</option>
+                        <option value="Motorcycles-4">Мотоциклы</option>
+                        <option value="Ships-4">Корабли</option>
+                        <option value="Ships-4-2">Корабли-2</option>
+                        <option value="Tractors-4">Тракторы</option>
+                    </select>
+                </div>
             </div>
 
         </div>
