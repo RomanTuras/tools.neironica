@@ -58,6 +58,15 @@
                         <option value="Ships-4">Корабли</option>
                         <option value="Ships-4-2">Корабли-2</option>
                         <option value="Tractors-4">Тракторы</option>
+                        <option value="Berries-4">Ягоды</option>
+                        <option value="Berries-4-2">Ягоды-2</option>
+                        <option value="Fruits-4">Фрукты</option>
+                        <option value="Fruits-4-2">Фрукты-2</option>
+                        <option value="Numbers-4">Числа</option>
+                        <option value="Numbers-4-2">Числа-2</option>
+                        <option value="Numbers-4-3">Числа-3</option>
+                        <option value="Numbers-4-4">Числа-4</option>
+                        <option value="Numbers-4-5">Числа-5</option>
                     </select>
                 </div>
             </div>
