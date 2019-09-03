@@ -67,6 +67,8 @@
                         <option value="Numbers-4-3">Числа-3</option>
                         <option value="Numbers-4-4">Числа-4</option>
                         <option value="Numbers-4-5">Числа-5</option>
+                        <option value="Vegetables-4">Овощи</option>
+                        <option value="Vegetables-4-2">Овощи-2</option>
                     </select>
                 </div>
             </div>
