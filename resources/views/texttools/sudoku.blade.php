@@ -47,6 +47,7 @@
                         <option value="Balls-4-4">Мячи-4</option>
                         <option value="Cars-4">Машины</option>
                         <option value="Cars-4-2">Машины-2</option>
+                        <option value="Cars-4-3">Машины-3</option>
                         <option value="Flowers-4">Цветы</option>
                         <option value="Flowers-4-2">Цветы-2</option>
                         <option value="Flowers-4-3">Цветы-3</option>

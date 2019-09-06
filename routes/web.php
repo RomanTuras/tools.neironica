@@ -18,5 +18,6 @@ Route::get('/shulte-gorbova', 'ShulteGorbovaController@index')->name('texttools.
 Route::get('/maze', 'MazeController@index')->name('texttools.maze');
 Route::get('/math-examples', 'MathExamplesController@index')->name('texttools.math-examples');
 Route::get('/sudoku', 'SudokuController@index')->name('texttools.sudoku');
+Route::get('/filwords', 'FilwordsController@index')->name('texttools.filwords');
 });
 

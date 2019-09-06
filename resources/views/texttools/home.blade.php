@@ -72,6 +72,20 @@
 
           </div>
 
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card border-primary mb-3" >
+                    <div class="card-header">Филворды</div>
+                    <div class="card-body text-primary">
+                        <p class="card-text">Генератор Филвордов различной сложности, стиль, различный шрифт.</p>
+                        <a href="{{ URL::route('texttools.filwords') }}" class="btn btn-primary">Перейти</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         </div>
     </div>
 </div>
