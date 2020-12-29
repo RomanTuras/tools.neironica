@@ -14,13 +14,13 @@
       <div class="col-md-2 padding-0">
         <div class="dropdown border-c float-r">
           <label for="rangeWallMaze">Wall</label>
-          <input id="rangeWallMaze" class="border-c rangeMaze" type="range" min=3 max=10 step=1 value=3> 
+          <input id="rangeWallMaze" class="border-c rangeMaze" type="range" min=3 max=30 step=1 value=3>
         </div>
       </div>
       <div class="col-md-2 padding-0">
         <div class="dropdown border-c float-r">
           <label for="rangeTunnelMaze">Tunnel</label>
-          <input id="rangeTunnelMaze" class="border-c rangeMaze" type="range" min="10" max="50" step="2" value="10"> 
+          <input id="rangeTunnelMaze" class="border-c rangeMaze" type="range" min="10" max="110" step="2" value="10">
         </div>
       </div>
 

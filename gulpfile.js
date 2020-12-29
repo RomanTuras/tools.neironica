@@ -43,8 +43,8 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
 	return gulp.src([
 		// 'node_modules/jquery/dist/jquery.min.js', // Optional jQuery plug-in (npm i --save-dev jquery)
-		'resources/js/helpers/*.js',
 		'resources/js/txt-tools/*.js',
+		'resources/js/helpers/*.js',
 		// 'resources/js/_textconverter.js', // Custom scripts. Always at the end
 		])
 	.pipe(concat('scripts.min.js'))

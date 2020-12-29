@@ -42,9 +42,11 @@ $(function () {
             let padding = $(paddingRangeSudoku).val();
             let imageSet = $(inputImageSet).val();
             let isFontBold = !!$(checkboxBoldSudoku).prop("checked");
+            hideSet(sizeTable);
 
             $(inputSizeTable).change(function () {
                 sizeTable= this.value.split(',');
+                hideSet(sizeTable);
             });
             $(inputImageSet).change(function () {
                 imageSet = this.value;
@@ -79,12 +81,14 @@ $(function () {
                 $("th").css("font-weight", isFontBold ? "bold" : "normal");
             });
 
+
             /**
              * Generate Sudoku Table
              */
             $(generateSudoku).click(function () {
                 let cols = sizeTable[0];
                 let rows = sizeTable[1];
+
                 let table = SudokuHelper.getTablePattern(cols, rows);
                 table = SudokuHelper.mix(table, cols, rows, 13);
 
@@ -113,6 +117,51 @@ $(function () {
             let imagePath = `../img/@2x/sudoku/${imageSet}`;
             if(imageSet === "none") return '';
             return imagePath;
+        }
+
+        function hideSet(sizeTable) {
+            if(sizeTable[0] == 3 && sizeTable[1] == 1){
+                $( ".three" ).each(function() {
+                    $( this ).removeClass( "display-none" );
+                });
+                $( ".four" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+                $( ".six" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+            }else if(sizeTable[0] == 2 && sizeTable[1] == 2){
+                $( ".four" ).each(function() {
+                    $( this ).removeClass( "display-none" );
+                });
+                $( ".six" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+                $( ".three" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+            }else if(sizeTable[0] == 3 && sizeTable[1] == 2){
+                $( ".six" ).each(function() {
+                    $( this ).removeClass( "display-none" );
+                });
+                $( ".four" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+                $( ".three" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+            }else{
+                $( ".six" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+                $( ".four" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+                $( ".three" ).each(function() {
+                    $( this ).addClass( "display-none" );
+                });
+            }
+
         }
 
         /**

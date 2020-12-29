@@ -106,7 +106,7 @@
         <div class="col-md-2">
             <div class="dropdown paddingRange border-c float-r">
                 {{-- <label for="paddingRange">Padding</label> --}}
-                <input id="paddingRangeFilwords" class="border-c" type="range" min="40" max="150" step="10" value="50">
+                <input id="paddingRangeFilwords" class="border-c" type="range" min="20" max="150" step="10" value="50">
             </div>
         </div>
 

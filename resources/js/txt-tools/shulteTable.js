@@ -31,7 +31,7 @@ function startShulte() {
     let mixedArray = ShuffleHelper.shuffleArray(filledArray);
     createTable(rows, cols, mixedArray);
     styleTable();
-    $("#inputBgImage").val("");
+    // $("#inputBgImage").val("");
   });
 }
 
@@ -182,4 +182,7 @@ function styleTable() {
   }
   let listColors = $("#inputColorSchema").val().split(',');
   paintTable("#shulte-table", listColors);
+
+  let pathImage = $("#inputBgImage").val();
+  $("table").css('background-image', `url('${pathImage}')`);
 }

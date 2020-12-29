@@ -41,15 +41,16 @@ $(function() {
 
   // Set selected font size
   $("#inputFontSize").on('change', function(){
-    var fontSize = $("#inputFontSize").value;
+    var fontSize = this.value;
     $(".cell").css("font-size", fontSize + "px");
+    console.log("font = " + fontSize + "px")
     settingsObject.fontSize = fontSize;
     LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
 
   // Set selected font family
   $("#inputFontName").on('change', function(){
-    var fontName = $("#inputFontName").value;
+    var fontName = this.value;
     $(".cell").css("font-family", fontName);
     settingsObject.fontFamily = fontName;
     LocalStorageHelper.saveFontSettings(key, settingsObject);
@@ -57,7 +58,7 @@ $(function() {
 
   // Set selected padding
   $("#paddingRange").on('change', function(){
-    var cellPadding = $("#paddingRange").value;
+    var cellPadding = this.value;
     $(".cell").css("padding", cellPadding + "px");
     settingsObject.cellPadding = cellPadding;
     LocalStorageHelper.saveFontSettings(key, settingsObject);

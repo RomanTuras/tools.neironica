@@ -41,6 +41,13 @@ class SudokuHelper {
                     [3,2,1,4]
                 ];
                 break;
+            case 3:
+                table = [
+                    [1,3,2],
+                    [3,2,1],
+                    [2,1,3]
+                ];
+                break;
         }
         return table;
     }
@@ -119,13 +126,23 @@ class SudokuHelper {
     }
 
     static mix(table, cols, rows, amt) {
-        let listMixFunctions = [
-            'this.transpose(table)',
-            'this.swapTwoRowsSmall(table, cols, rows)',
-            'this.swapTwoColumnsSmall(table, cols, rows)',
-            'this.swapRowsArea(table, cols, rows)',
-            'this.swapColumnsArea(table, cols, rows)'
-        ];
+        let size = cols * rows;
+        let listMixFunctions = [];
+        if (size === 3) { //when a small table, excepting swap inner rows and cols
+            listMixFunctions = [
+                'this.transpose(table)',
+                'this.swapRowsArea(table, cols, rows)',
+                'this.swapColumnsArea(table, cols, rows)'
+            ];
+        } else {
+            listMixFunctions = [
+                'this.transpose(table)',
+                'this.swapTwoRowsSmall(table, cols, rows)',
+                'this.swapTwoColumnsSmall(table, cols, rows)',
+                'this.swapRowsArea(table, cols, rows)',
+                'this.swapColumnsArea(table, cols, rows)'
+            ];
+        }
         for (let i = 0; i < amt; i++) {
             let id_func = RandomizeHelper.getRandomInt(0, listMixFunctions.length - 1);
             table = eval(listMixFunctions[id_func]);

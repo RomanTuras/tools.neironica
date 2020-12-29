@@ -11,5 +11,12 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js([
+    'resources/js/app.js',
+    'resources/js/helpers/SudokuHelper.js',
+    'resources/js/txt-tools/sudokuGenerator.js',
+    'resources/js/txt-tools/shulteTable.js',
+    'resources/js/txt-tools/shulteGorbovaTable.js',
+    'resources/js/txt-tools/textConverter.js'
+], 'public/js')
     .sass('resources/sass/app.scss', 'public/css');

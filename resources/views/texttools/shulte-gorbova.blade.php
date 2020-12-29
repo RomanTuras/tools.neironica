@@ -14,7 +14,7 @@
       <div class="col-md-2">
         <div class="dropdown paddingRange border-c float-r">
           {{-- <label for="paddingRange">Padding</label> --}}
-          <input id="paddingRange" class="border-c" type="range" min="5" max="25" step="1" value="17"> 
+          <input id="paddingRange" class="border-c" type="range" min="5" max="55" step="1" value="17">
         </div>
       </div>
       <div class="col-md-2 padding-0">
@@ -24,6 +24,7 @@
               <label class="input-group-text" for="inputRows">Table</label>
             </div>
             <select class="rows-select" id="inputRows">
+              <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
               <option value="6">6</option>
@@ -47,6 +48,7 @@
               <label class="input-group-text" for="inputCols">:</label>
             </div>
             <select class="rows-select" id="inputCols">
+              <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
                 <option value="6">6</option>

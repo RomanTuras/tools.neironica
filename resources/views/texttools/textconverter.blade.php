@@ -124,6 +124,7 @@
       </div>
     </div>
     <div id="control-panel" class="container">
+      <button type="button" id="results" class="btn btn-success" style="margin-right: 20px;">Ответ</button>
       <button type="button" id="vertical-mirror" class="btn btn-outline-primary">Верх ногами</button>
       <button type="button" id="horizontal-mirror" class="btn btn-outline-secondary">Зеркально</button>
       <button type="button" id="h-v-mirror" class="btn btn-outline-primary">Верх ногами + Зеркально</button>

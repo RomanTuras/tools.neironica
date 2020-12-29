@@ -172,6 +172,13 @@ $(function() {
       showResult(text);
     });
 
+    // Showing results
+    $("#results").click(function(){
+      var text = prepareText($('#main-textarea').val());
+      removeAllClasses("#result");
+      showResult(text);
+    });
+
     // Vertical mirror 
     $("#vertical-mirror").click(function(){
       var text = prepareText($('#main-textarea').val());

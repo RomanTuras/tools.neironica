@@ -14,7 +14,7 @@
       <div class="col-md-2">
         <div class="dropdown paddingRange border-c float-r">
           {{-- <label for="paddingRange">Padding</label> --}}
-          <input id="paddingRangeShulte" class="border-c" type="range" min="5" max="25" step="1" value="17"> 
+          <input id="paddingRangeShulte" class="border-c" type="range" min="5" max="55" step="1" value="18">
         </div>
       </div>
       <div class="col-md-2">
@@ -24,6 +24,7 @@
               <label class="input-group-text" for="inputRowsShulte">Table</label>
             </div>
             <select class="rows-select" id="inputRowsShulte">
+              <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
               <option value="6">6</option>
@@ -47,19 +48,20 @@
               <label class="input-group-text" for="inputColsShulte">:</label>
             </div>
             <select class="rows-select" id="inputColsShulte">
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
             </select>
           </div>
         </div>
