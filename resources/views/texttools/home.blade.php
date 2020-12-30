@@ -84,6 +84,16 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="card border-primary mb-3" >
+                    <div class="card-header">Генератор чисел</div>
+                    <div class="card-body text-primary">
+                        <p class="card-text">Генератор чисел различной разрядности, стиль, различный шрифт.</p>
+                        <a href="{{ URL::route('texttools.numbers') }}" class="btn btn-primary">Перейти</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         </div>
