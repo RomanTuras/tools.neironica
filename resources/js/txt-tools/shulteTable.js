@@ -12,7 +12,8 @@ $(function() {
     let settingsObject = { //default settings for "Shulte Table"
       'fontFamily': 'Arial',
       'fontSize': 18,
-      'cellPadding': 17,
+      'cellPaddingX': 17,
+      'cellPaddingY': 17
     }
     setupControls(key, settingsObject);
     startShulte();
@@ -43,17 +44,20 @@ function startShulte() {
 function setupControls(key, settingsObject) {
   let fontFamily = settingsObject.fontFamily;
   let fontSize = settingsObject.fontSize;
-  let cellPadding = settingsObject.cellPadding;
+  let cellPaddingX = settingsObject.cellPaddingX;
+  let cellPaddingY = settingsObject.cellPaddingY;
 
   if (LocalStorageHelper.getFontSettings(key) != null) {
     fontFamily = LocalStorageHelper.getFontSettings(key).fontFamily;
     fontSize = LocalStorageHelper.getFontSettings(key).fontSize;
-    cellPadding = LocalStorageHelper.getFontSettings(key).cellPadding;
+    cellPaddingX = LocalStorageHelper.getFontSettings(key).cellPaddingX;
+    cellPaddingY = LocalStorageHelper.getFontSettings(key).cellPaddingY;
   }
 
   $("#inputFontNameShulte").val(fontFamily);
   $("#inputFontSizeShulte").val(fontSize);
-  $("#paddingRangeShulte").val(cellPadding);
+  $("#paddingRangeShulteX").val(cellPaddingX);
+  $("#paddingRangeShulteY").val(cellPaddingY);
 }
 
 /**
@@ -85,11 +89,21 @@ function listenIvents(key, settingsObject) {
     $(".cell").css("color", fontColor);
   });
 
-  // Set selected padding
-  $("#paddingRangeShulte").on('change', function() {
-    var cellPadding = this.value;
-    $(".cell").css("padding", cellPadding + "px");
-    settingsObject.cellPadding = cellPadding;
+  // Set selected paddingX
+  $("#paddingRangeShulteX").on('change', function() {
+    let cellPaddingX = this.value;
+    $(".cell").css("padding-left", cellPaddingX + "px");
+    $(".cell").css("padding-right", cellPaddingX + "px");
+    settingsObject.cellPaddingX = cellPaddingX;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+  });
+
+  // Set selected paddingY
+  $("#paddingRangeShulteY").on('change', function() {
+    let cellPaddingY = this.value;
+    $(".cell").css("padding-top", cellPaddingY + "px");
+    $(".cell").css("padding-bottom", cellPaddingY + "px");
+    settingsObject.cellPaddingY = cellPaddingY;
     LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
 
@@ -174,7 +188,14 @@ function styleTable() {
   $(".cell").css("font-family", $("#inputFontNameShulte").val());
   $(".cell").css("color", $("#inputFontColorShulte").val());
   $(".cell").css("font-size", $("#inputFontSizeShulte").val() + "px");
-  $(".cell").css("padding", $("#paddingRangeShulte").val() + "px");
+
+  let paddingX =  $("#paddingRangeShulteX").val();
+  let paddingY =  $("#paddingRangeShulteY").val();
+  $(".cell").css("padding-left", paddingX + "px");
+  $(".cell").css("padding-right", paddingX + "px");
+  $(".cell").css("padding-top", paddingY + "px");
+  $(".cell").css("padding-bottom", paddingY + "px");
+
   if ($("#checkboxBoldShulte").prop("checked") == true) {
     $(".cell").css("font-weight", "bold");
   } else {

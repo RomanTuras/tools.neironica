@@ -47,6 +47,13 @@
                         <option value=1000000,9999999>7x значн</option>
                         <option value=10000000,99999999>8x значн</option>
                         <option value=100000000,999999999>9x значн</option>
+                        <option value=1000000000,9999999999>10x значн</option>
+                        <option value=10000000000,99999999999>11x значн</option>
+                        <option value=100000000000,999999999999>12x значн</option>
+                        <option value=1000000000000,9999999999999>13x значн</option>
+                        <option value=10000000000000,99999999999999>14x значн</option>
+                        <option value=100000000000000,999999999999999>15x значн</option>
+                        <option value=1000000000000000,9999999999999999>16x значн</option>
                     </select>
                     <select class="color-select" id="inputSecondNumberType">
                         <option value=1,9>1..9</option>
@@ -62,6 +69,13 @@
                         <option value=1000000,9999999>7x значн</option>
                         <option value=10000000,99999999>8x значн</option>
                         <option value=100000000,999999999>9x значн</option>
+                        <option value=1000000000,9999999999>10x значн</option>
+                        <option value=10000000000,99999999999>11x значн</option>
+                        <option value=100000000000,999999999999>12x значн</option>
+                        <option value=1000000000000,9999999999999>13x значн</option>
+                        <option value=10000000000000,99999999999999>14x значн</option>
+                        <option value=100000000000000,999999999999999>15x значн</option>
+                        <option value=1000000000000000,9999999999999999>16x значн</option>
                     </select>
                 </div>
             </div>
@@ -77,8 +91,17 @@
                       <option value="3">3</option>
                       <option value="4">4</option>
                       <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
                   </select>
                   <select class="color-select" id="inputExamplesNumber">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
                       <option value="5">5</option>
                       <option value="6">6</option>
                       <option value="7">7</option>
@@ -126,14 +149,28 @@
                         <option value="18">18</option>
                         <option value="22">22</option>
                         <option value="26">26</option>
-                        <option value="28">28</option>
-                        <option value="36">36</option>
+                        <option value="30">30</option>
+                        <option value="34">34</option>
+                        <option value="38">38</option>
                         <option value="42">42</option>
-                        <option value="48">48</option>
+                        <option value="46">46</option>
                         <option value="50">50</option>
-                        <option value="56">56</option>
-                        <option value="60">60</option>
-                        <option value="72">72</option>
+                        <option value="54">54</option>
+                        <option value="58">58</option>
+                        <option value="62">62</option>
+                        <option value="66">66</option>
+                        <option value="70">70</option>
+                        <option value="74">74</option>
+                        <option value="78">78</option>
+                        <option value="82">82</option>
+                        <option value="86">86</option>
+                        <option value="90">90</option>
+                        <option value="94">94</option>
+                        <option value="98">98</option>
+                        <option value="102">102</option>
+                        <option value="106">106</option>
+                        <option value="110">110</option>
+                        <option value="114">114</option>
                     </select>
                 </div>
             </div>

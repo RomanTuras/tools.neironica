@@ -10,7 +10,8 @@ $(function() {
   let settingsObject = { //default settings for "Shulte Gorbova Table"
     'fontFamily': 'Arial',
     'fontSize': 18,
-    'cellPadding': 17,
+    'cellPaddingX': 17,
+    'cellPaddingY': 17
   }
 
   const key = "shulte-gorbova-table";
@@ -43,7 +44,6 @@ $(function() {
   $("#inputFontSize").on('change', function(){
     var fontSize = this.value;
     $(".cell").css("font-size", fontSize + "px");
-    console.log("font = " + fontSize + "px")
     settingsObject.fontSize = fontSize;
     LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
@@ -56,11 +56,21 @@ $(function() {
     LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
 
-  // Set selected padding
-  $("#paddingRange").on('change', function(){
-    var cellPadding = this.value;
-    $(".cell").css("padding", cellPadding + "px");
-    settingsObject.cellPadding = cellPadding;
+  // Set selected paddingX
+  $("#paddingRangeX").on('change', function(){
+    let cellPaddingX = this.value;
+    $(".cell").css("padding-left", cellPaddingX + "px");
+    $(".cell").css("padding-right", cellPaddingX + "px");
+    settingsObject.cellPaddingX = cellPaddingX;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+  });
+
+  // Set selected paddingY
+  $("#paddingRangeY").on('change', function(){
+    let cellPaddingY = this.value;
+    $(".cell").css("padding-top", cellPaddingY + "px");
+    $(".cell").css("padding-bottom", cellPaddingY + "px");
+    settingsObject.cellPaddingY = cellPaddingY;
     LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
 
@@ -103,15 +113,18 @@ class ShulteGorbova{
   setupControls(){
     let fontFamily = this.settingsObject.fontFamily;
     let fontSize = this.settingsObject.fontSize;
-    let cellPadding = this.settingsObject.cellPadding;
+    let cellPaddingX = this.settingsObject.cellPaddingX;
+    let cellPaddingY = this.settingsObject.cellPaddingY;
     if(LocalStorageHelper.getFontSettings(this.key) != null){
       fontFamily = LocalStorageHelper.getFontSettings(this.key).fontFamily;
       fontSize = LocalStorageHelper.getFontSettings(this.key).fontSize;
-      cellPadding = LocalStorageHelper.getFontSettings(this.key).cellPadding;
+      cellPaddingX = LocalStorageHelper.getFontSettings(this.key).cellPaddingX;
+      cellPaddingY = LocalStorageHelper.getFontSettings(this.key).cellPaddingY;
     }
     $("#inputFontName").val(fontFamily);
     $("#inputFontSize").val(fontSize);
-    $("#paddingRange").val(cellPadding);
+    $("#paddingRangeX").val(cellPaddingX);
+    $("#paddingRangeY").val(cellPaddingY);
   }
 
   /**
@@ -135,7 +148,6 @@ class ShulteGorbova{
       }
       counter++;
     }
-    // console.log(arr);
     return arr;
   }
 
@@ -202,7 +214,14 @@ class ShulteGorbova{
   static styleTable(){
     $(".cell").css("font-family", $("#inputFontName").val());
     $(".cell").css("font-size", $("#inputFontSize").val() + "px");
-    $(".cell").css("padding", $("#paddingRange").val() + "px");
+
+    let paddingX =  $("#paddingRangeShulteX").val();
+    let paddingY =  $("#paddingRangeShulteY").val();
+    $(".cell").css("padding-left", paddingX + "px");
+    $(".cell").css("padding-right", paddingX + "px");
+    $(".cell").css("padding-top", paddingY + "px");
+    $(".cell").css("padding-bottom", paddingY + "px");
+
     if($("#checkboxBold").prop("checked") == true){
       $(".cell").css("font-weight", "bold");
     }else{

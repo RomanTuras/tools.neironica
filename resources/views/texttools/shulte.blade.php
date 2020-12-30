@@ -12,9 +12,14 @@
         <button type="button" id="generate-shulte" class="btn btn-outline-primary">Generate</button>
       </div>
       <div class="col-md-2">
-        <div class="dropdown paddingRange border-c float-r">
-          {{-- <label for="paddingRange">Padding</label> --}}
-          <input id="paddingRangeShulte" class="border-c" type="range" min="5" max="55" step="1" value="18">
+        <div class="dropdown paddingRangeX border-c float-r">
+           <label for="paddingRangeX">X:</label>
+          <input id="paddingRangeShulteX" class="border-c" type="range" min="5" max="55" step="1" value="18">
+        </div>
+
+        <div class="dropdown paddingRangeY border-c float-r">
+          <label for="paddingRangeY">Y:</label>
+          <input id="paddingRangeShulteY" class="border-c" type="range" min="5" max="55" step="1" value="18">
         </div>
       </div>
       <div class="col-md-2">
@@ -129,14 +134,28 @@
               <option value="18">18</option>
               <option value="22">22</option>
               <option value="26">26</option>
-              <option value="28">28</option>
-              <option value="36">36</option>
+              <option value="30">30</option>
+              <option value="34">34</option>
+              <option value="38">38</option>
               <option value="42">42</option>
-              <option value="48">48</option>
+              <option value="46">46</option>
               <option value="50">50</option>
-              <option value="56">56</option>
-              <option value="60">60</option>
-              <option value="72">72</option>
+              <option value="54">54</option>
+              <option value="58">58</option>
+              <option value="62">62</option>
+              <option value="66">66</option>
+              <option value="70">70</option>
+              <option value="74">74</option>
+              <option value="78">78</option>
+              <option value="82">82</option>
+              <option value="86">86</option>
+              <option value="90">90</option>
+              <option value="94">94</option>
+              <option value="98">98</option>
+              <option value="102">102</option>
+              <option value="106">106</option>
+              <option value="110">110</option>
+              <option value="114">114</option>
             </select>
           </div>
         </div>
