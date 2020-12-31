@@ -19,4 +19,13 @@ class GeneratorController extends Controller
     {
         return view('texttools.numbers');
     }
+
+    /**
+     * Getting a Count view, starting a Count Generator logic
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function count()
+    {
+        return view('texttools.count');
+    }
 }

@@ -94,6 +94,16 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="card border-primary mb-3" >
+                    <div class="card-header">Подсчет</div>
+                    <div class="card-body text-primary">
+                        <p class="card-text">Генератор таблиц с картинками для их подсчета.</p>
+                        <a href="{{ URL::route('texttools.count') }}" class="btn btn-primary">Перейти</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         </div>

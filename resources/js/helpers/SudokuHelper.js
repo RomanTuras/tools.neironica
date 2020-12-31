@@ -1,6 +1,56 @@
 class SudokuHelper {
 
     /**
+     * Getting occurrences numbers in the table
+     * @param table
+     * @param numbers
+     * @returns {[]}
+     */
+    static countOccurrences(table, numbers) {
+        let array = [];
+        let occur = [];
+        let counter = 0;
+        for (let i = 0; i < table.length; i++) {
+            for (let j = 0; j < table[i].length; j++) {
+                array.push(table[i][j]);
+            }
+        }
+        array.sort();
+        for (let n=1; n < numbers+1; n++){
+            for (let i=0; i<array.length; i++){
+                if(array[i] === n) counter++;
+            }
+            if (counter !== 0) {
+                occur.push([n, counter]); //Store Number and it occurrences
+                counter = 0;
+            }
+        }
+        console.log(array);
+        console.log(occur);
+        return occur;
+    }
+
+    /**
+     * Creating a table with random numbers
+     * @param numbers
+     * @param cols
+     * @param rows
+     * @returns {[]}
+     */
+    static getFilledTableByRangeOfNumbers(numbers, cols, rows){
+        let table = [];
+        let row = [];
+        for (let x=0; x<cols; x++){
+            for (let y=0; y<rows; y++){
+                row.push(RandomizeHelper.getRandomInt(1, numbers));
+            }
+            table.push(row);
+            row = [];
+        }
+        return table;
+    }
+
+    /**
      * Getting pattern of correct sudoku, depends from size (type) of table
      * @param cols Integer
      * @param rows Integer

@@ -49887,14 +49887,77 @@ var SudokuHelper = /*#__PURE__*/function () {
   }
 
   _createClass(SudokuHelper, null, [{
-    key: "getTablePattern",
+    key: "countOccurrences",
 
+    /**
+     * Getting occurrences numbers in the table
+     * @param table
+     * @param numbers
+     * @returns {[]}
+     */
+    value: function countOccurrences(table, numbers) {
+      var array = [];
+      var occur = [];
+      var counter = 0;
+
+      for (var i = 0; i < table.length; i++) {
+        for (var j = 0; j < table[i].length; j++) {
+          array.push(table[i][j]);
+        }
+      }
+
+      array.sort();
+
+      for (var n = 1; n < numbers + 1; n++) {
+        for (var _i = 0; _i < array.length; _i++) {
+          if (array[_i] === n) counter++;
+        }
+
+        if (counter !== 0) {
+          occur.push([n, counter]); //Store Number and it occurrences
+
+          counter = 0;
+        }
+      }
+
+      console.log(array);
+      console.log(occur);
+      return occur;
+    }
+    /**
+     * Creating a table with random numbers
+     * @param numbers
+     * @param cols
+     * @param rows
+     * @returns {[]}
+     */
+
+  }, {
+    key: "getFilledTableByRangeOfNumbers",
+    value: function getFilledTableByRangeOfNumbers(numbers, cols, rows) {
+      var table = [];
+      var row = [];
+
+      for (var x = 0; x < cols; x++) {
+        for (var y = 0; y < rows; y++) {
+          row.push(RandomizeHelper.getRandomInt(1, numbers));
+        }
+
+        table.push(row);
+        row = [];
+      }
+
+      return table;
+    }
     /**
      * Getting pattern of correct sudoku, depends from size (type) of table
      * @param cols Integer
      * @param rows Integer
      * @returns {[]}
      */
+
+  }, {
+    key: "getTablePattern",
     value: function getTablePattern(cols, rows) {
       var table = [];
       var size = cols * rows;
