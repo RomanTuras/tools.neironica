@@ -215,8 +215,8 @@ class ShulteGorbova{
     $(".cell").css("font-family", $("#inputFontName").val());
     $(".cell").css("font-size", $("#inputFontSize").val() + "px");
 
-    let paddingX =  $("#paddingRangeShulteX").val();
-    let paddingY =  $("#paddingRangeShulteY").val();
+    let paddingX =  $("#paddingRangeX").val();
+    let paddingY =  $("#paddingRangeY").val();
     $(".cell").css("padding-left", paddingX + "px");
     $(".cell").css("padding-right", paddingX + "px");
     $(".cell").css("padding-top", paddingY + "px");

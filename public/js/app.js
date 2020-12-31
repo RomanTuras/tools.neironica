@@ -50372,8 +50372,8 @@ var ShulteGorbova = /*#__PURE__*/function () {
     value: function styleTable() {
       $(".cell").css("font-family", $("#inputFontName").val());
       $(".cell").css("font-size", $("#inputFontSize").val() + "px");
-      var paddingX = $("#paddingRangeShulteX").val();
-      var paddingY = $("#paddingRangeShulteY").val();
+      var paddingX = $("#paddingRangeX").val();
+      var paddingY = $("#paddingRangeY").val();
       $(".cell").css("padding-left", paddingX + "px");
       $(".cell").css("padding-right", paddingX + "px");
       $(".cell").css("padding-top", paddingY + "px");
