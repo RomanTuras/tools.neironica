@@ -28,4 +28,13 @@ class GeneratorController extends Controller
     {
         return view('texttools.count');
     }
+
+    /**
+     * Getting a Remember Configuration view, starting a Remember Config logic
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function configuration()
+    {
+        return view('texttools.configuration');
+    }
 }
