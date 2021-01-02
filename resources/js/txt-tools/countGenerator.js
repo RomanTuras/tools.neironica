@@ -23,6 +23,7 @@ $(function () {
             const inputFontName = "#inputFontName";
             const inputFontSize = "#inputFontSize";
             const checkboxBold = "#checkboxBold";
+            const checkboxGrid = "#checkboxGrid";
             const paddingRange = "#paddingRange";
 
             $(answersContent).hide();
@@ -54,6 +55,7 @@ $(function () {
             let fontName = $(inputFontName).val();
             let padding = $(paddingRange).val();
             let isFontBold = !!$(checkboxBold).prop("checked");
+            let isGridEnabled = !!$(checkboxGrid).prop("checked");
 
             $(inputX).change(function () {
                 tableX= this.value.split(',');
@@ -100,6 +102,14 @@ $(function () {
                 isFontBold = $(checkboxBold).prop("checked");
                 $("th").css("font-weight", isFontBold ? "bold" : "normal");
             });
+            $(checkboxGrid).change(function () {
+                isGridEnabled = $(checkboxGrid).prop("checked");
+                if (isGridEnabled) {
+                    $("#main-table").addClass("table-sudoku").removeClass("table-count");
+                }else {
+                    $("#main-table").addClass("table-count").removeClass("table-sudoku");
+                }
+            });
 
 
             /**
@@ -107,7 +117,7 @@ $(function () {
              */
             $(generateCount).click(function () {
                 table = SudokuHelper.getFilledTableByRangeOfNumbers(numberImages, tableX, tableY);
-                showTable(table, tableX, tableY, imageSet);
+                showTable(table, tableX, tableY, imageSet, isGridEnabled);
                 styleTable(fontName, fontSize, padding, isFontBold);
                 $(answersContent).hide();
             });
@@ -174,9 +184,11 @@ $(function () {
          * @param rows
          * @param imageSet String
          */
-        function showTable(resultList, cols, rows, imageSet) {
+        function showTable(resultList, cols, rows, imageSet, isGridEnabled) {
             const result = "#res";
-            let table = '<table class="table-sudoku">';
+            let table = '';
+            if (isGridEnabled) table = '<table id="main-table" class="table-sudoku">';
+            else table = '<table id="main-table" class="table-count">';
             table += '<tbody>';
             let i = 0;
             let imagePath = getPathToImageByImageSet(imageSet);

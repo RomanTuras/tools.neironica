@@ -205,6 +205,14 @@
 
         </div>
 
+        <div class="col-md-1">
+            <div class="dropdown float-right">
+                <label class="form-check-label border-c">
+                    <input id="checkboxGrid" type="checkbox" checked="true" class="form-check-input" value="">Grid
+                </label>
+            </div>
+        </div>
+
         <div class="col-md-2">
             <div class="dropdown paddingRange border-c float-r">
                 {{-- <label for="paddingRange">Padding</label> --}}
