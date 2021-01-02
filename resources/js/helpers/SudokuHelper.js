@@ -15,7 +15,7 @@ class SudokuHelper {
                 array.push(table[i][j]);
             }
         }
-        array.sort();
+        array.sort(function(a,b) { return a - b; });
         for (let n=1; n < numbers+1; n++){
             for (let i=0; i<array.length; i++){
                 if(array[i] === n) counter++;
@@ -25,8 +25,6 @@ class SudokuHelper {
                 counter = 0;
             }
         }
-        console.log(array);
-        console.log(occur);
         return occur;
     }
 

@@ -69,28 +69,84 @@
                         <label class="input-group-text" for="inputImageSet">Images:</label>
                     </div>
                     <select class="font-select" id="inputImageSet">
-                        <option class="six" value="Vegetables">Овощи</option>
+                        <option class="four" value="Airplanes-4,4">Самолеты</option>
+                        <option class="four" value="Airplanes-4-2,4">Самолеты-2</option>
+                        <option class="four" value="Airships-4,4">Дирижабли</option>
+                        <option class="four" value="Air-transport-4,4">Воздушный</option>
+                        <option class="four" value="Balls-4,4">Мячи</option>
+                        <option class="four" value="Balls-4-2,4">Мячи-2</option>
+                        <option class="four" value="Balls-4-3,4">Мячи-3</option>
+                        <option class="four" value="Balls-4-4,4">Мячи-4</option>
+                        <option class="four" value="Cars-4,4">Машины</option>
+                        <option class="four" value="Cars-4-2,4">Машины-2</option>
+                        <option class="four" value="Cars-4-3,4">Машины-3</option>
+                        <option class="four" value="Flowers-4,4">Цветы</option>
+                        <option class="four" value="Flowers-4-2,4">Цветы-2</option>
+                        <option class="four" value="Flowers-4-3,4">Цветы-3</option>
+                        <option class="four" value="Flowers-4-4,4">Цветы-4</option>
+                        <option class="four" value="Helicopters-4,4">Вертолеты</option>
+                        <option class="four" value="Helicopters-4-2,4">Вертолеты-2</option>
+                        <option class="four" value="Motorcycles-4,4">Мотоциклы</option>
+                        <option class="four" value="Ships-4,4">Корабли</option>
+                        <option class="four" value="Ships-4-2,4">Корабли-2</option>
+                        <option class="four" value="Tractors-4,4">Тракторы</option>
+                        <option class="four" value="Berries-4,4">Ягоды</option>
+                        <option class="four" value="Berries-4-2,4">Ягоды-2</option>
+                        <option class="four" value="Berries-4-3,4">Ягоды-3</option>
+                        <option class="four" value="Berries-4-4,4">Ягоды-4</option>
+                        <option class="four" value="Berries-4-5,4">Ягоды-5</option>
+                        <option class="four" value="Berries-4-6,4">Ягоды-6</option>
+                        <option class="four" value="Fruits-4,4">Фрукты</option>
+                        <option class="four" value="Fruits-4-2,4">Фрукты-2</option>
+                        <option class="four" value="Fruits-4-3,4">Фрукты-3</option>
+                        <option class="four" value="Fruits-4-4,4">Фрукты-4</option>
+                        <option class="four" value="Fruits-4-5,4">Фрукты-5</option>
+                        <option class="four" value="Fruits-4-6,4">Фрукты-6</option>
+                        <option class="four" value="Fruits-4-7,4">Фрукты-7</option>
+                        <option class="four" value="Fruits-4-8,4">Фрукты-8</option>
+                        <option class="four" value="Fruits-4-9,4">Фрукты-9</option>
+                        <option class="four" value="Fruits-4-10,4">Фрукты-10</option>
+                        <option class="four" value="Fruits-4-11,4">Фрукты-11</option>
+                        <option class="four" value="Fruits-4-12,4">Фрукты-12</option>
+                        <option class="four" value="Numbers-4,4">Числа</option>
+                        <option class="four" value="Numbers-4-2,4">Числа-2</option>
+                        <option class="four" value="Numbers-4-3,4">Числа-3</option>
+                        <option class="four" value="Numbers-4-4,4">Числа-4</option>
+                        <option class="four" value="Numbers-4-5,4">Числа-5</option>
+                        <option class="four" value="Vegetables-4,4">Овощи</option>
+                        <option class="four" value="Vegetables-4-2,4">Овощи-2</option>
+                        <option class="six" value="Geometric-6,6">Фигуры</option>
+                        <option class="six" value="Berries-6,6">Ягоды</option>
+                        <option class="six" value="Berries-6-1,6">Ягоды-1</option>
+                        <option class="six" value="Berries-6-2,6">Ягоды-2</option>
+                        <option class="six" value="Berries-6-3,6">Ягоды-3</option>
+                        <option class="six" value="Berries-6-4,6">Ягоды-4</option>
+                        <option class="six" value="Fruits-6,6">Фрукты</option>
+                        <option class="six" value="Fruits-6-2,6">Фрукты-2</option>
+                        <option class="six" value="Fruits-6-3,6">Фрукты-3</option>
+                        <option class="six" value="Fruits-6-4,6">Фрукты-4</option>
+                        <option class="six" value="Vegetables-6,6">Овощи</option>
                     </select>
                 </div>
             </div>
 
         </div>
 
-        <div class="col-md-3">
-            <div class="dropdown paddingRange border-c float-r">
-                <label for="densityRange" style="display: inline;">Density:</label>
-                <input id="densityRange" class="border-c" type="range" min="1" max="9" step="1" value="5">
-                <p title="Чем больше этот показатель, тем меньше вероятность плотности заполнения и наоборот"
-                   style="display: inline; cursor: pointer; border: 1px solid #999; border-radius: 10px; padding: 1px 7px;">?</p>
+        <div class="dropdown">
+            <div class="input-group h-34">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputOpenedCells">Quantity:</label>
+                </div>
+                <select class="color-select" id="inputOpenedCells">
+                    <option value="2">2</option>
+                </select>
             </div>
-
         </div>
 
 
 
         <div class="col-md-3">
             <div class="dropdown paddingRange border-c float-r">
-
                 <label for="paddingRange" style="display: inline;">Padding:</label>
                 <input id="paddingRange" class="border-c" type="range" min="40" max="150" step="10" value="50">
             </div>

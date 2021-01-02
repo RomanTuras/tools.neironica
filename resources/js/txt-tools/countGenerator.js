@@ -45,11 +45,14 @@ $(function () {
             //values of the controls
             let tableX = $(inputX).val();
             let tableY = $(inputY).val();
+            let imagesConfig = $(inputImageSet).val().split(',');
+            let imageSet = imagesConfig[0]; //Name of the image set
+            let quantityImagesInSet = imagesConfig[1]; //Quantity images from current set
+            $(inputNumberImages).html(getRangeOfQuantityImages(quantityImagesInSet));
             let numberImages = $(inputNumberImages).val();
             let fontSize = $(inputFontSize).val();
             let fontName = $(inputFontName).val();
             let padding = $(paddingRange).val();
-            let imageSet = $(inputImageSet).val();
             let isFontBold = !!$(checkboxBold).prop("checked");
 
             $(inputX).change(function () {
@@ -62,7 +65,11 @@ $(function () {
                 numberImages= this.value.split(',');
             });
             $(inputImageSet).change(function () {
-                imageSet = this.value;
+                imagesConfig = this.value.split(',');
+                imageSet = imagesConfig[0];
+                quantityImagesInSet = imagesConfig[1];
+                $(inputNumberImages).html(getRangeOfQuantityImages(quantityImagesInSet));
+                numberImages = 2;
             });
             $(paddingRange).change(function () {
                 padding = this.value;
@@ -123,6 +130,20 @@ $(function () {
             });
         }
         startCount();
+
+        /**
+         * Getting html options for selected size of a table
+         * @param x
+         * @param y
+         * @returns {string}
+         */
+        function getRangeOfQuantityImages(q) {
+            let options = '';
+            for (let i=2; i<=q; i++){
+                options += `<option value=${i}>${i}</option>`;
+            }
+            return options;
+        }
 
         /**
          *

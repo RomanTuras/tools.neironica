@@ -1,7 +1,7 @@
 $(function () {
 
     if($("#configuration").length){
-        function startCcnfiguration() {
+        function startConfiguration() {
 
             let settings = {
                 'density': 5,
@@ -18,9 +18,9 @@ $(function () {
             const inputX = "#inputX";
             const inputY = "#inputY";
             const inputImageSet = "#inputImageSet";
-            const inputDensity = "#densityRange";
+            const inputOpenedCells = "#inputOpenedCells";
             const paddingRange = "#paddingRange";
-            const colorsQuantity = 7;
+            // const quantityImagesInSet = 0;
 
             $(answersContent).hide();
 
@@ -29,10 +29,10 @@ $(function () {
              */
             function setupControlsConfiguration() {
                 if (LocalStorageHelper.getFontSettings(key) != null) {
-                    settings.density = LocalStorageHelper.getFontSettings(key).density;
+                    settings.openedCells = LocalStorageHelper.getFontSettings(key).openedCells;
                     settings.padding = LocalStorageHelper.getFontSettings(key).padding;
                 }
-                $(inputDensity).val(settings.density);
+                $(inputOpenedCells).val(settings.openedCells);
                 $(paddingRange).val(settings.padding);
             }
             setupControlsConfiguration();
@@ -40,18 +40,32 @@ $(function () {
             //values of the controls
             let tableX = $(inputX).val();
             let tableY = $(inputY).val();
-            let density = $(inputDensity).val();
+            let imagesConfig = $(inputImageSet).val().split(',');
+            let imageSet = imagesConfig[0]; //Name of the image set
+            $(inputOpenedCells).html(getRangeOfOpenedCells(tableX, tableY));
+            let quantityOpenedCells = $(inputOpenedCells).val();
             let padding = $(paddingRange).val();
-            let imageSet = $(inputImageSet).val();
+            let quantityImagesInSet = imagesConfig[1]; //Quantity images from current set
+
 
             $(inputX).change(function () {
-                tableX= this.value.split(',');
+                tableX= this.value;
+                $(inputOpenedCells).html(getRangeOfOpenedCells(tableX, tableY));
+                quantityOpenedCells = 2;
+                settings.openedCells = quantityOpenedCells;
+                LocalStorageHelper.saveFontSettings(key, settings);
             });
             $(inputY).change(function () {
-                tableY= this.value.split(',');
+                tableY= this.value;
+                $(inputOpenedCells).html(getRangeOfOpenedCells(tableX, tableY));
+                quantityOpenedCells = 2;
+                settings.openedCells = quantityOpenedCells;
+                LocalStorageHelper.saveFontSettings(key, settings);
             });
             $(inputImageSet).change(function () {
-                imageSet = this.value;
+                imagesConfig = this.value.split(',');
+                imageSet = imagesConfig[0];
+                quantityImagesInSet = imagesConfig[1];
             });
             $(paddingRange).change(function () {
                 padding = this.value;
@@ -66,9 +80,9 @@ $(function () {
                 settings.padding = padding;
                 LocalStorageHelper.saveFontSettings(key, settings);
             });
-            $(inputDensity).on('change', function(){
-                density = this.value;
-                settings.density = density;
+            $(inputOpenedCells).on('change', function(){
+                quantityOpenedCells = this.value;
+                settings.openedCells = quantityOpenedCells;
                 LocalStorageHelper.saveFontSettings(key, settings);
             });
 
@@ -77,10 +91,10 @@ $(function () {
              * Generate Table
              */
             $(generate).click(function () {
-                table = SudokuHelper.getFilledTableByRangeOfNumbers(colorsQuantity, tableX, tableY);
-                showTable(table, tableX, tableY, imageSet, density);
+                table = SudokuHelper.getFilledTableByRangeOfNumbers(quantityImagesInSet, tableX, tableY);
+                let openedCellsList = RandomizeHelper.getRandomNumbersFromRange(0, tableX*tableY - 1, quantityOpenedCells);
+                showTable(table, tableX, tableY, imageSet, openedCellsList);
                 styleTable(padding);
-                $(answersContent).hide();
             });
 
             /**
@@ -91,7 +105,21 @@ $(function () {
                 $("tr").find("img").removeClass("img-hidden");
             });
         }
-        startCcnfiguration();
+        startConfiguration();
+
+        /**
+         * Getting html options for selected size of a table
+         * @param x
+         * @param y
+         * @returns {string}
+         */
+        function getRangeOfOpenedCells(x, y) {
+            let options = '';
+            for (let i=2; i<x*y; i++){
+                options += `<option value=${i}>${i}</option>`;
+            }
+             return options;
+        }
 
         /**
          *
@@ -99,7 +127,7 @@ $(function () {
          * @returns {String}
          */
         function getPathToImageByImageSet(imageSet) {
-            let imagePath = `../img/@2x/config/${imageSet}`;
+            let imagePath = `../img/@2x/sudoku/${imageSet}`;
             if(imageSet === "none") return '';
             return imagePath;
         }
@@ -121,53 +149,34 @@ $(function () {
          * @param cols
          * @param rows
          * @param imageSet String
+         * @param openedCellsList
          */
-        function showTable(resultList, cols, rows, imageSet, density) {
+        function showTable(resultList, cols, rows, imageSet, openedCellsList) {
             const result = "#res";
             let table = '<table class="table-sudoku">';
             table += '<tbody>';
-            let i = 0;
+
             let imagePath = getPathToImageByImageSet(imageSet);
             let imageUrl = '';
+            let i = 0;
+            let counter = 0;
+
             resultList.forEach(function (row) {
                 table += '<tr>';
                 row.forEach(function (item) {
                     imageUrl = `${imagePath}/${item}.png`;
-                    if(Math.random() * 10 > density){
+                    if(counter === openedCellsList[i]){
                         item = `<img src="${imageUrl}" />`;
+                        i++;
                     }else item = `<img class="img-hidden" src="${imageUrl}" />`;
                     table += `<th class="cell-opened">${item}</th>`;
-                    i++;
+                    counter++;
                 });
                 table += '</tr>';
             });
 
             table += '</tbody></table>';
             $(result).html(table);
-        }
-
-        function showAnswers(array, numbers, imageSet) {
-            let answerList = SudokuHelper.countOccurrences(array, numbers);
-
-            const result = "#answers";
-            let table = '<table class="table-sudoku">';
-            table += '<tbody>';
-            let i = 0;
-            let imagePath = getPathToImageByImageSet(imageSet);
-            let imageUrl = '';
-            answerList.forEach(function (row) {
-
-            let item = "";
-            imageUrl = `${imagePath}/${row[0]}.png`;
-            item = `<img src="${imageUrl}" />`;
-            table += `<th class="cell-opened">${item}</th><th class="cell-opened">${row[1]}</th>`;
-            i++;
-            table += '</tr>';
-            });
-
-            table += '</tbody></table>';
-            $(result).html(table);
-
         }
 
         /**

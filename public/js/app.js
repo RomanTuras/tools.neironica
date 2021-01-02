@@ -49906,7 +49906,9 @@ var SudokuHelper = /*#__PURE__*/function () {
         }
       }
 
-      array.sort();
+      array.sort(function (a, b) {
+        return a - b;
+      });
 
       for (var n = 1; n < numbers + 1; n++) {
         for (var _i = 0; _i < array.length; _i++) {
@@ -49920,8 +49922,6 @@ var SudokuHelper = /*#__PURE__*/function () {
         }
       }
 
-      console.log(array);
-      console.log(occur);
       return occur;
     }
     /**
