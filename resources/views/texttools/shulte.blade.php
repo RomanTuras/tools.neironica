@@ -221,6 +221,10 @@
           <label class="form-check-label border-c">
             <input id="checkboxBoldShulte" type="checkbox" class="form-check-input" value="">Bold
           </label>
+          <br>
+          <label class="form-check-label border-c">
+            <input id="checkboxColored" type="checkbox" class="form-check-input" value="">Colored
+          </label>
         </div>
 
       </div>

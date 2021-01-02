@@ -14,7 +14,7 @@ $(function() {
       'fontSize': 18,
       'cellPaddingX': 17,
       'cellPaddingY': 17
-    }
+    };
     setupControls(key, settingsObject);
     startShulte();
     listenIvents(key, settingsObject);
@@ -28,10 +28,11 @@ function startShulte() {
   $("#generate-shulte").click(function() {
     let rows = $("#inputRowsShulte").val();
     let cols = $("#inputColsShulte").val();
+    let isColored = $("#checkboxColored").prop("checked");
     let filledArray = fillArray(rows * cols);
     let mixedArray = ShuffleHelper.shuffleArray(filledArray);
     createTable(rows, cols, mixedArray);
-    styleTable();
+    styleTable(isColored);
     // $("#inputBgImage").val("");
   });
 }
@@ -109,21 +110,25 @@ function listenIvents(key, settingsObject) {
 
   //Bold text - checkbox event handler
   $("#checkboxBoldShulte").change(function() {
-    if ($("#checkboxBoldShulte").prop("checked") == true) {
+    if ($("#checkboxBoldShulte").prop("checked") === true) {
       $(".cell").css("font-weight", "bold");
     } else {
       $(".cell").css("font-weight", "normal");
     }
   });
 
+  $("#checkboxColored").change(function() {
+    paintTableColor("#shulte-table", $("#checkboxColored").prop("checked"));
+  });
+
   //Background color -  event handler
   $("#inputColorSchema").change(function() {
     let listColors = this.value.split(',');
-    paintTable("#shulte-table", listColors);
+    paintTableBackground("#shulte-table", listColors);
   });
 
 
-  //St backgroung image
+  //St background image
   $("#inputBgImage").change(function() {
     let pathImage = this.value;
     $("table").css('background-image', `url('${pathImage}')`);
@@ -131,17 +136,33 @@ function listenIvents(key, settingsObject) {
 }
 
 /**
- * Random painting backgroung to each <td>
+ * Random painting background to each <td>
  * @param {String} table Element
- * @param {Boolean} isColorPaint 
+ * @param listColors
  */
-function paintTable(table, listColors) {
+function paintTableBackground(table, listColors) {
   // const listColors = ['aqua', 'coral', 'cornflowerblue', 'transparent', 'chartreuse', 'fuchsia'];
   $(table).each(function(index, tr) {
     var lines = $('td', tr).map(function(index, td) {
       let n = RandomizeHelper.getRandomInt(0, listColors.length);
       let color = (listColors.length > 1) ? listColors[n] : "transparent";
       $(td).css("background", color);
+    });
+  });
+}
+
+/**
+ * Random colored font from the table
+ * @param table
+ * @param isColored
+ */
+function paintTableColor(table, isColored) {
+  const listColors = ['aqua', 'coral', 'cornflowerblue', 'blueviolet', 'chartreuse', 'fuchsia'];
+  $(table).each(function(index, tr) {
+    $('td', tr).map(function(index, td) {
+      let n = RandomizeHelper.getRandomInt(0, listColors.length-1);
+      let color = (isColored) ? listColors[n] : "black";
+      $(td).css("color", color);
     });
   });
 }
@@ -184,7 +205,7 @@ function createTable(rows, cols, mixedArray) {
 /**
  * Accepting styles to result table, depends from control
  */
-function styleTable() {
+function styleTable(isColored) {
   $(".cell").css("font-family", $("#inputFontNameShulte").val());
   $(".cell").css("color", $("#inputFontColorShulte").val());
   $(".cell").css("font-size", $("#inputFontSizeShulte").val() + "px");
@@ -202,7 +223,8 @@ function styleTable() {
     $(".cell").css("font-weight", "normal");
   }
   let listColors = $("#inputColorSchema").val().split(',');
-  paintTable("#shulte-table", listColors);
+  paintTableBackground("#shulte-table", listColors);
+  paintTableColor("#shulte-table" ,isColored)
 
   let pathImage = $("#inputBgImage").val();
   $("table").css('background-image', `url('${pathImage}')`);

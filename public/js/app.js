@@ -50435,10 +50435,11 @@ function startShulte() {
   $("#generate-shulte").click(function () {
     var rows = $("#inputRowsShulte").val();
     var cols = $("#inputColsShulte").val();
+    var isColored = $("#checkboxColored").prop("checked");
     var filledArray = fillArray(rows * cols);
     var mixedArray = ShuffleHelper.shuffleArray(filledArray);
     createTable(rows, cols, mixedArray);
-    styleTable(); // $("#inputBgImage").val("");
+    styleTable(isColored); // $("#inputBgImage").val("");
   });
 }
 /**
@@ -50511,17 +50512,20 @@ function listenIvents(key, settingsObject) {
   }); //Bold text - checkbox event handler
 
   $("#checkboxBoldShulte").change(function () {
-    if ($("#checkboxBoldShulte").prop("checked") == true) {
+    if ($("#checkboxBoldShulte").prop("checked") === true) {
       $(".cell").css("font-weight", "bold");
     } else {
       $(".cell").css("font-weight", "normal");
     }
+  });
+  $("#checkboxColored").change(function () {
+    paintTableColor("#shulte-table", $("#checkboxColored").prop("checked"));
   }); //Background color -  event handler
 
   $("#inputColorSchema").change(function () {
     var listColors = this.value.split(',');
-    paintTable("#shulte-table", listColors);
-  }); //St backgroung image
+    paintTableBackground("#shulte-table", listColors);
+  }); //St background image
 
   $("#inputBgImage").change(function () {
     var pathImage = this.value;
@@ -50529,19 +50533,36 @@ function listenIvents(key, settingsObject) {
   });
 }
 /**
- * Random painting backgroung to each <td>
+ * Random painting background to each <td>
  * @param {String} table Element
- * @param {Boolean} isColorPaint 
+ * @param listColors
  */
 
 
-function paintTable(table, listColors) {
+function paintTableBackground(table, listColors) {
   // const listColors = ['aqua', 'coral', 'cornflowerblue', 'transparent', 'chartreuse', 'fuchsia'];
   $(table).each(function (index, tr) {
     var lines = $('td', tr).map(function (index, td) {
       var n = RandomizeHelper.getRandomInt(0, listColors.length);
       var color = listColors.length > 1 ? listColors[n] : "transparent";
       $(td).css("background", color);
+    });
+  });
+}
+/**
+ * Random colored font from the table
+ * @param table
+ * @param isColored
+ */
+
+
+function paintTableColor(table, isColored) {
+  var listColors = ['aqua', 'coral', 'cornflowerblue', 'blueviolet', 'chartreuse', 'fuchsia'];
+  $(table).each(function (index, tr) {
+    $('td', tr).map(function (index, td) {
+      var n = RandomizeHelper.getRandomInt(0, listColors.length - 1);
+      var color = isColored ? listColors[n] : "black";
+      $(td).css("color", color);
     });
   });
 }
@@ -50593,7 +50614,7 @@ function createTable(rows, cols, mixedArray) {
  */
 
 
-function styleTable() {
+function styleTable(isColored) {
   $(".cell").css("font-family", $("#inputFontNameShulte").val());
   $(".cell").css("color", $("#inputFontColorShulte").val());
   $(".cell").css("font-size", $("#inputFontSizeShulte").val() + "px");
@@ -50611,7 +50632,8 @@ function styleTable() {
   }
 
   var listColors = $("#inputColorSchema").val().split(',');
-  paintTable("#shulte-table", listColors);
+  paintTableBackground("#shulte-table", listColors);
+  paintTableColor("#shulte-table", isColored);
   var pathImage = $("#inputBgImage").val();
   $("table").css('background-image', "url('".concat(pathImage, "')"));
 }
