@@ -130,7 +130,7 @@ $(function () {
          * @returns {String}
          */
         function getPathToImageByImageSet(imageSet) {
-            let imagePath = `../img/@2x/count/${imageSet}`;
+            let imagePath = `../img/@2x/sudoku/${imageSet}`;
             if(imageSet === "none") return '';
             return imagePath;
         }
