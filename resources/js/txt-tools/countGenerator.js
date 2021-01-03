@@ -71,7 +71,12 @@ $(function () {
                 imageSet = imagesConfig[0];
                 quantityImagesInSet = imagesConfig[1];
                 $(inputNumberImages).html(getRangeOfQuantityImages(quantityImagesInSet));
-                numberImages = 2;
+                if (quantityImagesInSet < numberImages) {
+                    $(inputNumberImages).val(2);
+                    numberImages = 2;
+                }else {
+                    $(inputNumberImages).val(numberImages);
+                }
             });
             $(paddingRange).change(function () {
                 padding = this.value;
@@ -117,9 +122,14 @@ $(function () {
              */
             $(generateCount).click(function () {
                 table = SudokuHelper.getFilledTableByRangeOfNumbers(numberImages, tableX, tableY);
-                showTable(table, tableX, tableY, imageSet, isGridEnabled);
-                styleTable(fontName, fontSize, padding, isFontBold);
-                $(answersContent).hide();
+                if (quantityImagesInSet < numberImages) {
+                    alert(`В выбранном наборе ${quantityImagesInSet} картинок, пожалуйста уменьшите значение N`);
+                    $(inputNumberImages).val(2);
+                }else {
+                    showTable(table, tableX, tableY, imageSet, isGridEnabled);
+                    styleTable(fontName, fontSize, padding, isFontBold);
+                    $(answersContent).hide();
+                }
             });
 
             /**
