@@ -235,7 +235,7 @@
   
   <div id="result-content" class="container">
     <div class="row">
-      <div class="col-md-8 offset-2">
+      <div class="col-md-12">
         <div id="result"></div>
       </div>
     </div>
