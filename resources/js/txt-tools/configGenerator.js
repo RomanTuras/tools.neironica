@@ -93,6 +93,7 @@ $(function () {
             $(generate).click(function () {
                 table = SudokuHelper.getFilledTableByRangeOfNumbers(quantityImagesInSet, tableX, tableY);
                 let openedCellsList = RandomizeHelper.getRandomNumbersFromRange(0, tableX*tableY - 1, quantityOpenedCells);
+                openedCellsList.sort(function(a,b) { return a - b; });
                 showTable(table, tableX, tableY, imageSet, openedCellsList);
                 styleTable(padding);
             });

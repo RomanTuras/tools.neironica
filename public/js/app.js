@@ -49887,14 +49887,41 @@ var SudokuHelper = /*#__PURE__*/function () {
   }
 
   _createClass(SudokuHelper, null, [{
-    key: "countOccurrences",
+    key: "fillTableFromArray",
 
+    /**
+     * Getting filled from array a table
+     * @param array
+     * @param cols
+     * @param rows
+     * @returns {[]}
+     */
+    value: function fillTableFromArray(array, cols, rows) {
+      var table = [];
+      var row = [];
+      var i = 0;
+
+      for (var x = 0; x < cols; x++) {
+        for (var y = 0; y < rows; y++) {
+          row.push(array[i]);
+          i++;
+        }
+
+        table.push(row);
+        row = [];
+      }
+
+      return table;
+    }
     /**
      * Getting occurrences numbers in the table
      * @param table
      * @param numbers
      * @returns {[]}
      */
+
+  }, {
+    key: "countOccurrences",
     value: function countOccurrences(table, numbers) {
       var array = [];
       var occur = [];

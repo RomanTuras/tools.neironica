@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\TextTools;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 class GeneratorController extends Controller
 {
@@ -13,7 +15,7 @@ class GeneratorController extends Controller
 
     /**
      * Getting a Numbers view, starting a Number Generator logic
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function numbers()
     {
@@ -22,7 +24,7 @@ class GeneratorController extends Controller
 
     /**
      * Getting a Count view, starting a Count Generator logic
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function count()
     {
@@ -31,10 +33,19 @@ class GeneratorController extends Controller
 
     /**
      * Getting a Remember Configuration view, starting a Remember Config logic
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function configuration()
     {
         return view('texttools.configuration');
+    }
+
+    /**
+     * Getting a Arrange view, starting a Arrange Numbers logic
+     * @return Factory|View
+     */
+    public function arrange()
+    {
+        return view('texttools.arrange');
     }
 }

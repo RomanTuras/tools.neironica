@@ -118,6 +118,16 @@
                     </div>
                 </div>
 
+                <div class="col-md-4">
+                    <div class="card border-primary mb-3" >
+                        <div class="card-header">Расставить числа</div>
+                        <div class="card-body text-primary">
+                            <p class="card-text">Генератор последовательностей чисел различной сложности, стиль, различный шрифт.</p>
+                            <a href="{{ URL::route('texttools.arrange') }}" class="btn btn-primary">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>

@@ -39,7 +39,6 @@ class RandomizeHelper{
                 i++;
             }
         }
-        randomList.sort(function(a,b) { return a - b; });
         return randomList;
     }
 }

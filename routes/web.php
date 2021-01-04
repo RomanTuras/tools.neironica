@@ -25,4 +25,5 @@ Route::group(['prefix' => 'texttools', 'namespace'=>'TextTools', 'middleware'=>[
     Route::get('/numbers', 'GeneratorController@numbers')->name('texttools.numbers');
     Route::get('/count', 'GeneratorController@count')->name('texttools.count');
     Route::get('/remember-configuration', 'GeneratorController@configuration')->name('texttools.configuration');
+    Route::get('/arrange-numbers', 'GeneratorController@arrange')->name('texttools.arrange');
 });

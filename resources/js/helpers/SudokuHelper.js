@@ -1,5 +1,38 @@
 class SudokuHelper {
 
+    static getArrangeTable(table, cols, rows){
+        let array = [];
+        table.forEach(function (row) {
+            row.forEach(function (item) {
+                array.push(item);
+            });
+        });
+        array.sort(function(a,b) { return a - b; });
+        return this.fillTableFromArray(array ,cols, rows);
+    }
+
+    /**
+     * Getting filled from array a table
+     * @param array
+     * @param cols
+     * @param rows
+     * @returns {[]}
+     */
+    static fillTableFromArray(array, cols, rows){
+        let table = [];
+        let row = [];
+        let i = 0;
+        for (let x=0; x<cols; x++){
+            for (let y=0; y<rows; y++){
+                row.push(array[i]);
+                i++;
+            }
+            table.push(row);
+            row = [];
+        }
+        return table;
+    }
+
     /**
      * Getting occurrences numbers in the table
      * @param table
