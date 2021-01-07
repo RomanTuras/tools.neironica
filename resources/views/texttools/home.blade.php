@@ -128,6 +128,16 @@
                     </div>
                 </div>
 
+                <div class="col-md-4">
+                    <div class="card border-primary mb-3" >
+                        <div class="card-header">Кодировка - Алфавит</div>
+                        <div class="card-body text-primary">
+                            <p class="card-text">Кодировка слов различной длины, стиль, различный шрифт.</p>
+                            <a href="{{ URL::route('texttools.encoding-alphabet') }}" class="btn btn-primary">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>

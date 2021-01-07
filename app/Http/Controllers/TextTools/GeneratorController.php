@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TextTools;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class GeneratorController extends Controller
@@ -47,5 +48,21 @@ class GeneratorController extends Controller
     public function arrange()
     {
         return view('texttools.arrange');
+    }
+
+    /**
+     * Getting a Encoding-alphabet view
+     * @return Factory|View
+     */
+    public function encodingAlphabet()
+    {
+        $words = DB::table('words')
+            ->where('text', '!=', '')
+            ->limit(1)
+            ->pluck('text');
+
+        $words = trim(mb_strtolower($words[0]));
+
+        return view('texttools.encoding-alphabet', ['words' => $words]);
     }
 }
