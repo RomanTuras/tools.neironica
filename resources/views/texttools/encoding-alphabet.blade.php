@@ -164,7 +164,14 @@
           <div class="input-group">
             <div class="input-group-prepend">
             </div>
-            <textarea id="main-textarea" class="form-control" aria-label="main-textarea" placeholder="Вводите слова через пробел, без запятых и без нажатия Enter..."></textarea>
+            <textarea
+                    id="main-textarea"
+                    class="form-control"
+                    style="font-size: 24px;"
+                    aria-label="main-textarea"
+                    placeholder="Вводите слова через пробел, без запятых и без нажатия Enter...">
+
+            </textarea>
           </div>
         </div>
         <div id="control-panel" class="container">

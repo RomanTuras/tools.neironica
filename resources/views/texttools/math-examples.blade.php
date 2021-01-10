@@ -255,7 +255,7 @@
       <div id="res" class="col-md-12"></div>
       </div>
     </div>
-  </div>
+
 
 </section>
 

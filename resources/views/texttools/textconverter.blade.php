@@ -134,7 +134,7 @@
       <div class="input-group">
         <div class="input-group-prepend">
         </div>
-        <textarea id="main-textarea" class="form-control" aria-label="main-textarea"></textarea>
+        <textarea id="main-textarea" class="form-control" style="font-size: 24px;" aria-label="main-textarea"></textarea>
       </div>
     </div>
     <div id="control-panel" class="container">

@@ -126,7 +126,7 @@ $(function () {
          */
         function showTable(resultList, columnsNumber, examplesNumber) {
             const result = "#res";
-            let table = '<table id="table-math-examples" class="table table-striped">';
+            let table = '<table id="table-math-examples" class="table">';
             table += '<tbody>';
             let i = 0;
             for (let example=0; example<examplesNumber; example++){

@@ -180,7 +180,7 @@ $(function () {
                 table += getImagesByLetters( wordToLower.charAt(j), encodeSet, false);
                 table += `</th>`;
                 col++;
-                if(col === 10) {
+                if(col === 11) {
                     table += '</tr><tr>';
                     col = 0;
                 }
