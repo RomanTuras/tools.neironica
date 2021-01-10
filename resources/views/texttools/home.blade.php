@@ -140,6 +140,20 @@
 
             </div>
 
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="card border-primary mb-3" >
+                        <div class="card-header">Кодировка - числа</div>
+                        <div class="card-body text-primary">
+                            <p class="card-text">Кодировка слов в числа по согласным, стиль, различный шрифт.</p>
+                            <a href="{{ URL::route('texttools.encoding-numbers') }}" class="btn btn-primary">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>

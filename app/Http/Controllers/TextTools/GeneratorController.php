@@ -65,4 +65,13 @@ class GeneratorController extends Controller
 
         return view('texttools.encoding-alphabet', ['words' => $words]);
     }
+
+    /**
+     * Getting a Encoding-numbers view
+     * @return Factory|View
+     */
+    public function encodingNumbers()
+    {
+        return view('texttools.encoding-numbers');
+    }
 }
