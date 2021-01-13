@@ -7,6 +7,10 @@ Route::get('/', function () {
   return view('welcome');
 });
 
+Route::get('/i', function () {
+    phpinfo();
+});
+
 Auth::routes();
 
 // Route::group(['middleware' => ['auth']], function () {
