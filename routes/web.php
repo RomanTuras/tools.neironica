@@ -7,17 +7,13 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-Route::get('/i', function () {
-    phpinfo();
-});
-
 Auth::routes();
 
-// Route::group(['middleware' => ['auth']], function () {
-//   Route::get('/home', 'HomeController@index')->name('home');
-// });
+Route::group(['prefix' => 'student', 'middleware'=>['auth', 'student']], function () {
+    Route::get('/', 'StudentController@home');
+});
 
-Route::group(['prefix' => 'texttools', 'namespace'=>'TextTools', 'middleware'=>['auth']], function () {
+Route::group(['prefix' => 'texttools', 'namespace'=>'TextTools', 'middleware'=>['auth', 'admin']], function () {
     Route::get('/', 'HomeController@index')->name('texttools');
     Route::get('/text-converter', 'TextConverterController@index')->name('texttools.text-converter');
     Route::get('/shulte-table', 'ShulteTablesController@index')->name('texttools.shulte');

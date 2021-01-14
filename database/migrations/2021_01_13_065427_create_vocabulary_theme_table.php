@@ -24,11 +24,6 @@ class CreateVocabularyThemeTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
-//        Schema::table('vocabulary_theme', function ($table) {
-//            $table->foreign('language_id')->references('id')->on('vocabulary_language')->onDelete('cascade');
-//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-//        });
     }
 
     /**

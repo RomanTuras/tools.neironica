@@ -31,12 +31,6 @@ class CreateVocabularyTranslateTable extends Migration
             $table->timestamps();
         });
 
-//        Schema::table('vocabulary_translate', function ($table) {
-//            $table->foreign('language_id')->references('id')->on('vocabulary_language')->onDelete('cascade');
-//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-//            $table->foreign('theme_id')->references('id')->on('vocabulary_theme')->onDelete('cascade');
-//            $table->foreign('variety_id')->references('id')->on('vocabulary_variety')->onDelete('cascade');
-//        });
     }
 
     /**
