@@ -10,7 +10,10 @@ return [
     |
     */
 
+    'home' => 'На главную',
     'start' => 'Начало работы',
     'vocabulary' => 'Словарь',
+    'vocabulary-add' => 'Добавить в словарь',
+    'vocabulary-exercise' => 'Упражнения',
 
 ];

@@ -65,10 +65,33 @@ class StudentController extends Controller
 
 
 
-
         return view('students.home',
             ['data' =>
                  ['page' => 'students.home']
+            ]);
+    }
+
+    public function vocabulary() {
+        $vl = new VocabularyLanguage();
+        $languages = $vl->getLanguages();
+        $vv = new VocabularyVariety();
+        $varieties = $vv->getVarieties();
+        return view('students.vocabulary',
+            ['data' =>
+                 [
+                     'page' => 'students.vocabulary-add',
+                     'languages' => $languages,
+                     'varieties' => $varieties,
+                     ]
+            ]);
+    }
+
+    public function exercise() {
+        $vl = new VocabularyLanguage();
+        $languages = $vl->getLanguages();
+        return view('students.vocabulary-exercise',
+            ['data' =>
+                 ['page' => 'students.vocabulary-exercise', 'languages' => $languages]
             ]);
     }
 }

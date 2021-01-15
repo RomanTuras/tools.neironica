@@ -39,9 +39,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+{{--                Creating App Bar--}}
                 @if(isset($data))
                     @if($data['page'] == 'students.home')
                         @include('appbars.home-student')
+                    @elseif($data['page'] == 'students.vocabulary-add' || $data['page'] == 'students.vocabulary-exercise')
+                        @include('appbars.vocabulary-student')
                         @endif
                     @else
                 @include('appbars.start')

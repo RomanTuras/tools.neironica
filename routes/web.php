@@ -11,6 +11,8 @@ Auth::routes();
 
 Route::group(['prefix' => 'students', 'middleware'=>['auth', 'student']], function () {
     Route::get('/', 'StudentController@home');
+    Route::get('/vocabulary-add', 'StudentController@vocabulary');
+    Route::get('/vocabulary-exercise', 'StudentController@exercise');
 });
 
 Route::group(['prefix' => 'texttools', 'namespace'=>'TextTools', 'middleware'=>['auth', 'admin']], function () {
