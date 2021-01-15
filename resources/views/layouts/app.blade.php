@@ -58,19 +58,19 @@
                                 </li>
                             @endif
                         @else
+
+                        @if (\App\User::getRole() == 'admin') {{-- Menu items for administrator --}}
                             <a class="menu-item" href="{{ url('/texttools') }}">Text Tools</a>
+                        @elseif (\App\User::getRole() == 'student') {{-- Menu items for teachers --}}
+                            <a class="menu-item" href="{{ url('/student') }}">Словарь</a>
+                        @endif
+
                             <li class="dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @if (Auth::user()->status == 'admin') {{-- Menu items for administrator --}}
-                                        <a class="dropdown-item" href="#">Студенты</a>
-                                        <a class="dropdown-item" href="#">Упражнения</a>
-                                    @elseif (Auth::user()->status == 'teacher') {{-- Menu items for teachers --}}
-                                        <a class="dropdown-item" href="#">Студенты</a>
-                                    @endif
                                     {{-- Menu item for students and all --}}
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['prefix' => 'student', 'middleware'=>['auth', 'student']], function () {
+Route::group(['prefix' => 'students', 'middleware'=>['auth', 'student']], function () {
     Route::get('/', 'StudentController@home');
 });
 

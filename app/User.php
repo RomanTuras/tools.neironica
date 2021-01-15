@@ -51,7 +51,7 @@ class User extends Authenticatable
      * Getting role of auth user
      * @return mixed|null
      */
-    public function getRole() {
+    public static function getRole() {
         $user_id = Auth::id();
         if ($user_id != null) {
             return DB::table('users')

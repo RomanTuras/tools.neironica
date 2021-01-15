@@ -36,40 +36,36 @@ class StudentController extends Controller
         $vl = new VocabularyLanguage();
         $languages = $vl->getLanguages();
         foreach ($languages as $language) {
-            echo $language->id.' - '.$language->name. '<br>';
+//            echo $language->id.' - '.$language->name. '<br>';
         }
 
-        echo '<br>';
 
         $vv = new VocabularyVariety();
         $varieties = $vv->getVarieties();
         foreach ($varieties as $variety) {
-            echo $variety->id.' - '.$variety->name. '<br>';
+//            echo $variety->id.' - '.$variety->name. '<br>';
         }
 
-        echo '<br>';
 
         $vt = new VocabularyTheme();
         $themes = $vt->getThemes(Auth::id());
         foreach ($themes as $theme) {
-            echo $theme->id.' - '.$theme->name. '<br>';
+//            echo $theme->id.' - '.$theme->name. '<br>';
         }
 
-        echo '<br>';
 
         $vTrans = new VocabularyTranslate();
         $translate = $vTrans->translateText(Auth::id(), 1, "собака есть собака");
 
-        echo '<br>';
 
         $vocabulary = $vTrans->getUserVocabulary(Auth::id(), 1, 1, 1);
         foreach ($vocabulary as $w) {
-            echo $w->id.' - '.$w->text_ru.' - '.$w->translation. '<br>';
+//            echo $w->id.' - '.$w->text_ru.' - '.$w->translation. '<br>';
         }
 
-        dd($translate);
 
 
-//        return view('student-home');
+
+        return view('students.home');
     }
 }

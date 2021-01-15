@@ -73,12 +73,17 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/texttools') }}">Tools</a>
+                        @if (\App\User::getRole() == 'admin') {{-- Menu items for administrator --}}
+                            <a href="{{ url('/texttools') }}">Начало работы</a>
+                        @elseif (\App\User::getRole() == 'student') {{-- Menu items for teachers --}}
+                            <a href="{{ url('/students') }}">Начало работы</a>
+                        @endif
+
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">Войти</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Регистрация</a>
                         @endif
                     @endauth
                 </div>
