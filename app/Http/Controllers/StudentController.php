@@ -66,6 +66,9 @@ class StudentController extends Controller
 
 
 
-        return view('students.home');
+        return view('students.home',
+            ['data' =>
+                 ['page' => 'students.home']
+            ]);
     }
 }
