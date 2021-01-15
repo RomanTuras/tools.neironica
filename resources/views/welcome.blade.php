@@ -74,16 +74,16 @@
                 <div class="top-right links">
                     @auth
                         @if (\App\User::getRole() == 'admin') {{-- Menu items for administrator --}}
-                            <a href="{{ url('/texttools') }}">Начало работы</a>
+                            <a href="{{ url('/texttools') }}">{{ __('appbar.start') }}</a>
                         @elseif (\App\User::getRole() == 'student') {{-- Menu items for teachers --}}
-                            <a href="{{ url('/students') }}">Начало работы</a>
+                            <a href="{{ url('/students') }}">{{ __('appbar.start') }}</a>
                         @endif
 
                     @else
-                        <a href="{{ route('login') }}">Войти</a>
+                        <a href="{{ route('login') }}">{{ __('auth.login') }}</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Регистрация</a>
+                            <a href="{{ route('register') }}">{{ __('auth.register') }}</a>
                         @endif
                     @endauth
                 </div>
