@@ -25,6 +25,12 @@ class VocabularyTheme extends Model
     public function getThemes($userId) {
         return DB::table('vocabulary_theme')
             ->where('user_id', '=', $userId)
+            ->orderBy('name')
             ->get();
+    }
+
+    public function insertTheme($userId, $languageId, $name) {
+        DB::table('vocabulary_theme')
+            ->updateOrInsert(['name'=>$name, 'user_id'=>$userId, 'language_id'=>$languageId]);
     }
 }

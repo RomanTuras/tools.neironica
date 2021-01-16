@@ -31,40 +31,7 @@ class StudentController extends Controller
         dd('student index page');
     }
 
-    public function home()
-    {
-        $vl = new VocabularyLanguage();
-        $languages = $vl->getLanguages();
-        foreach ($languages as $language) {
-//            echo $language->id.' - '.$language->name. '<br>';
-        }
-
-
-        $vv = new VocabularyVariety();
-        $varieties = $vv->getVarieties();
-        foreach ($varieties as $variety) {
-//            echo $variety->id.' - '.$variety->name. '<br>';
-        }
-
-
-        $vt = new VocabularyTheme();
-        $themes = $vt->getThemes(Auth::id());
-        foreach ($themes as $theme) {
-//            echo $theme->id.' - '.$theme->name. '<br>';
-        }
-
-
-        $vTrans = new VocabularyTranslate();
-        $translate = $vTrans->translateText(Auth::id(), 1, "собака есть собака");
-
-
-        $vocabulary = $vTrans->getUserVocabulary(Auth::id(), 1, 1, 1);
-        foreach ($vocabulary as $w) {
-//            echo $w->id.' - '.$w->text_ru.' - '.$w->translation. '<br>';
-        }
-
-
-
+    public function home() {
         return view('students.home',
             ['data' =>
                  ['page' => 'students.home']
@@ -72,23 +39,23 @@ class StudentController extends Controller
     }
 
     public function vocabulary() {
-        $vl = new VocabularyLanguage();
-        $languages = $vl->getLanguages();
-        $vv = new VocabularyVariety();
-        $varieties = $vv->getVarieties();
+        $vc = new VocabularyController();
+        $languages = $vc->getLanguages();
+        $varieties = $vc->getVarieties();
         return view('students.vocabulary',
             ['data' =>
                  [
                      'page' => 'students.vocabulary-add',
                      'languages' => $languages,
                      'varieties' => $varieties,
+                     'user_id' => Auth::id(),
                      ]
             ]);
     }
 
     public function exercise() {
-        $vl = new VocabularyLanguage();
-        $languages = $vl->getLanguages();
+        $vc = new VocabularyController();
+        $languages = $vc->getLanguages();
         return view('students.vocabulary-exercise',
             ['data' =>
                  ['page' => 'students.vocabulary-exercise', 'languages' => $languages]
