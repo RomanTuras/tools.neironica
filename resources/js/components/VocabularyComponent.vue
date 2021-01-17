@@ -117,7 +117,7 @@
             },
             insertTheme: function () {
                 ApiServices.insertTheme(this.data.userId, this.selectedLang, this.themeName).then( response => {
-                    this.getThemes()
+                    this.getThemes();
                 }).catch( error => console.log(error) )
             },
             getThemes() {

@@ -51363,13 +51363,14 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   timeout: 10000
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
+  token: '',
   getThemes: function getThemes(user_id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              return _context.abrupt("return", apiClient("/api/vocabulary-get-themes-current-user/" + user_id));
+              return _context.abrupt("return", apiClient("/api/vocabulary-get-themes/" + user_id));
 
             case 1:
             case "end":

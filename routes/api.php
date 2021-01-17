@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,13 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('auth:api')->group(function (){
-    Route::get('/vocabulary-get-themes-current-user/{user_id}', 'VocabularyController@getThemes');
+    Route::get('/vocabulary-get-themes/{user_id}', 'VocabularyController@getThemes');
     Route::post('/vocabulary-insert-theme/{user_id}/{language_id}/{name}', 'VocabularyController@insertTheme');
 });
 
-
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});

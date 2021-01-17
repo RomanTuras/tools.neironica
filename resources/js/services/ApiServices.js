@@ -6,14 +6,15 @@ const apiClient = axios.create({
     withCredentials: false, // This is the default
     headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     },
-    timeout: 10000
+    timeout: 10000,
 });
 
 export default {
+    token: '',
     async getThemes(user_id) {
-        return apiClient("/api/vocabulary-get-themes-current-user/" + user_id);
+        return apiClient("/api/vocabulary-get-themes/" + user_id);
     },
     async insertTheme(user_id, language_id, name) {
         return await apiClient
@@ -35,3 +36,4 @@ export default {
             });
     }
 }
+
