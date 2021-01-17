@@ -19,13 +19,27 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="selectTheme">Выберите тему:</label>
-                    <button @click="editTheme" type="button" class="btn btn-info" style="float: right;"><i class="fa fa-edit" style="font-size: 18px;">изменить</i></button>
+                    <button @click="editTheme" type="button" class="btn btn-info" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;">изменить</i></button>
+
+                    <div v-if="isEditBlock">
+                        <div class="input-group mb-3">
+                            <input v-model="inputEditTheme" id="inputThemeNameEdit" type="text" class="form-control" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button v-on:click="updateTheme()" class="btn btn-outline-secondary" type="button">Записать</button>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" role="alert" style="display:block">
+                            This is a danger alert—check it out!
+                        </div>
+                    </div>
+
+
                     <select v-model="selectedTheme" id="selectTheme" class="custom-select" size="6">
                         <option v-for="theme in themes" v-bind:value="theme">{{ theme.name }}</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputThemeName">Добавить / изменить тему:</label>
+                    <label for="inputThemeName">Добавить тему:</label>
                     <div class="input-group mb-3">
                         <input v-model="themeName" id="inputThemeName" type="text" class="form-control" placeholder="Название темы" aria-describedby="basic-addon2">
                         <div class="input-group-append">
@@ -94,26 +108,36 @@
         data: () => ({
             selectedLang: '1',
             selectedVariety: '1',
+            inputEditTheme: '',
             selectedTheme: [],
-            scrf: '',
             themes: [],
             themeName: '',
+            themeId: -1, //A new theme
+            isEditBlock: false,
             vocabularyList: [],
-            result: [],
-            delay: 700,
-            clicks: 0,
-            timer: null
+
         }),
         props: {
             data: {}
         },
         mounted() {
-            this.scrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             this.getThemes()
         },
         methods: {
             editTheme: function(){
-                this.themeName = this.selectedTheme.name
+                if (this.selectedTheme.name) {
+                    this.inputEditTheme = this.selectedTheme.name;
+                    this.themeId = this.selectedTheme.id;
+                    this.isEditBlock = true;
+                }
+            },
+            updateTheme: function() {
+                ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
+                    this.getThemes();
+                    console.log(response.data)
+                }).catch( error => console.log(error) );
+                this.isEditBlock = false;
+
             },
             insertTheme: function () {
                 ApiServices.insertTheme(this.data.userId, this.selectedLang, this.themeName).then( response => {

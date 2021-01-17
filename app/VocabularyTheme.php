@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class VocabularyTheme extends Model
@@ -20,7 +20,7 @@ class VocabularyTheme extends Model
      *
      * @param $userId
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getThemes($userId) {
         return DB::table('vocabulary_theme')
@@ -29,8 +29,25 @@ class VocabularyTheme extends Model
             ->get();
     }
 
+    /**
+     * Inserting a new theme
+     * @param $userId
+     * @param $languageId
+     * @param $name
+     */
     public function insertTheme($userId, $languageId, $name) {
         DB::table('vocabulary_theme')
-            ->updateOrInsert(['name'=>$name, 'user_id'=>$userId, 'language_id'=>$languageId]);
+            ->insert(['name'=>$name, 'user_id'=>$userId, 'language_id'=>$languageId]);
+    }
+
+    /**
+     * Update theme by ID
+     * @param $themeId
+     * @param $name
+     */
+    public function updateTheme($themeId, $name) {
+        DB::table('vocabulary_theme')
+            ->where('id', '=', $themeId)
+            ->update(['name' => $name]);
     }
 }

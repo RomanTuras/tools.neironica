@@ -2011,48 +2011,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       selectedLang: '1',
       selectedVariety: '1',
+      inputEditTheme: '',
       selectedTheme: [],
-      scrf: '',
       themes: [],
       themeName: '',
-      vocabularyList: [],
-      result: [],
-      delay: 700,
-      clicks: 0,
-      timer: null
+      themeId: -1,
+      //A new theme
+      isEditBlock: false,
+      vocabularyList: []
     };
   },
   props: {
     data: {}
   },
   mounted: function mounted() {
-    this.scrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     this.getThemes();
   },
   methods: {
     editTheme: function editTheme() {
-      this.themeName = this.selectedTheme.name;
+      if (this.selectedTheme.name) {
+        this.inputEditTheme = this.selectedTheme.name;
+        this.themeId = this.selectedTheme.id;
+        this.isEditBlock = true;
+      }
     },
-    insertTheme: function insertTheme() {
+    updateTheme: function updateTheme() {
       var _this = this;
 
-      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].insertTheme(this.data.userId, this.selectedLang, this.themeName).then(function (response) {
+      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].updateTheme(this.themeId, this.inputEditTheme).then(function (response) {
         _this.getThemes();
+
+        console.log(response.data);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+      this.isEditBlock = false;
+    },
+    insertTheme: function insertTheme() {
+      var _this2 = this;
+
+      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].insertTheme(this.data.userId, this.selectedLang, this.themeName).then(function (response) {
+        _this2.getThemes();
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     getThemes: function getThemes() {
-      var _this2 = this;
+      var _this3 = this;
 
       _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].getThemes(this.data.userId).then(function (response) {
-        _this2.themes = response.data;
+        _this3.themes = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -38487,7 +38515,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info",
-              staticStyle: { float: "right" },
+              staticStyle: { float: "right", "margin-bottom": "15px" },
               attrs: { type: "button" },
               on: { click: _vm.editTheme }
             },
@@ -38502,6 +38530,68 @@ var render = function() {
               )
             ]
           ),
+          _vm._v(" "),
+          _vm.isEditBlock
+            ? _c("div", [
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.inputEditTheme,
+                        expression: "inputEditTheme"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "inputThemeNameEdit",
+                      type: "text",
+                      "aria-describedby": "basic-addon2"
+                    },
+                    domProps: { value: _vm.inputEditTheme },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.inputEditTheme = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group-append" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-secondary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.updateTheme()
+                          }
+                        }
+                      },
+                      [_vm._v("Записать")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-danger",
+                    staticStyle: { display: "block" },
+                    attrs: { role: "alert" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        This is a danger alert—check it out!\n                    "
+                    )
+                  ]
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "select",
@@ -38543,7 +38633,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6" }, [
           _c("label", { attrs: { for: "inputThemeName" } }, [
-            _vm._v("Добавить / изменить тему:")
+            _vm._v("Добавить тему:")
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "input-group mb-3" }, [
@@ -51380,13 +51470,35 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee);
     }))();
   },
-  insertTheme: function insertTheme(user_id, language_id, name) {
+  updateTheme: function updateTheme(theme_id, name) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
+              return apiClient.post("/api/vocabulary-update-theme/" + theme_id + '/' + name)["catch"](function (error) {
+                return error.response;
+              });
+
+            case 2:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  insertTheme: function insertTheme(user_id, language_id, name) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
               return apiClient.post("/api/vocabulary-insert-theme/" + user_id + '/' + language_id + '/' + name)["catch"](function (error) {
                 if (error.response) {// Request made and server responded
                   // console.log(error.response.data);
@@ -51402,14 +51514,14 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
               });
 
             case 2:
-              return _context2.abrupt("return", _context2.sent);
+              return _context3.abrupt("return", _context3.sent);
 
             case 3:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   }
 });

@@ -9,15 +9,15 @@ use App\VocabularyVariety;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Collection;
 
 class VocabularyController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-
     /**
      * Getting languages
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getLanguages() {
         $vl = new VocabularyLanguage();
@@ -26,7 +26,7 @@ class VocabularyController extends Controller
 
     /**
      * Getting varieties
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getVarieties() {
         $vv = new VocabularyVariety();
@@ -37,16 +37,32 @@ class VocabularyController extends Controller
      * Getting all user themes
      * @param $userId
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getThemes($userId) {
         $vt = new VocabularyTheme();
         return $vt->getThemes($userId);
     }
 
+    /**
+     * Insert a new theme
+     * @param $userId
+     * @param $languageId
+     * @param $name
+     */
     public function insertTheme($userId, $languageId, $name) {
         $vt = new VocabularyTheme();
         $vt->insertTheme($userId, $languageId, $name);
+    }
+
+    /**
+     * Update theme by ID
+     * @param $themeID
+     * @param $name
+     */
+    public function updateTheme($themeID, $name) {
+        $vt = new VocabularyTheme();
+        $vt->updateTheme($themeID, $name);
     }
 
     /**

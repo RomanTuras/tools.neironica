@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function (){
     Route::get('/vocabulary-get-themes/{user_id}', 'VocabularyController@getThemes');
     Route::post('/vocabulary-insert-theme/{user_id}/{language_id}/{name}', 'VocabularyController@insertTheme');
+    Route::post('/vocabulary-update-theme/{theme_id}/{name}', 'VocabularyController@updateTheme');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

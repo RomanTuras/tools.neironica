@@ -16,6 +16,13 @@ export default {
     async getThemes(user_id) {
         return apiClient("/api/vocabulary-get-themes/" + user_id);
     },
+    async updateTheme(theme_id, name) {
+        return await apiClient
+            .post("/api/vocabulary-update-theme/" + theme_id + '/' + name)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
     async insertTheme(user_id, language_id, name) {
         return await apiClient
             .post("/api/vocabulary-insert-theme/" + user_id + '/' + language_id + '/' + name)
