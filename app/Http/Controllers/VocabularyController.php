@@ -51,6 +51,7 @@ class VocabularyController extends Controller
      * @param $name
      */
     public function insertTheme($userId, $languageId, $name) {
+        $name = htmlentities($name, ENT_QUOTES, 'UTF-8', false);
         $vt = new VocabularyTheme();
         $vt->insertTheme($userId, $languageId, $name);
     }
@@ -61,8 +62,22 @@ class VocabularyController extends Controller
      * @param $name
      */
     public function updateTheme($themeID, $name) {
+        $name = htmlentities($name, ENT_QUOTES, 'UTF-8', false);
         $vt = new VocabularyTheme();
         $vt->updateTheme($themeID, $name);
+    }
+
+    /**
+     * Checking is theme name exist by user ID
+     *
+     * @param $userId
+     * @param $name
+     *
+     * @return array
+     */
+    public function isThemeNameExist($userId, $name) {
+        $vt = new VocabularyTheme();
+        return ['data' => $vt->isThemeNameExist($userId, $name)];
     }
 
     /**

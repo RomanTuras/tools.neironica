@@ -50,4 +50,19 @@ class VocabularyTheme extends Model
             ->where('id', '=', $themeId)
             ->update(['name' => $name]);
     }
+
+    /**
+     * Checking is theme name exist by user ID
+     * @param $userId
+     * @param $name
+     *
+     * @return bool
+     */
+    public function isThemeNameExist($userId, $name) {
+        $themeName = DB::table('vocabulary_theme')
+            ->where('name', 'like', $name)
+            ->where('user_id', '=', $userId)
+            ->get();
+        return count($themeName )== 0 ? false : true;
+    }
 }

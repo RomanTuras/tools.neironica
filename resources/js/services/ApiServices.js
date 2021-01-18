@@ -13,6 +13,9 @@ const apiClient = axios.create({
 
 export default {
     token: '',
+    async isThemeNameExist(user_id, name) {
+        return apiClient("/api/vocabulary-is-theme-exist/" + user_id + '/' + name);
+    },
     async getThemes(user_id) {
         return apiClient("/api/vocabulary-get-themes/" + user_id);
     },

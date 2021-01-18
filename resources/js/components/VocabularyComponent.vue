@@ -28,8 +28,8 @@
                                 <button v-on:click="updateTheme()" class="btn btn-outline-secondary" type="button">Записать</button>
                             </div>
                         </div>
-                        <div class="alert alert-danger" role="alert" style="display:block">
-                            This is a danger alert—check it out!
+                        <div v-if="alertEditThemeName.length > 0" class="alert alert-danger" role="alert" style="display:block">
+                            {{ alertEditThemeName }}
                         </div>
                     </div>
 
@@ -41,10 +41,13 @@
                 <div class="col-md-6">
                     <label for="inputThemeName">Добавить тему:</label>
                     <div class="input-group mb-3">
-                        <input v-model="themeName" id="inputThemeName" type="text" class="form-control" placeholder="Название темы" aria-describedby="basic-addon2">
+                        <input v-model="inputNewTheme" id="inputThemeName" type="text" class="form-control" placeholder="Название темы" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button v-on:click="insertTheme()" class="btn btn-outline-secondary" type="button">Записать</button>
                         </div>
+                    </div>
+                    <div v-if="alertAddNewTheme.length > 0" class="alert alert-danger" role="alert" style="display:block">
+                        {{ alertAddNewTheme }}
                     </div>
                 </div>
             </div>
@@ -109,9 +112,11 @@
             selectedLang: '1',
             selectedVariety: '1',
             inputEditTheme: '',
+            inputNewTheme: '',
+            alertEditThemeName: '',
+            alertAddNewTheme: '',
             selectedTheme: [],
             themes: [],
-            themeName: '',
             themeId: -1, //A new theme
             isEditBlock: false,
             vocabularyList: [],
@@ -125,24 +130,43 @@
         },
         methods: {
             editTheme: function(){
-                if (this.selectedTheme.name) {
+                if (this.selectedTheme.name) { //Is theme selected
                     this.inputEditTheme = this.selectedTheme.name;
                     this.themeId = this.selectedTheme.id;
                     this.isEditBlock = true;
                 }
             },
             updateTheme: function() {
-                ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
-                    this.getThemes();
-                    console.log(response.data)
-                }).catch( error => console.log(error) );
-                this.isEditBlock = false;
+                if (this.inputEditTheme.length > 2 && this.inputEditTheme.length < 255) {
+                    ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
+                        this.getThemes();
+                        console.log(response.data)
+                    }).catch( error => console.log(error) );
+                    this.isEditBlock = false;
+                    this.alertEditThemeName = '';
+                } else {
+                    this.alertEditThemeName = 'Введите от 3 до 254 символов';
+                }
 
             },
             insertTheme: function () {
-                ApiServices.insertTheme(this.data.userId, this.selectedLang, this.themeName).then( response => {
-                    this.getThemes();
-                }).catch( error => console.log(error) )
+                let userId = this.data.userId;
+                let themeName = this.inputNewTheme;
+                ApiServices.isThemeNameExist(userId, themeName).then( response => {
+                    if (!response.data.data) {
+                        if (themeName.length > 2 && themeName.length < 255) {
+                            ApiServices.insertTheme(userId, this.selectedLang, themeName).then( response => {
+                                this.getThemes();
+                            }).catch( error => console.log(error) );
+                            this.alertAddNewTheme = '';
+                            this.inputNewTheme = '';
+                        } else {
+                            this.alertAddNewTheme = 'Введите от 3 до 254 символов';
+                        }
+                    } else {
+                        this.alertAddNewTheme = 'Такое название уже есть!';
+                    }
+                }).catch( error => console.log(error) );
             },
             getThemes() {
                 ApiServices.getThemes(this.data.userId).then( response => {

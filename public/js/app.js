@@ -2025,6 +2025,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2032,9 +2035,11 @@ __webpack_require__.r(__webpack_exports__);
       selectedLang: '1',
       selectedVariety: '1',
       inputEditTheme: '',
+      inputNewTheme: '',
+      alertEditThemeName: '',
+      alertAddNewTheme: '',
       selectedTheme: [],
       themes: [],
-      themeName: '',
       themeId: -1,
       //A new theme
       isEditBlock: false,
@@ -2050,6 +2055,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     editTheme: function editTheme() {
       if (this.selectedTheme.name) {
+        //Is theme selected
         this.inputEditTheme = this.selectedTheme.name;
         this.themeId = this.selectedTheme.id;
         this.isEditBlock = true;
@@ -2058,20 +2064,41 @@ __webpack_require__.r(__webpack_exports__);
     updateTheme: function updateTheme() {
       var _this = this;
 
-      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].updateTheme(this.themeId, this.inputEditTheme).then(function (response) {
-        _this.getThemes();
+      if (this.inputEditTheme.length > 2 && this.inputEditTheme.length < 255) {
+        _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].updateTheme(this.themeId, this.inputEditTheme).then(function (response) {
+          _this.getThemes();
 
-        console.log(response.data);
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-      this.isEditBlock = false;
+          console.log(response.data);
+        })["catch"](function (error) {
+          return console.log(error);
+        });
+        this.isEditBlock = false;
+        this.alertEditThemeName = '';
+      } else {
+        this.alertEditThemeName = 'Введите от 3 до 254 символов';
+      }
     },
     insertTheme: function insertTheme() {
       var _this2 = this;
 
-      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].insertTheme(this.data.userId, this.selectedLang, this.themeName).then(function (response) {
-        _this2.getThemes();
+      var userId = this.data.userId;
+      var themeName = this.inputNewTheme;
+      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].isThemeNameExist(userId, themeName).then(function (response) {
+        if (!response.data.data) {
+          if (themeName.length > 2 && themeName.length < 255) {
+            _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].insertTheme(userId, _this2.selectedLang, themeName).then(function (response) {
+              _this2.getThemes();
+            })["catch"](function (error) {
+              return console.log(error);
+            });
+            _this2.alertAddNewTheme = '';
+            _this2.inputNewTheme = '';
+          } else {
+            _this2.alertAddNewTheme = 'Введите от 3 до 254 символов';
+          }
+        } else {
+          _this2.alertAddNewTheme = 'Такое название уже есть!';
+        }
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -38577,19 +38604,23 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "alert alert-danger",
-                    staticStyle: { display: "block" },
-                    attrs: { role: "alert" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        This is a danger alert—check it out!\n                    "
+                _vm.alertEditThemeName.length > 0
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "alert alert-danger",
+                        staticStyle: { display: "block" },
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm.alertEditThemeName) +
+                            "\n                    "
+                        )
+                      ]
                     )
-                  ]
-                )
+                  : _vm._e()
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -38642,8 +38673,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.themeName,
-                  expression: "themeName"
+                  value: _vm.inputNewTheme,
+                  expression: "inputNewTheme"
                 }
               ],
               staticClass: "form-control",
@@ -38653,13 +38684,13 @@ var render = function() {
                 placeholder: "Название темы",
                 "aria-describedby": "basic-addon2"
               },
-              domProps: { value: _vm.themeName },
+              domProps: { value: _vm.inputNewTheme },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.themeName = $event.target.value
+                  _vm.inputNewTheme = $event.target.value
                 }
               }
             }),
@@ -38679,7 +38710,25 @@ var render = function() {
                 [_vm._v("Записать")]
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _vm.alertAddNewTheme.length > 0
+            ? _c(
+                "div",
+                {
+                  staticClass: "alert alert-danger",
+                  staticStyle: { display: "block" },
+                  attrs: { role: "alert" }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.alertAddNewTheme) +
+                      "\n                "
+                  )
+                ]
+              )
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
@@ -51454,13 +51503,13 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
   token: '',
-  getThemes: function getThemes(user_id) {
+  isThemeNameExist: function isThemeNameExist(user_id, name) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              return _context.abrupt("return", apiClient("/api/vocabulary-get-themes/" + user_id));
+              return _context.abrupt("return", apiClient("/api/vocabulary-is-theme-exist/" + user_id + '/' + name));
 
             case 1:
             case "end":
@@ -51470,21 +51519,15 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee);
     }))();
   },
-  updateTheme: function updateTheme(theme_id, name) {
+  getThemes: function getThemes(user_id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
-              return apiClient.post("/api/vocabulary-update-theme/" + theme_id + '/' + name)["catch"](function (error) {
-                return error.response;
-              });
+              return _context2.abrupt("return", apiClient("/api/vocabulary-get-themes/" + user_id));
 
-            case 2:
-              return _context2.abrupt("return", _context2.sent);
-
-            case 3:
+            case 1:
             case "end":
               return _context2.stop();
           }
@@ -51492,13 +51535,35 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee2);
     }))();
   },
-  insertTheme: function insertTheme(user_id, language_id, name) {
+  updateTheme: function updateTheme(theme_id, name) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
+              return apiClient.post("/api/vocabulary-update-theme/" + theme_id + '/' + name)["catch"](function (error) {
+                return error.response;
+              });
+
+            case 2:
+              return _context3.abrupt("return", _context3.sent);
+
+            case 3:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  insertTheme: function insertTheme(user_id, language_id, name) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
               return apiClient.post("/api/vocabulary-insert-theme/" + user_id + '/' + language_id + '/' + name)["catch"](function (error) {
                 if (error.response) {// Request made and server responded
                   // console.log(error.response.data);
@@ -51514,14 +51579,14 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
               });
 
             case 2:
-              return _context3.abrupt("return", _context3.sent);
+              return _context4.abrupt("return", _context4.sent);
 
             case 3:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   }
 });
