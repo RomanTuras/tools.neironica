@@ -20,6 +20,7 @@ class CreateVocabularyTranslateTable extends Migration
             $table->bigIncrements('id');
             $table->mediumText('translation')->nullable();
             $table->mediumText('text_ru')->nullable();
+            $table->mediumText('encoding')->nullable();
             $table->bigInteger('language_id')->unsigned();
             $table->foreign('language_id')->references('id')->on('vocabulary_language')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();

@@ -13,11 +13,28 @@ const apiClient = axios.create({
 
 export default {
     token: '',
+    async getUserVocabulary(user_id, language_id, theme_id, variety_id) {
+        return apiClient("/api/get-user-vocabulary/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id);
+    },
     async isThemeNameExist(user_id, name) {
         return apiClient("/api/vocabulary-is-theme-exist/" + user_id + '/' + name);
     },
     async getThemes(user_id) {
         return apiClient("/api/vocabulary-get-themes/" + user_id);
+    },
+    async updateTranslation(id, text_ru, transl, encode) {
+        return await apiClient
+            .post("/api/vocabulary-update-translation/" + id + '/' + text_ru + '/' + transl + '/' + encode)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
+    async insertTranslation(user_id, language_id, theme_id, variety_id, text_ru, transl, encode) {
+        return await apiClient
+            .post("/api/vocabulary-insert-translation/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id + '/' + text_ru + '/' + transl + '/' + encode)
+            .catch(function(error) {
+                return error.response;
+            });
     },
     async updateTheme(theme_id, name) {
         return await apiClient

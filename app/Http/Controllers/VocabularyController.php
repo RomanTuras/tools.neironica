@@ -95,14 +95,33 @@ class VocabularyController extends Controller
 
     /**
      * Getting a user vocabulary, depend on language, theme and variety
+     *
      * @param $userId
      * @param $languageId
      * @param $themeId
      * @param $varietyId
+     *
+     * @return Collection
      */
     public function getUserVocabulary($userId, $languageId, $themeId, $varietyId) {
         $vTrans = new VocabularyTranslate();
-        $vTrans->getUserVocabulary($userId, $languageId, $themeId, $varietyId);
+        return $vTrans->getUserVocabulary($userId, $languageId, $themeId, $varietyId);
+    }
+
+    public function insertTranslation($userId, $languageId, $themeId, $varietyId, $textRu, $transl, $encode) {
+        $textRu = htmlentities($textRu, ENT_QUOTES, 'UTF-8', false);
+        $transl = htmlentities($transl, ENT_QUOTES, 'UTF-8', false);
+        $encode = htmlentities($encode, ENT_QUOTES, 'UTF-8', false);
+        $vTrans = new VocabularyTranslate();
+        $vTrans->insertTranslation($userId, $languageId, $themeId, $varietyId, $textRu, $transl, $encode);
+    }
+
+    public function updateTranslation($id, $textRu, $transl, $encode) {
+        $textRu = htmlentities($textRu, ENT_QUOTES, 'UTF-8', false);
+        $transl = htmlentities($transl, ENT_QUOTES, 'UTF-8', false);
+        $encode = htmlentities($encode, ENT_QUOTES, 'UTF-8', false);
+        $vTrans = new VocabularyTranslate();
+        $vTrans->updateTranslation($id, $textRu, $transl, $encode);
     }
 
 }

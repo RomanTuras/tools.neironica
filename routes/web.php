@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -8,6 +9,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE, exit code: '.$exitCode;
+});
 
 Route::group(['prefix' => 'students', 'middleware'=>['auth', 'student']], function () {
     Route::get('/', 'StudentController@home');

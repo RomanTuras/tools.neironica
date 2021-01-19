@@ -42,7 +42,28 @@ class VocabularyTranslate extends Model
              ->where('language_id', '=', $languageId)
              ->where('theme_id', '=', $themeId)
              ->where('variety_id', '=', $varietyId)
+             ->orderBy('text_ru')
              ->get();
+    }
+
+    public function insertTranslation($userId, $languageId, $themeId, $varietyId, $textRu, $transl, $encode) {
+        DB::table('vocabulary_translate')
+            ->insert([
+                'user_id'=>$userId,
+                'language_id'=>$languageId,
+                'theme_id'=>$themeId,
+                'variety_id'=>$varietyId,
+                'text_ru'=>$textRu,
+                'translation'=>$transl,
+                'encoding'=>$encode,
+                'created_at' => now()
+            ]);
+    }
+
+    public function updateTranslation($id, $textRu, $transl, $encode) {
+        DB::table('vocabulary_translate')
+            ->where('id', '=', $id)
+            ->update(['text_ru' => $textRu, 'translation' => $transl, 'encoding' => $encode, 'updated_at' => now()]);
     }
 
 }
