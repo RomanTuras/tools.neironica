@@ -19,7 +19,7 @@ Route::group(['prefix' => 'students', 'middleware'=>['auth']], function () {
 //Route::group(['prefix' => 'students'], function () {
     Route::get('/', 'StudentController@home');
     Route::get('/vocabulary', 'VocabularyController@index');
-    Route::get('/vocabulary-exercise', 'StudentController@exercise');
+    Route::get('/vocabulary-exercise', 'VocabularyController@exercise');
 });
 
 Route::group(['prefix' => 'texttools', 'namespace'=>'TextTools', 'middleware'=>['auth', 'admin']], function () {

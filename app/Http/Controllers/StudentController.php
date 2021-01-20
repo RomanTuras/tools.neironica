@@ -37,13 +37,4 @@ class StudentController extends Controller
                  ['page' => 'students.home']
             ]);
     }
-
-    public function exercise() {
-        $vc = new VocabularyController();
-        $languages = $vc->getLanguages();
-        return view('students.vocabulary-exercise',
-            ['data' =>
-                 ['page' => 'students.vocabulary-exercise', 'languages' => $languages]
-            ]);
-    }
 }
