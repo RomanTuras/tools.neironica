@@ -7,7 +7,7 @@
     <!-- Right Side Of Navbar -->
     <ul class="navbar-nav ml-auto">
 
-        <a class="menu-item" href="{{ url('/students/vocabulary-add') }}">{{ __('appbar.vocabulary') }}</a>
+        <a class="menu-item" href="{{ url('/students/vocabulary') }}">{{ __('appbar.vocabulary') }}</a>
 
 
         <li class="dropdown">

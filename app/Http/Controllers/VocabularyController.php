@@ -11,10 +11,26 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class VocabularyController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs;
+
+    public function index() {
+        $vc = new VocabularyController();
+        $languages = $vc->getLanguages();
+        $varieties = $vc->getVarieties();
+        return view('students.vocabulary',
+            ['data' =>
+                 [
+                     'page' => 'students.vocabulary-add',
+                     'languages' => $languages,
+                     'varieties' => $varieties,
+                     'user_id' => Auth::id(),
+                 ]
+            ]);
+    }
 
     /**
      * Getting languages

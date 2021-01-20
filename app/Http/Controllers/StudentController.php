@@ -38,21 +38,6 @@ class StudentController extends Controller
             ]);
     }
 
-    public function vocabulary() {
-        $vc = new VocabularyController();
-        $languages = $vc->getLanguages();
-        $varieties = $vc->getVarieties();
-        return view('students.vocabulary',
-            ['data' =>
-                 [
-                     'page' => 'students.vocabulary-add',
-                     'languages' => $languages,
-                     'varieties' => $varieties,
-                     'user_id' => Auth::id(),
-                     ]
-            ]);
-    }
-
     public function exercise() {
         $vc = new VocabularyController();
         $languages = $vc->getLanguages();

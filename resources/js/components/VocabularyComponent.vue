@@ -87,7 +87,7 @@
 
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <button v-on:click="addTextTranslate" type="submit" class="btn my-btn" style="width: 90%; font-size: 18px">СОХРАНИТЬ В СЛОВАРЬ</button>
+                            <button :disabled="!selectedTheme.name" v-on:click="addTextTranslate" type="submit" class="btn my-btn" style="width: 90%; font-size: 18px">СОХРАНИТЬ В СЛОВАРЬ</button>
                         </div>
                     </div>
                 </div>
@@ -129,6 +129,7 @@
             selectedLang: '1',
             selectedVariety: '1',
             selectedVocabularyString: [],
+            selectedTheme: [],
             inputEditTheme: '',
             inputNewTheme: '',
             inputText: '',
@@ -137,7 +138,6 @@
             alertEditThemeName: '',
             alertAddNewTheme: '',
             alertAddText: '',
-            selectedTheme: [],
             themes: [],
             themeId: 0,
             isEditBlock: false,
@@ -162,8 +162,8 @@
         methods: {
             addTextTranslate: function() {
                 if ((this.inputText.length > 0 && this.inputText.length < 255)
-                    || (this.inputTranslation.length > 0 && this.inputTranslation.length < 255)
-                || (this.inputEncode.length > 0 && this.inputEncode.length < 255)) {
+                    && (this.inputTranslation.length > 0 && this.inputTranslation.length < 255)
+                    && (this.inputEncode.length > 0 && this.inputEncode.length < 255)) {
                     this.alertAddText = '';
                     let user_id = this.data.userId;
                     let language_id = this.selectedLang;

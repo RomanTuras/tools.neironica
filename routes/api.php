@@ -21,7 +21,6 @@ Route::middleware('auth:api')->group(function (){
     Route::post('/vocabulary-update-theme/{theme_id}/{name}', 'VocabularyController@updateTheme');
 //    Route::post('/vocabulary-update-theme/{object}', 'VocabularyController@updateTheme');
 
-
     Route::get('/vocabulary-get-themes/{user_id}', 'VocabularyController@getThemes');
     Route::get('/get-user-vocabulary/{user_id}/{language_id}/{theme_id}/{variety_id}', 'VocabularyController@getUserVocabulary');
     Route::get('/vocabulary-is-theme-exist/{user_id}/{name}', 'VocabularyController@isThemeNameExist');
