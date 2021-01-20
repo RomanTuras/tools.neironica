@@ -1,15 +1,18 @@
 <template>
     <main role="main">
         <div class="container">
+            <div class="container text-center my-section">
+                <h1>Добавить в словарь</h1>
+            </div>
             <div class="row">
-                <div class="col-md-6">
-                    <label for="selectLanguage">Язык:</label>
+                <div class="col-md-5 my-card">
+                    <label class="my-title" for="selectLanguage">Язык:</label>
                     <select v-model="selectedLang" id="selectLanguage" class="custom-select custom-select-lg mb-3">
                         <option v-for="lang in data.languages" v-bind:value="lang.id" class="menu-item">{{ lang.name }}</option>
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <label for="selectVariety">Вариант:</label>
+                <div class="col-md-5 offset-md-1 my-card">
+                    <label class="my-title" for="selectVariety">Вариант:</label>
                     <select v-model="selectedVariety" id="selectVariety" class="custom-select custom-select-lg mb-3">
                         <option v-for="variety in data.varieties" v-bind:value="variety.id" class="menu-item">{{ variety.name }}</option>
                     </select>
@@ -17,15 +20,15 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <label for="selectTheme">Выберите тему:</label>
-                    <button @click="editTheme" type="button" class="btn btn-info" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;">изменить</i></button>
+                <div class="col-md-5 my-card">
+                    <label class="my-title" for="selectTheme">Выберите тему:</label>
+                    <button @click="editTheme" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;"></i></button>
 
                     <div v-if="isEditBlock">
                         <div class="input-group mb-3">
-                            <input v-model.trim="inputEditTheme" id="inputThemeNameEdit" type="text" class="form-control" aria-describedby="basic-addon2">
+                            <input v-model.trim="inputEditTheme" id="inputThemeNameEdit" type="text" class="form-control my-text" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button v-on:click="updateTheme()" class="btn btn-outline-secondary" type="button">Записать</button>
+                                <button v-on:click="updateTheme()" class="btn my-btn" type="button">Записать</button>
                             </div>
                         </div>
                         <div v-if="alertEditThemeName.length > 0" class="alert alert-danger" role="alert" style="display:block">
@@ -35,15 +38,15 @@
 
 
                     <select v-model="selectedTheme" id="selectTheme" class="custom-select" size="6">
-                        <option @click="onThemeClick()" v-for="theme in themes" v-bind:value="theme">{{ theme.name }}</option>
+                        <option class="my-text" @click="onThemeClick()" v-for="theme in themes" v-bind:value="theme">{{ theme.name }}</option>
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <label for="inputThemeName">Добавить тему:</label>
+                <div class="col-md-5 offset-md-1 my-card">
+                    <label class="my-title" for="inputThemeName">Добавить тему:</label>
                     <div class="input-group mb-3">
-                        <input v-model.trim="inputNewTheme" id="inputThemeName" type="text" class="form-control" placeholder="Название темы" aria-describedby="basic-addon2">
+                        <input v-model.trim="inputNewTheme" id="inputThemeName" type="text" class="form-control my-text" placeholder="Название темы" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <button v-on:click="insertTheme()" class="btn btn-outline-secondary" type="button">Записать</button>
+                            <button v-on:click="insertTheme()" class="btn  my-btn" type="button">Записать</button>
                         </div>
                     </div>
                     <div v-if="alertAddNewTheme.length > 0" class="alert alert-danger" role="alert" style="display:block">
@@ -53,47 +56,51 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 text-center">
+                <div class="col-md-12 text-center my-section">
                     <h3 v-if="selectedTheme.name">Выбрана тема: {{ selectedTheme.name }}</h3>
-                    <h3 v-else style="color:coral">Тема не выбрана - сделайте выбор</h3>
+                    <h3 v-else style="color:#cb4c07">Тема не выбрана - сделайте выбор</h3>
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="inputText">Введите русское значение</label>
-                    <input v-model.trim="inputText" type="text" class="form-control" id="inputText" placeholder="Русское значение" />
+                <div class="form-group col-md-5 my-card">
+                    <label class="my-title" for="inputText">Введите русское значение</label>
+                    <input v-model.trim="inputText" type="text" class="form-control my-text" id="inputText" placeholder="Русское значение" />
                 </div>
 
-                <div class="form-group col-md-6">
-                    <label for="inputTranslation">Введите перевод</label>
-                    <input v-model.trim="inputTranslation" type="text" class="form-control" id="inputTranslation" placeholder="Перевод">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="inputCode">Введите кодировку</label>
-                    <input v-model.trim="inputEncode" type="text" class="form-control" id="inputCode" placeholder="Кодировка">
-                </div>
-            </div>
-
-            <div v-if="alertAddText.length > 0" class="alert alert-danger" role="alert" style="display:block">
-                {{ alertAddText }}
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <button v-on:click="addTextTranslate" type="submit" class="btn btn-primary">Сохранить</button>
+                <div class="form-group col-md-5 offset-md-1 my-card">
+                    <label class="my-title" for="inputTranslation">Введите перевод</label>
+                    <input v-model.trim="inputTranslation" type="text" class="form-control my-text" id="inputTranslation" placeholder="Перевод">
                 </div>
             </div>
 
             <div class="row">
+                <div class="form-group col-md-5 my-card">
+                    <label class="my-title" for="inputCode">Введите кодировку</label>
+                    <input v-model.trim="inputEncode" type="text" class="form-control my-text" id="inputCode" placeholder="Кодировка">
+                </div>
+
+                <div class="form-group col-md-5 offset-md-1">
+                    <div v-if="alertAddText.length > 0" class="alert alert-danger" role="alert" style="display:block">
+                        {{ alertAddText }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button v-on:click="addTextTranslate" type="submit" class="btn my-btn" style="width: 90%; font-size: 18px">СОХРАНИТЬ В СЛОВАРЬ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row my-card">
                 <div class="col-md-12 text-center">
                     <h3>Мой словарь:</h3>
                 </div>
                 <div class="col-md-10 offset-md-1">
-                    <button v-if="vocabularyList.length > 0" @click="editTranslation" type="button" class="btn btn-info" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;">изменить</i></button>
+                    <button v-if="vocabularyList.length > 0" @click="editTranslation" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;"></i></button>
                 </div>
                 <div class="col-md-10 offset-md-1 text-center">
                     <div class="list-group">
@@ -101,7 +108,7 @@
                             <li
                                     v-for="vc in vocabularyList"
                                     v-on:click="selectedVocabularyString = vc"
-                                    class="list-group-item list-group-item-action" :class=" vc.id === selectedVocabularyString.id ? 'active' : ''">
+                                    class="list-group-item list-group-item-action my-text" :class=" vc.id === selectedVocabularyString.id ? 'active' : ''">
                                 {{ vc.text_ru }} - {{ vc.translation }} - {{ vc.encoding }}
                             </li>
                         </ul>
@@ -135,6 +142,7 @@
             themeId: 0,
             isEditBlock: false,
             isEditTranslateMode: false,
+            isEditThemePressed: false,
             vocabularyList: [],
         }),
         props: {
@@ -142,6 +150,14 @@
         },
         mounted() {
             this.getThemes()
+        },
+        watch: {
+            selectedLang: function() {
+                this.getVocabulary();
+            },
+            selectedVariety: function() {
+                this.getVocabulary();
+            },
         },
         methods: {
             addTextTranslate: function() {
@@ -184,16 +200,20 @@
             },
             editTheme: function(){
                 if (this.selectedTheme.name) { //Is theme selected
+                    this.isEditBlock = !this.isEditBlock;
                     this.inputEditTheme = this.selectedTheme.name;
                     this.themeId = this.selectedTheme.id;
-                    this.isEditBlock = true;
                     this.alertAddNewTheme = '';
                     this.inputNewTheme = '';
                 }
             },
             updateTheme: function() {
                 if (this.inputEditTheme.length > 2 && this.inputEditTheme.length < 255) {
-                    ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
+                    // ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
+                    // const params = new URLSearchParams();
+                    // params.append('theme_id', this.themeId);
+                    // params.append('name', this.inputEditTheme);
+                        ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
                         this.getThemes();
                     }).catch( error => console.log(error) );
                     this.isEditBlock = false;
@@ -232,7 +252,7 @@
                 ApiServices.getUserVocabulary(this.data.userId, this.selectedLang, this.selectedTheme.id, this.selectedVariety)
                     .then(response => {
                         this.vocabularyList = response.data
-                    }).catch( error => console.log(error) )
+                    }).catch( error => console.log(error))
             },
         },
         name: "VocabularyComponent"
@@ -240,5 +260,43 @@
 </script>
 
 <style scoped>
+    main {
+        background-color: #e6f5f1;
+        padding-bottom: 100px;
+    }
+    .my-card {
+        margin-bottom: 50px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: #fefefe;
+        border-radius: 10px;
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+    }
+    .my-card .my-title {
+        font-size: 22px;
+    }
+    .my-text {
+        font-size: 1.25rem;
+    }
+
+    .list-group-item.active {
+        background-color: #4eb799;
+        border-color: #4eb799;
+    }
+
+    .my-btn {
+        border: solid 1px #4eb799;
+        background-color: #4eb799;
+    }
+    .my-btn:hover {
+        color: #fefefe;
+    }
+
+    .my-section {
+        margin-bottom: 50px;
+    }
+    select option:after {
+        background: #2a9055;
+    }
 
 </style>

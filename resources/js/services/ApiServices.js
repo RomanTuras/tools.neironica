@@ -36,9 +36,10 @@ export default {
                 return error.response;
             });
     },
-    async updateTheme(theme_id, name) {
+    async updateTheme(theme_id, name) { //object
         return await apiClient
             .post("/api/vocabulary-update-theme/" + theme_id + '/' + name)
+            // .post("/api/vocabulary-update-theme/" + object)
             .catch(function(error) {
                 return error.response;
             });

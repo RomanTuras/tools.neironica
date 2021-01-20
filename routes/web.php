@@ -10,12 +10,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('config:cache');
-    return 'DONE, exit code: '.$exitCode;
-});
+//Route::get('/clear-cache', function() {
+//    $exitCode = Artisan::call('config:cache');
+//    return 'DONE, exit code: '.$exitCode;
+//});
 
-Route::group(['prefix' => 'students', 'middleware'=>['auth', 'student']], function () {
+Route::group(['prefix' => 'students', 'middleware'=>['auth']], function () {
+//Route::group(['prefix' => 'students'], function () {
     Route::get('/', 'StudentController@home');
     Route::get('/vocabulary-add', 'StudentController@vocabulary');
     Route::get('/vocabulary-exercise', 'StudentController@exercise');

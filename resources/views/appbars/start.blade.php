@@ -19,9 +19,10 @@
         @else
 
             @if (\App\User::getRole() == 'admin') {{-- Menu items for administrator --}}
+                <a class="menu-item" href="{{ url('/students/vocabulary-add') }}">Словарь</a>
                 <a class="menu-item" href="{{ url('/texttools') }}">Text Tools</a>
             @elseif (\App\User::getRole() == 'student') {{-- Menu items for teachers --}}
-                <a class="menu-item" href="{{ url('/student') }}">Словарь</a>
+                <a class="menu-item" href="{{ url('/students') }}">Словарь</a>
             @endif
 
             <li class="dropdown">

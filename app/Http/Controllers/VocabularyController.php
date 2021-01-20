@@ -9,11 +9,12 @@ use App\VocabularyVariety;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class VocabularyController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs;
 
     /**
      * Getting languages
@@ -56,11 +57,23 @@ class VocabularyController extends Controller
         $vt->insertTheme($userId, $languageId, $name);
     }
 
-    /**
-     * Update theme by ID
-     * @param $themeID
-     * @param $name
-     */
+
+//    public function updateTheme($request) {
+//        return $this->parseRequest($request);
+//    }
+//
+//    private function parseRequest($request){
+//        $query  = explode('&', $request);
+//        $params = array();
+//        foreach($query as $param)
+//        {
+//            list($name, $value) = explode('=', $param);
+////            $params[urldecode($name)][] = urldecode($value);
+//            array_push($params, ['name' => $name, 'value' => $value ]);
+//        }
+//        return $params;
+//    }
+
     public function updateTheme($themeID, $name) {
         $name = htmlentities($name, ENT_QUOTES, 'UTF-8', false);
         $vt = new VocabularyTheme();
