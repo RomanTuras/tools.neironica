@@ -23,6 +23,7 @@ Route::middleware('auth:api')->group(function (){
 
     Route::get('/vocabulary-get-themes/{user_id}', 'VocabularyApiController@getThemes');
     Route::get('/get-user-vocabulary/{user_id}/{language_id}/{theme_id}/{variety_id}', 'VocabularyApiController@getUserVocabulary');
+    Route::get('/get-user-exercise/{user_id}/{language_id}/{theme_id}/{variety_id}/{num}', 'VocabularyApiController@getUserExercise');
     Route::get('/vocabulary-is-theme-exist/{user_id}/{name}', 'VocabularyApiController@isThemeNameExist');
 });
 

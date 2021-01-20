@@ -13,6 +13,9 @@ const apiClient = axios.create({
 
 export default {
     token: '',
+    async getUserExercise(user_id, language_id, theme_id, variety_id, number) {
+        return apiClient("/api/get-user-exercise/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id + '/' + number);
+    },
     async getUserVocabulary(user_id, language_id, theme_id, variety_id) {
         return apiClient("/api/get-user-vocabulary/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id);
     },

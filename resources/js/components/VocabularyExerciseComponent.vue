@@ -2,7 +2,7 @@
     <main role="main">
         <div class="container">
             <div class="container text-center my-section">
-                <h1>Добавить в словарь</h1>
+                <h1>Упражнения</h1>
             </div>
             <div class="row">
                 <div class="col-md-5 my-card">
@@ -22,36 +22,17 @@
             <div class="row">
                 <div class="col-md-5 my-card">
                     <label class="my-title" for="selectTheme">Выберите тему:</label>
-                    <button @click="editTheme" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;"></i></button>
-
-                    <div v-if="isEditBlock">
-                        <div class="input-group mb-3">
-                            <input v-model.trim="inputEditTheme" id="inputThemeNameEdit" type="text" class="form-control my-text" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button v-on:click="updateTheme()" class="btn my-btn" type="button">Записать</button>
-                            </div>
-                        </div>
-                        <div v-if="alertEditThemeName.length > 0" class="alert alert-danger" role="alert" style="display:block">
-                            {{ alertEditThemeName }}
-                        </div>
-                    </div>
-
-
                     <select v-model="selectedTheme" id="selectTheme" class="custom-select" size="6">
-                        <option class="my-text" @click="onThemeClick()" v-for="theme in themes" v-bind:value="theme">{{ theme.name }}</option>
+                        <option class="my-text" v-for="theme in themes" v-bind:value="theme">{{ theme.name }}</option>
                     </select>
                 </div>
                 <div class="col-md-5 offset-md-1 my-card">
-                    <label class="my-title" for="inputThemeName">Добавить тему:</label>
-                    <div class="input-group mb-3">
-                        <input v-model.trim="inputNewTheme" id="inputThemeName" type="text" class="form-control my-text" placeholder="Название темы" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button v-on:click="insertTheme()" class="btn  my-btn" type="button">Записать</button>
-                        </div>
-                    </div>
-                    <div v-if="alertAddNewTheme.length > 0" class="alert alert-danger" role="alert" style="display:block">
-                        {{ alertAddNewTheme }}
-                    </div>
+                    <label class="my-title" for="selectVariety">Направление:</label>
+                    <select v-model="selectedDirection" id="selectDirection" class="custom-select custom-select-lg mb-3">
+                        <option class="menu-item" value="1">Русский</option>
+                        <option class="menu-item" value="2">Иностранный</option>
+                        <option class="menu-item" value="3">Кодировка</option>
+                    </select>
                 </div>
             </div>
 
@@ -63,36 +44,16 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-md-5 my-card">
-                    <label class="my-title" for="inputText">Введите русское значение</label>
-                    <input v-model.trim="inputText" type="text" class="form-control my-text" id="inputText" placeholder="Русское значение" />
-                </div>
-
-                <div class="form-group col-md-5 offset-md-1 my-card">
-                    <label class="my-title" for="inputTranslation">Введите перевод</label>
-                    <input v-model.trim="inputTranslation" type="text" class="form-control my-text" id="inputTranslation" placeholder="Перевод">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-5 my-card">
-                    <label class="my-title" for="inputCode">Введите кодировку</label>
-                    <input v-model.trim="inputEncode" type="text" class="form-control my-text" id="inputCode" placeholder="Кодировка">
-                </div>
-
-                <div class="form-group col-md-5 offset-md-1">
-                    <div v-if="alertAddText.length > 0" class="alert alert-danger" role="alert" style="display:block">
-                        {{ alertAddText }}
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <button :disabled="!selectedTheme.name" v-on:click="addTextTranslate" type="submit" class="btn my-btn" style="width: 90%; font-size: 18px">СОХРАНИТЬ В СЛОВАРЬ</button>
+                <div class="form-group col-md-6 offset-md-3 my-card">
+                    <label class="my-title text-center" for="inputNumberRows" style="width: 100%">Введите количество строк для показа:</label>
+                    <div class="input-group mb-3">
+                        <input v-model="inputRowsNumber" id="inputNumberRows" type="number" min="1" max="1000" class="form-control my-text" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button :disabled="!selectedTheme.name" v-on:click="startExercise()" class="btn  my-btn" type="button">Показать</button>
                         </div>
                     </div>
                 </div>
             </div>
-
 
 
             <div class="row my-card">
@@ -100,7 +61,8 @@
                     <h3>Мой словарь:</h3>
                 </div>
                 <div class="col-md-10 offset-md-1">
-                    <button v-if="vocabularyList.length > 0" @click="editTranslation" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;"></i></button>
+                    <button v-if="vocabularyList.length > 0" @click="showAnswers()" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px"><i class="fa fa-info-circle" style="font-size: 18px;"></i></button>
+                    <button v-if="vocabularyList.length > 0" @click="startExercise()" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px; margin-right: 20px;"><i class="fa fa-refresh" style="font-size: 18px;"></i></button>
                 </div>
                 <div class="col-md-10 offset-md-1 text-center">
                     <div class="list-group">
@@ -128,21 +90,11 @@
         data: () => ({
             selectedLang: '1',
             selectedVariety: '1',
-            selectedVocabularyString: [],
+            selectedDirection: 1,
+            selectedVocabularyString: '',
+            inputRowsNumber: 10,
             selectedTheme: [],
-            inputEditTheme: '',
-            inputNewTheme: '',
-            inputText: '',
-            inputTranslation: '',
-            inputEncode: '',
-            alertEditThemeName: '',
-            alertAddNewTheme: '',
-            alertAddText: '',
             themes: [],
-            themeId: 0,
-            isEditBlock: false,
-            isEditTranslateMode: false,
-            isEditThemePressed: false,
             vocabularyList: [],
         }),
         props: {
@@ -153,95 +105,18 @@
         },
         watch: {
             selectedLang: function() {
-                this.getVocabulary();
+
             },
             selectedVariety: function() {
-                this.getVocabulary();
+
             },
         },
         methods: {
-            addTextTranslate: function() {
-                if ((this.inputText.length > 0 && this.inputText.length < 255)
-                    && (this.inputTranslation.length > 0 && this.inputTranslation.length < 255)
-                    && (this.inputEncode.length > 0 && this.inputEncode.length < 255)) {
-                    this.alertAddText = '';
-                    let user_id = this.data.userId;
-                    let language_id = this.selectedLang;
-                    let theme_id = this.selectedTheme.id;
-                    let variety_id = this.selectedVariety;
-                    let text_ru = this.inputText;
-                    let transl = this.inputTranslation;
-                    let encode = this.inputEncode;
+            showAnswers: function() {
 
-                    if (this.isEditTranslateMode) { //Edit current translation
-                        this.isEditTranslateMode = false;
-                        let translation_id = this.selectedVocabularyString.id;
-                        ApiServices.updateTranslation(translation_id, text_ru, transl, encode).then( response => {
-                        }).catch( error => console.log(error) );
-
-                    } else { //Add a new translation
-                        ApiServices.insertTranslation(user_id, language_id, theme_id, variety_id, text_ru, transl, encode).then( response => {
-                        }).catch( error => console.log(error) );
-                    }
-                    this.getVocabulary();
-                    this.inputText = '';
-                    this.inputTranslation = '';
-                    this.inputEncode = '';
-                } else this.alertAddText = 'Введите от 3 до 254 символов';
             },
-            onThemeClick: function() {
-                this.getVocabulary()
-            },
-            editTranslation: function() {
-                this.isEditTranslateMode = true;
-                this.inputText = this.selectedVocabularyString.text_ru;
-                this.inputTranslation = this.selectedVocabularyString.translation;
-                this.inputEncode = this.selectedVocabularyString.encoding;
-            },
-            editTheme: function(){
-                if (this.selectedTheme.name) { //Is theme selected
-                    this.isEditBlock = !this.isEditBlock;
-                    this.inputEditTheme = this.selectedTheme.name;
-                    this.themeId = this.selectedTheme.id;
-                    this.alertAddNewTheme = '';
-                    this.inputNewTheme = '';
-                }
-            },
-            updateTheme: function() {
-                if (this.inputEditTheme.length > 2 && this.inputEditTheme.length < 255) {
-                    // ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
-                    // const params = new URLSearchParams();
-                    // params.append('theme_id', this.themeId);
-                    // params.append('name', this.inputEditTheme);
-                        ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
-                        this.getThemes();
-                    }).catch( error => console.log(error) );
-                    this.isEditBlock = false;
-                    this.alertEditThemeName = '';
-                } else {
-                    this.alertEditThemeName = 'Введите от 3 до 254 символов';
-                }
-            },
-            insertTheme: function () {
-                let userId = this.data.userId;
-                let themeName = this.inputNewTheme;
-                this.isEditBlock = false;
-                this.alertEditThemeName = '';
-                if (themeName.length > 2 && themeName.length < 255) {
-                    ApiServices.isThemeNameExist(userId, themeName).then( response => {
-                        if (!response.data.data) {
-                            ApiServices.insertTheme(userId, this.selectedLang, themeName).then( response => {
-                                this.getThemes();
-                            }).catch( error => console.log(error) );
-                            this.alertAddNewTheme = '';
-                            this.inputNewTheme = '';
-                        } else {
-                            this.alertAddNewTheme = 'Такое название уже есть!';
-                        }
-                    }).catch( error => console.log(error) );
-                } else {
-                    this.alertAddNewTheme = 'Введите от 3 до 254 символов';
-                }
+            startExercise: function() {
+                this.getVocabulary();
             },
             getThemes() {
                 ApiServices.getThemes(this.data.userId).then( response => {
@@ -249,13 +124,13 @@
                 }).catch( error => console.log(error) )
             },
             getVocabulary() {
-                ApiServices.getUserVocabulary(this.data.userId, this.selectedLang, this.selectedTheme.id, this.selectedVariety)
+                ApiServices.getUserExercise(this.data.userId, this.selectedLang, this.selectedTheme.id, this.selectedVariety, this.inputRowsNumber)
                     .then(response => {
                         this.vocabularyList = response.data
                     }).catch( error => console.log(error))
             },
         },
-        name: "VocabularyComponent"
+        name: "VocabularyExerciseComponent"
     }
 </script>
 

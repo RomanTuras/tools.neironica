@@ -115,6 +115,13 @@ class VocabularyApiController extends Controller
         return $vTrans->getUserVocabulary($userId, $languageId, $themeId, $varietyId);
     }
 
+    public function getUserExercise($userId, $languageId, $themeId, $varietyId, $num) {
+        $vTrans = new VocabularyTranslate();
+        return $vTrans->getUserExercise($userId, $languageId, $themeId, $varietyId, $num);
+    }
+
+
+
     public function insertTranslation($userId, $languageId, $themeId, $varietyId, $textRu, $transl, $encode) {
         $textRu = htmlentities($textRu, ENT_QUOTES, 'UTF-8', false);
         $transl = htmlentities($transl, ENT_QUOTES, 'UTF-8', false);

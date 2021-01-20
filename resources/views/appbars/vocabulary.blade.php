@@ -14,7 +14,7 @@
                 <a class="nav-link" href="{{ url('/students') }}">{{ __('appbar.home') }}</a>
             @endif
         </li>
-        <li class="nav-item {{ ($data['page'] == 'students.vocabulary-add')? 'active':'' }}">
+        <li class="nav-item {{ ($data['page'] == 'students.vocabulary')? 'active':'' }}">
             <a class="nav-link"
                href="{{ url('/students/vocabulary') }}">{{ __('appbar.vocabulary-add') }}</a>
         </li>

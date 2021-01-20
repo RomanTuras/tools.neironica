@@ -2301,65 +2301,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       selectedLang: '1',
       selectedVariety: '1',
-      selectedVocabularyString: [],
+      selectedDirection: 1,
+      selectedVocabularyString: '',
+      inputRowsNumber: 10,
       selectedTheme: [],
-      inputEditTheme: '',
-      inputNewTheme: '',
-      inputText: '',
-      inputTranslation: '',
-      inputEncode: '',
-      alertEditThemeName: '',
-      alertAddNewTheme: '',
-      alertAddText: '',
       themes: [],
-      themeId: 0,
-      isEditBlock: false,
-      isEditTranslateMode: false,
-      isEditThemePressed: false,
       vocabularyList: []
     };
   },
@@ -2370,131 +2322,34 @@ __webpack_require__.r(__webpack_exports__);
     this.getThemes();
   },
   watch: {
-    selectedLang: function selectedLang() {
-      this.getVocabulary();
-    },
-    selectedVariety: function selectedVariety() {
-      this.getVocabulary();
-    }
+    selectedLang: function selectedLang() {},
+    selectedVariety: function selectedVariety() {}
   },
   methods: {
-    addTextTranslate: function addTextTranslate() {
-      if (this.inputText.length > 0 && this.inputText.length < 255 && this.inputTranslation.length > 0 && this.inputTranslation.length < 255 && this.inputEncode.length > 0 && this.inputEncode.length < 255) {
-        this.alertAddText = '';
-        var user_id = this.data.userId;
-        var language_id = this.selectedLang;
-        var theme_id = this.selectedTheme.id;
-        var variety_id = this.selectedVariety;
-        var text_ru = this.inputText;
-        var transl = this.inputTranslation;
-        var encode = this.inputEncode;
-
-        if (this.isEditTranslateMode) {
-          //Edit current translation
-          this.isEditTranslateMode = false;
-          var translation_id = this.selectedVocabularyString.id;
-          _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].updateTranslation(translation_id, text_ru, transl, encode).then(function (response) {})["catch"](function (error) {
-            return console.log(error);
-          });
-        } else {
-          //Add a new translation
-          _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].insertTranslation(user_id, language_id, theme_id, variety_id, text_ru, transl, encode).then(function (response) {})["catch"](function (error) {
-            return console.log(error);
-          });
-        }
-
-        this.getVocabulary();
-        this.inputText = '';
-        this.inputTranslation = '';
-        this.inputEncode = '';
-      } else this.alertAddText = 'Введите от 3 до 254 символов';
-    },
-    onThemeClick: function onThemeClick() {
+    showAnswers: function showAnswers() {},
+    startExercise: function startExercise() {
       this.getVocabulary();
     },
-    editTranslation: function editTranslation() {
-      this.isEditTranslateMode = true;
-      this.inputText = this.selectedVocabularyString.text_ru;
-      this.inputTranslation = this.selectedVocabularyString.translation;
-      this.inputEncode = this.selectedVocabularyString.encoding;
-    },
-    editTheme: function editTheme() {
-      if (this.selectedTheme.name) {
-        //Is theme selected
-        this.isEditBlock = !this.isEditBlock;
-        this.inputEditTheme = this.selectedTheme.name;
-        this.themeId = this.selectedTheme.id;
-        this.alertAddNewTheme = '';
-        this.inputNewTheme = '';
-      }
-    },
-    updateTheme: function updateTheme() {
+    getThemes: function getThemes() {
       var _this = this;
 
-      if (this.inputEditTheme.length > 2 && this.inputEditTheme.length < 255) {
-        // ApiServices.updateTheme(this.themeId, this.inputEditTheme).then( response => {
-        // const params = new URLSearchParams();
-        // params.append('theme_id', this.themeId);
-        // params.append('name', this.inputEditTheme);
-        _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].updateTheme(this.themeId, this.inputEditTheme).then(function (response) {
-          _this.getThemes();
-        })["catch"](function (error) {
-          return console.log(error);
-        });
-        this.isEditBlock = false;
-        this.alertEditThemeName = '';
-      } else {
-        this.alertEditThemeName = 'Введите от 3 до 254 символов';
-      }
-    },
-    insertTheme: function insertTheme() {
-      var _this2 = this;
-
-      var userId = this.data.userId;
-      var themeName = this.inputNewTheme;
-      this.isEditBlock = false;
-      this.alertEditThemeName = '';
-
-      if (themeName.length > 2 && themeName.length < 255) {
-        _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].isThemeNameExist(userId, themeName).then(function (response) {
-          if (!response.data.data) {
-            _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].insertTheme(userId, _this2.selectedLang, themeName).then(function (response) {
-              _this2.getThemes();
-            })["catch"](function (error) {
-              return console.log(error);
-            });
-            _this2.alertAddNewTheme = '';
-            _this2.inputNewTheme = '';
-          } else {
-            _this2.alertAddNewTheme = 'Такое название уже есть!';
-          }
-        })["catch"](function (error) {
-          return console.log(error);
-        });
-      } else {
-        this.alertAddNewTheme = 'Введите от 3 до 254 символов';
-      }
-    },
-    getThemes: function getThemes() {
-      var _this3 = this;
-
       _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].getThemes(this.data.userId).then(function (response) {
-        _this3.themes = response.data;
+        _this.themes = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     getVocabulary: function getVocabulary() {
-      var _this4 = this;
+      var _this2 = this;
 
-      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].getUserVocabulary(this.data.userId, this.selectedLang, this.selectedTheme.id, this.selectedVariety).then(function (response) {
-        _this4.vocabularyList = response.data;
+      _services_ApiServices__WEBPACK_IMPORTED_MODULE_0__["default"].getUserExercise(this.data.userId, this.selectedLang, this.selectedTheme.id, this.selectedVariety, this.inputRowsNumber).then(function (response) {
+        _this2.vocabularyList = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
     }
   },
-  name: "VocabularyComponent"
+  name: "VocabularyExerciseComponent"
 });
 
 /***/ }),
@@ -40220,92 +40075,6 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "button",
-            {
-              staticClass: "btn my-btn",
-              staticStyle: { float: "right", "margin-bottom": "15px" },
-              attrs: { type: "button" },
-              on: { click: _vm.editTheme }
-            },
-            [
-              _c("i", {
-                staticClass: "fa fa-edit",
-                staticStyle: { "font-size": "18px" }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _vm.isEditBlock
-            ? _c("div", [
-                _c("div", { staticClass: "input-group mb-3" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.trim",
-                        value: _vm.inputEditTheme,
-                        expression: "inputEditTheme",
-                        modifiers: { trim: true }
-                      }
-                    ],
-                    staticClass: "form-control my-text",
-                    attrs: {
-                      id: "inputThemeNameEdit",
-                      type: "text",
-                      "aria-describedby": "basic-addon2"
-                    },
-                    domProps: { value: _vm.inputEditTheme },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.inputEditTheme = $event.target.value.trim()
-                      },
-                      blur: function($event) {
-                        return _vm.$forceUpdate()
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input-group-append" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn my-btn",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.updateTheme()
-                          }
-                        }
-                      },
-                      [_vm._v("Записать")]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm.alertEditThemeName.length > 0
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "alert alert-danger",
-                        staticStyle: { display: "block" },
-                        attrs: { role: "alert" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(_vm.alertEditThemeName) +
-                            "\n                    "
-                        )
-                      ]
-                    )
-                  : _vm._e()
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
             "select",
             {
               directives: [
@@ -40337,15 +40106,7 @@ var render = function() {
             _vm._l(_vm.themes, function(theme) {
               return _c(
                 "option",
-                {
-                  staticClass: "my-text",
-                  domProps: { value: theme },
-                  on: {
-                    click: function($event) {
-                      return _vm.onThemeClick()
-                    }
-                  }
-                },
+                { staticClass: "my-text", domProps: { value: theme } },
                 [_vm._v(_vm._s(theme.name))]
               )
             }),
@@ -40356,76 +40117,59 @@ var render = function() {
         _c("div", { staticClass: "col-md-5 offset-md-1 my-card" }, [
           _c(
             "label",
-            { staticClass: "my-title", attrs: { for: "inputThemeName" } },
-            [_vm._v("Добавить тему:")]
+            { staticClass: "my-title", attrs: { for: "selectVariety" } },
+            [_vm._v("Направление:")]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("input", {
+          _c(
+            "select",
+            {
               directives: [
                 {
                   name: "model",
-                  rawName: "v-model.trim",
-                  value: _vm.inputNewTheme,
-                  expression: "inputNewTheme",
-                  modifiers: { trim: true }
+                  rawName: "v-model",
+                  value: _vm.selectedDirection,
+                  expression: "selectedDirection"
                 }
               ],
-              staticClass: "form-control my-text",
-              attrs: {
-                id: "inputThemeName",
-                type: "text",
-                placeholder: "Название темы",
-                "aria-describedby": "basic-addon2"
-              },
-              domProps: { value: _vm.inputNewTheme },
+              staticClass: "custom-select custom-select-lg mb-3",
+              attrs: { id: "selectDirection" },
               on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.inputNewTheme = $event.target.value.trim()
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.selectedDirection = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group-append" }, [
+            },
+            [
               _c(
-                "button",
-                {
-                  staticClass: "btn  my-btn",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.insertTheme()
-                    }
-                  }
-                },
-                [_vm._v("Записать")]
+                "option",
+                { staticClass: "menu-item", attrs: { value: "1" } },
+                [_vm._v("Русский")]
+              ),
+              _vm._v(" "),
+              _c(
+                "option",
+                { staticClass: "menu-item", attrs: { value: "2" } },
+                [_vm._v("Иностранный")]
+              ),
+              _vm._v(" "),
+              _c(
+                "option",
+                { staticClass: "menu-item", attrs: { value: "3" } },
+                [_vm._v("Кодировка")]
               )
-            ])
-          ]),
-          _vm._v(" "),
-          _vm.alertAddNewTheme.length > 0
-            ? _c(
-                "div",
-                {
-                  staticClass: "alert alert-danger",
-                  staticStyle: { display: "block" },
-                  attrs: { role: "alert" }
-                },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.alertAddNewTheme) +
-                      "\n                "
-                  )
-                ]
-              )
-            : _vm._e()
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
@@ -40442,148 +40186,59 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "form-group col-md-5 my-card" }, [
+        _c("div", { staticClass: "form-group col-md-6 offset-md-3 my-card" }, [
           _c(
             "label",
-            { staticClass: "my-title", attrs: { for: "inputText" } },
-            [_vm._v("Введите русское значение")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.trim",
-                value: _vm.inputText,
-                expression: "inputText",
-                modifiers: { trim: true }
-              }
-            ],
-            staticClass: "form-control my-text",
-            attrs: {
-              type: "text",
-              id: "inputText",
-              placeholder: "Русское значение"
+            {
+              staticClass: "my-title text-center",
+              staticStyle: { width: "100%" },
+              attrs: { for: "inputNumberRows" }
             },
-            domProps: { value: _vm.inputText },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.inputText = $event.target.value.trim()
-              },
-              blur: function($event) {
-                return _vm.$forceUpdate()
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-5 offset-md-1 my-card" }, [
-          _c(
-            "label",
-            { staticClass: "my-title", attrs: { for: "inputTranslation" } },
-            [_vm._v("Введите перевод")]
+            [_vm._v("Введите количество строк для показа:")]
           ),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.trim",
-                value: _vm.inputTranslation,
-                expression: "inputTranslation",
-                modifiers: { trim: true }
-              }
-            ],
-            staticClass: "form-control my-text",
-            attrs: {
-              type: "text",
-              id: "inputTranslation",
-              placeholder: "Перевод"
-            },
-            domProps: { value: _vm.inputTranslation },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.inputTranslation = $event.target.value.trim()
-              },
-              blur: function($event) {
-                return _vm.$forceUpdate()
-              }
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "form-group col-md-5 my-card" }, [
-          _c(
-            "label",
-            { staticClass: "my-title", attrs: { for: "inputCode" } },
-            [_vm._v("Введите кодировку")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.trim",
-                value: _vm.inputEncode,
-                expression: "inputEncode",
-                modifiers: { trim: true }
-              }
-            ],
-            staticClass: "form-control my-text",
-            attrs: { type: "text", id: "inputCode", placeholder: "Кодировка" },
-            domProps: { value: _vm.inputEncode },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.inputEncode = $event.target.value.trim()
-              },
-              blur: function($event) {
-                return _vm.$forceUpdate()
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-5 offset-md-1" }, [
-          _vm.alertAddText.length > 0
-            ? _c(
-                "div",
+          _c("div", { staticClass: "input-group mb-3" }, [
+            _c("input", {
+              directives: [
                 {
-                  staticClass: "alert alert-danger",
-                  staticStyle: { display: "block" },
-                  attrs: { role: "alert" }
-                },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.alertAddText) +
-                      "\n                "
-                  )
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12 text-center" }, [
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.inputRowsNumber,
+                  expression: "inputRowsNumber"
+                }
+              ],
+              staticClass: "form-control my-text",
+              attrs: {
+                id: "inputNumberRows",
+                type: "number",
+                min: "1",
+                max: "1000",
+                "aria-describedby": "basic-addon2"
+              },
+              domProps: { value: _vm.inputRowsNumber },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.inputRowsNumber = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group-append" }, [
               _c(
                 "button",
                 {
-                  staticClass: "btn my-btn",
-                  staticStyle: { width: "90%", "font-size": "18px" },
-                  attrs: { disabled: !_vm.selectedTheme.name, type: "submit" },
-                  on: { click: _vm.addTextTranslate }
+                  staticClass: "btn  my-btn",
+                  attrs: { disabled: !_vm.selectedTheme.name, type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.startExercise()
+                    }
+                  }
                 },
-                [_vm._v("СОХРАНИТЬ В СЛОВАРЬ")]
+                [_vm._v("Показать")]
               )
             ])
           ])
@@ -40601,11 +40256,41 @@ var render = function() {
                   staticClass: "btn my-btn",
                   staticStyle: { float: "right", "margin-bottom": "15px" },
                   attrs: { type: "button" },
-                  on: { click: _vm.editTranslation }
+                  on: {
+                    click: function($event) {
+                      return _vm.showAnswers()
+                    }
+                  }
                 },
                 [
                   _c("i", {
-                    staticClass: "fa fa-edit",
+                    staticClass: "fa fa-info-circle",
+                    staticStyle: { "font-size": "18px" }
+                  })
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.vocabularyList.length > 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn my-btn",
+                  staticStyle: {
+                    float: "right",
+                    "margin-bottom": "15px",
+                    "margin-right": "20px"
+                  },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.startExercise()
+                    }
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fa fa-refresh",
                     staticStyle: { "font-size": "18px" }
                   })
                 ]
@@ -40674,7 +40359,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "container text-center my-section" }, [
-      _c("h1", [_vm._v("Добавить в словарь")])
+      _c("h1", [_vm._v("Упражнения")])
     ])
   },
   function() {
@@ -53433,13 +53118,13 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
   token: '',
-  getUserVocabulary: function getUserVocabulary(user_id, language_id, theme_id, variety_id) {
+  getUserExercise: function getUserExercise(user_id, language_id, theme_id, variety_id, number) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              return _context.abrupt("return", apiClient("/api/get-user-vocabulary/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id));
+              return _context.abrupt("return", apiClient("/api/get-user-exercise/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id + '/' + number));
 
             case 1:
             case "end":
@@ -53449,13 +53134,13 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee);
     }))();
   },
-  isThemeNameExist: function isThemeNameExist(user_id, name) {
+  getUserVocabulary: function getUserVocabulary(user_id, language_id, theme_id, variety_id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              return _context2.abrupt("return", apiClient("/api/vocabulary-is-theme-exist/" + user_id + '/' + name));
+              return _context2.abrupt("return", apiClient("/api/get-user-vocabulary/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id));
 
             case 1:
             case "end":
@@ -53465,13 +53150,13 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee2);
     }))();
   },
-  getThemes: function getThemes(user_id) {
+  isThemeNameExist: function isThemeNameExist(user_id, name) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              return _context3.abrupt("return", apiClient("/api/vocabulary-get-themes/" + user_id));
+              return _context3.abrupt("return", apiClient("/api/vocabulary-is-theme-exist/" + user_id + '/' + name));
 
             case 1:
             case "end":
@@ -53481,21 +53166,15 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee3);
     }))();
   },
-  updateTranslation: function updateTranslation(id, text_ru, transl, encode) {
+  getThemes: function getThemes(user_id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.next = 2;
-              return apiClient.post("/api/vocabulary-update-translation/" + id + '/' + text_ru + '/' + transl + '/' + encode)["catch"](function (error) {
-                return error.response;
-              });
+              return _context4.abrupt("return", apiClient("/api/vocabulary-get-themes/" + user_id));
 
-            case 2:
-              return _context4.abrupt("return", _context4.sent);
-
-            case 3:
+            case 1:
             case "end":
               return _context4.stop();
           }
@@ -53503,14 +53182,14 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee4);
     }))();
   },
-  insertTranslation: function insertTranslation(user_id, language_id, theme_id, variety_id, text_ru, transl, encode) {
+  updateTranslation: function updateTranslation(id, text_ru, transl, encode) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               _context5.next = 2;
-              return apiClient.post("/api/vocabulary-insert-translation/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id + '/' + text_ru + '/' + transl + '/' + encode)["catch"](function (error) {
+              return apiClient.post("/api/vocabulary-update-translation/" + id + '/' + text_ru + '/' + transl + '/' + encode)["catch"](function (error) {
                 return error.response;
               });
 
@@ -53525,15 +53204,14 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee5);
     }))();
   },
-  updateTheme: function updateTheme(theme_id, name) {
+  insertTranslation: function insertTranslation(user_id, language_id, theme_id, variety_id, text_ru, transl, encode) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               _context6.next = 2;
-              return apiClient.post("/api/vocabulary-update-theme/" + theme_id + '/' + name) // .post("/api/vocabulary-update-theme/" + object)
-              ["catch"](function (error) {
+              return apiClient.post("/api/vocabulary-insert-translation/" + user_id + '/' + language_id + '/' + theme_id + '/' + variety_id + '/' + text_ru + '/' + transl + '/' + encode)["catch"](function (error) {
                 return error.response;
               });
 
@@ -53548,13 +53226,36 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
       }, _callee6);
     }))();
   },
-  insertTheme: function insertTheme(user_id, language_id, name) {
+  updateTheme: function updateTheme(theme_id, name) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               _context7.next = 2;
+              return apiClient.post("/api/vocabulary-update-theme/" + theme_id + '/' + name) // .post("/api/vocabulary-update-theme/" + object)
+              ["catch"](function (error) {
+                return error.response;
+              });
+
+            case 2:
+              return _context7.abrupt("return", _context7.sent);
+
+            case 3:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  },
+  insertTheme: function insertTheme(user_id, language_id, name) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.next = 2;
               return apiClient.post("/api/vocabulary-insert-theme/" + user_id + '/' + language_id + '/' + name)["catch"](function (error) {
                 if (error.response) {// Request made and server responded
                   // console.log(error.response.data);
@@ -53570,14 +53271,14 @@ var apiClient = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
               });
 
             case 2:
-              return _context7.abrupt("return", _context7.sent);
+              return _context8.abrupt("return", _context8.sent);
 
             case 3:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }))();
   }
 });

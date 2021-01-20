@@ -46,6 +46,17 @@ class VocabularyTranslate extends Model
              ->get();
     }
 
+    public function getUserExercise($userId, $languageId, $themeId, $varietyId, $num) {
+        return DB::table('vocabulary_translate')
+            ->where('user_id', '=', $userId)
+            ->where('language_id', '=', $languageId)
+            ->where('theme_id', '=', $themeId)
+            ->where('variety_id', '=', $varietyId)
+            ->inRandomOrder()
+            ->limit($num)
+            ->get();
+    }
+
     public function insertTranslation($userId, $languageId, $themeId, $varietyId, $textRu, $transl, $encode) {
         DB::table('vocabulary_translate')
             ->insert([

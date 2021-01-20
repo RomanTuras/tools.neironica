@@ -44,7 +44,7 @@
                 @if(isset($data))
                     @if($data['page'] == 'students.home')
                         @include('appbars.home-student')
-                    @elseif($data['page'] == 'students.vocabulary-add' || $data['page'] == 'students.vocabulary-exercise')
+                    @elseif($data['page'] == 'students.vocabulary' || $data['page'] == 'students.vocabulary-exercise')
                         @include('appbars.vocabulary')
                         @endif
                     @else
