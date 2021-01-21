@@ -12,6 +12,7 @@ $(function() {
     let settingsObject = { //default settings for "Shulte Table"
       'fontFamily': 'Arial',
       'fontSize': 18,
+      'inputType': 1,
       'cellPaddingX': 17,
       'cellPaddingY': 17
     };
@@ -25,14 +26,40 @@ $(function() {
  * Processing Shulte table
  */
 function startShulte() {
-  $("#generate-shulte").click(function() {
+  $("#generate-shulte").unbind().click(function() {
     let rows = $("#inputRowsShulte").val();
     let cols = $("#inputColsShulte").val();
     let isColored = $("#checkboxColored").prop("checked");
-    let filledArray = fillArray(rows * cols);
-    let mixedArray = ShuffleHelper.shuffleArray(filledArray);
-    createTable(rows, cols, mixedArray);
-    styleTable(isColored);
+
+    let type = $("#inputType").val();
+    let offset = 0;
+    let isError = false;
+    switch (type) { // type == 1 -- Numbers
+      case '2': { // Russian alphabet
+        offset = 1039;
+        if (rows*cols > 32) isError = true;
+      }
+        break;
+      case '3': { // English alphabet
+        offset = 64;
+        if (rows*cols > 26) isError = true;
+      }
+        break;
+      case '4': { // German alphabet
+        offset = 64;
+        if (rows*cols > 30) isError = true;
+      }
+    }
+
+    if (!isError) {
+      let filledArray = [];
+      if (type == 4) filledArray = fillGermanyArray(rows * cols, offset); //Germany alphabet
+      else filledArray = fillArray(rows * cols, offset);
+      let mixedArray = ShuffleHelper.shuffleArray(filledArray);
+      createTable(rows, cols, mixedArray, type);
+      styleTable(isColored);
+    } else alert("Ошибка! Размерность таблицы больше количества букв выбранного алфавита!");
+
     // $("#inputBgImage").val("");
   });
 }
@@ -47,18 +74,21 @@ function setupControls(key, settingsObject) {
   let fontSize = settingsObject.fontSize;
   let cellPaddingX = settingsObject.cellPaddingX;
   let cellPaddingY = settingsObject.cellPaddingY;
+  let inputType = settingsObject.inputType;
 
   if (LocalStorageHelper.getFontSettings(key) != null) {
     fontFamily = LocalStorageHelper.getFontSettings(key).fontFamily;
     fontSize = LocalStorageHelper.getFontSettings(key).fontSize;
     cellPaddingX = LocalStorageHelper.getFontSettings(key).cellPaddingX;
     cellPaddingY = LocalStorageHelper.getFontSettings(key).cellPaddingY;
+    inputType = LocalStorageHelper.getFontSettings(key).inputType;
   }
 
   $("#inputFontNameShulte").val(fontFamily);
   $("#inputFontSizeShulte").val(fontSize);
   $("#paddingRangeShulteX").val(cellPaddingX);
   $("#paddingRangeShulteY").val(cellPaddingY);
+  $("#inputType").val(inputType);
 }
 
 /**
@@ -70,7 +100,7 @@ function listenIvents(key, settingsObject) {
 
   // Set selected font size
   $("#inputFontSizeShulte").on('change', function() {
-    var fontSize = this.value;
+    let fontSize = this.value;
     $(".cell").css("font-size", fontSize + "px");
     settingsObject.fontSize = fontSize;
     LocalStorageHelper.saveFontSettings(key, settingsObject);
@@ -78,15 +108,20 @@ function listenIvents(key, settingsObject) {
 
   // Set selected font family
   $("#inputFontNameShulte").on('change', function() {
-    var fontName = this.value;
+    let fontName = this.value;
     $(".cell").css("font-family", fontName);
     settingsObject.fontFamily = fontName;
     LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
 
+  $("#inputType").on('change', function() {
+    settingsObject.inputType = this.value;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+  });
+
   // Set selected font size
   $("#inputFontColorShulte").on('change', function() {
-    var fontColor = this.value;
+    let fontColor = this.value;
     $(".cell").css("color", fontColor);
   });
 
@@ -143,7 +178,7 @@ function listenIvents(key, settingsObject) {
 function paintTableBackground(table, listColors) {
   // const listColors = ['aqua', 'coral', 'cornflowerblue', 'transparent', 'chartreuse', 'fuchsia'];
   $(table).each(function(index, tr) {
-    var lines = $('td', tr).map(function(index, td) {
+    let lines = $('td', tr).map(function(index, td) {
       let n = RandomizeHelper.getRandomInt(0, listColors.length);
       let color = (listColors.length > 1) ? listColors[n] : "transparent";
       $(td).css("background", color);
@@ -169,31 +204,47 @@ function paintTableColor(table, isColored) {
 
 /**
  * Filled n-elements array from "1" to "n+1" numbers
- * @param {Int} n 
+ * @param {number} n
+ * @param offset
  * @returns Array
  */
-function fillArray(n) {
-  let arr = new Array(n);
-  for (let i = 0; i < n; i++) {
-    arr[i] = i + 1;
+function fillArray(n, offset) {
+  let arr = [];
+  for (let i = 1; i <= n; i++) {
+    arr.push(i + offset);
   }
   return arr;
 }
 
+function fillGermanyArray(n, offset) {
+  let arr = [];
+  for (let i=1; i<=26; i++) {
+    arr.push(i + offset);
+    if (i === 1) arr.push(196);
+    else if (i === 2) arr.push(223);
+    else if (i === 15) arr.push(214);
+    else if (i === 21) arr.push(220);
+    }
+  return arr;
+}
+
+
 /**
  * Creating a table
- * @param {Int} rows 
+ * @param {Int} rows
  * @param {Int} cols
- * @param {Int} number of array elements 
+ * @param mixedArray
+ * @param type
  */
-function createTable(rows, cols, mixedArray) {
-  var table_body = '<table align="center" id="shulte-table">';
-  var c = 0;
-  for (var i = 0; i < rows; i++) {
+function createTable(rows, cols, mixedArray, type) {
+  let table_body = '<table align="center" id="shulte-table">';
+  let c = 0;
+  for (let i = 0; i < rows; i++) {
     table_body += '<tr id="tr">';
-    for (var j = 0; j < cols; j++) {
+    for (let j = 0; j < cols; j++) {
       table_body += '<td class="cell">';
-      table_body += mixedArray[c++];
+      if (type == 1) table_body += mixedArray[c++]; //Type is Numbers
+      else table_body += '&#' + mixedArray[c++] + ';'; //Type is Letters
       table_body += '</td>';
     }
     table_body += '</tr>';

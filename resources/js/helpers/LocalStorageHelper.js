@@ -17,7 +17,7 @@ class LocalStorageHelper {
    * @param {String} key 
    */
   static getFontSettings(key){
-    var retrievedSettings = localStorage.getItem(key);
+    let retrievedSettings = localStorage.getItem(key);
     return (retrievedSettings == null) ? null : JSON.parse(retrievedSettings);
   }
 
