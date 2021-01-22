@@ -80,9 +80,12 @@
               <div class="input-group">
                 <select class="image-select" id="inputType">
                   <option value="1">Числа</option>
-                  <option value="2">Русский</option>
-                  <option value="3">Английский</option>
-                  <option value="4">Немецкий</option>
+                  <option value="2">Русский-RU</option>
+                  <option value="3">Английский-EN</option>
+                  <option value="4">Немецкий-GE</option>
+                  <option value="5">Русский-ru</option>
+                  <option value="6">Английский-en</option>
+                  <option value="7">Немецкий-ge</option>
                 </select>
               </div>
             </div>

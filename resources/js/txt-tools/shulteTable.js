@@ -35,26 +35,44 @@ function startShulte() {
     let offset = 0;
     let isError = false;
     switch (type) { // type == 1 -- Numbers
-      case '2': { // Russian alphabet
+      case '2': { // Russian alphabet big letter
         offset = 1039;
         if (rows*cols > 32) isError = true;
       }
         break;
-      case '3': { // English alphabet
+      case '3': { // English alphabet big letter
         offset = 64;
         if (rows*cols > 26) isError = true;
       }
         break;
-      case '4': { // German alphabet
+      case '4': { // German alphabet big letter
         offset = 64;
         if (rows*cols > 30) isError = true;
       }
+        break;
+      case '5': { // Russian alphabet small letter
+        offset = 1071;
+        if (rows*cols > 32) isError = true;
+      }
+        break;
+      case '6': { // English alphabet small letter
+        offset = 96;
+        if (rows*cols > 26) isError = true;
+      }
+        break;
+      case '7': { // German alphabet small letter
+        offset = 96;
+        if (rows*cols > 30) isError = true;
+      }
+        break;
     }
 
     if (!isError) {
       let filledArray = [];
-      if (type == 4) filledArray = fillGermanyArray(rows * cols, offset); //Germany alphabet
+      if (type == 4) filledArray = fillGermanyArray(rows * cols, offset, true); //Germany alphabet Big letters
+      else if (type == 7) filledArray = fillGermanyArray(rows * cols, offset, false); //Germany alphabet Small letters
       else filledArray = fillArray(rows * cols, offset);
+      console.log(filledArray);
       let mixedArray = ShuffleHelper.shuffleArray(filledArray);
       createTable(rows, cols, mixedArray, type);
       styleTable(isColored);
@@ -216,15 +234,28 @@ function fillArray(n, offset) {
   return arr;
 }
 
-function fillGermanyArray(n, offset) {
+function fillGermanyArray(n, offset, isBigLetters) {
   let arr = [];
-  for (let i=1; i<=26; i++) {
+  if (n >= 9 && n < 15) n = n - 2;
+  else if(n >= 15 && n < 21) n = n - 3;
+  else n = n - 4;
+
+  for (let i=1; i<=n; i++) {
     arr.push(i + offset);
-    if (i === 1) arr.push(196);
-    else if (i === 2) arr.push(223);
-    else if (i === 15) arr.push(214);
-    else if (i === 21) arr.push(220);
+    if (i === 1) {
+      if (isBigLetters) arr.push(196);
+      else arr.push(228)
     }
+    else if (i === 2) arr.push(223);
+    else if (i === 15) {
+      if (isBigLetters) arr.push(214);
+      else arr.push(246)
+    }
+    else if (i === 21) {
+      if (isBigLetters) arr.push(220);
+      else arr.push(252)
+    }
+  }
   return arr;
 }
 
