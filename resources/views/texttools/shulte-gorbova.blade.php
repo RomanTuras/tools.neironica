@@ -28,57 +28,80 @@
           <input id="paddingRangeY" class="border-c" type="range" min="5" max="55" step="1" value="18">
         </div>
       </div>
-      <div class="col-md-2 padding-0">
-        <div class="dropdown">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputRows">Table</label>
-            </div>
-            <select class="rows-select" id="inputRows">
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-            </select>
-          </div>
-        </div>
 
-        <div class="dropdown">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputCols">:</label>
+
+      <div class="col-md-2 padding-0">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="dropdown">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputRows">Table</label>
+                </div>
+                <select class="rows-select" id="inputRows">
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                </select>
+              </div>
             </div>
-            <select class="rows-select" id="inputCols">
-              <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-            </select>
+
+            <div class="dropdown">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputCols">:</label>
+                </div>
+                <select class="rows-select" id="inputCols">
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                </select>
+              </div>
+            </div>
+            <label id="labelIsGorbova" class="form-check-label">
+              <input id="checkboxIsGorbova" type="checkbox" class="form-check-input" value="" checked>1/2
+            </label>
           </div>
+
+          <div class="col-md-12 text-center" style="margin-top: 15px;">
+            <div class="dropdown">
+              <div class="input-group">
+                <select class="image-select" id="inputType">
+                  <option value="1">Числа</option>
+                  <option value="2">РУССКИЙ</option>
+                  <option value="3">АНГЛИЙСКИЙ</option>
+                  <option value="4">НЕМЕЦКИЙ</option>
+                  <option value="5">русский</option>
+                  <option value="6">английский</option>
+                  <option value="7">немецкий</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <label id="labelIsGorbova" class="form-check-label">
-          <input id="checkboxIsGorbova" type="checkbox" class="form-check-input" value="" checked>1/2
-        </label>
       </div>
 
       <div class="col-md-4">

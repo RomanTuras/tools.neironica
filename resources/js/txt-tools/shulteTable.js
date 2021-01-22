@@ -72,7 +72,6 @@ function startShulte() {
       if (type == 4) filledArray = fillGermanyArray(rows * cols, offset, true); //Germany alphabet Big letters
       else if (type == 7) filledArray = fillGermanyArray(rows * cols, offset, false); //Germany alphabet Small letters
       else filledArray = fillArray(rows * cols, offset);
-      console.log(filledArray);
       let mixedArray = ShuffleHelper.shuffleArray(filledArray);
       createTable(rows, cols, mixedArray, type);
       styleTable(isColored);
@@ -221,7 +220,7 @@ function paintTableColor(table, isColored) {
 }
 
 /**
- * Filled n-elements array from "1" to "n+1" numbers
+ * Filled n-elements array from "1" to "n+1" numbers by sequential numbers with offset depended on selected alphabet
  * @param {number} n
  * @param offset
  * @returns Array
@@ -234,11 +233,18 @@ function fillArray(n, offset) {
   return arr;
 }
 
+/**
+ * Filled n-elements array from "1" to "n+1" numbers by sequential numbers for German alphabet only
+ * @param n
+ * @param offset
+ * @param isBigLetters
+ * @returns {[]}
+ */
 function fillGermanyArray(n, offset, isBigLetters) {
   let arr = [];
-  if (n >= 9 && n < 15) n = n - 2;
-  else if(n >= 15 && n < 21) n = n - 3;
-  else n = n - 4;
+  if (n >= 9 && n < 15) n = n - 2; //Will be added 2 different letters in to the Eng alphabet
+  else if(n >= 15 && n < 21) n = n - 3; //Will be added 3 different letters in to the Eng alphabet
+  else n = n - 4;  //Will be added 4 different letters in to the Eng alphabet
 
   for (let i=1; i<=n; i++) {
     arr.push(i + offset);
