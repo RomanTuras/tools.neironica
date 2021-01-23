@@ -109,7 +109,7 @@
                                     v-for="vc in vocabularyList"
                                     v-on:click="selectedVocabularyString = vc"
                                     class="list-group-item list-group-item-action my-text" :class=" vc.id === selectedVocabularyString.id ? 'active' : ''">
-                                {{ vc.text_ru }} - {{ vc.translation }} - {{ vc.encoding }}
+                                {{ vc.text_ru }} &nbsp; &#10132; &nbsp; {{ vc.translation }} &nbsp; &#10132; &nbsp; {{ vc.encoding }}
                             </li>
                         </ul>
                     </div>
