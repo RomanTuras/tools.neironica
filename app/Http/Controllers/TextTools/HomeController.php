@@ -14,6 +14,9 @@ class HomeController extends Controller
    */
   public function index()
   {
-    return view('texttools.home');
+    return view('texttools.home',
+        ['data' =>
+             ['page' => 'texttools']
+        ]);
   }
 }

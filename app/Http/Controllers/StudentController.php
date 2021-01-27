@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\VocabularyLanguage;
 use App\VocabularyTheme;
 use App\VocabularyTranslate;
@@ -26,12 +27,24 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        dd('student index page');
+    public function index() {
+        $vc = new VocabularyApiController();
+        $languages = $vc->getLanguages();
+        $varieties = $vc->getVarieties();
+        return view('students.students',
+            ['data' =>
+                 [
+                     'page' => 'students',
+                     'languages' => $languages,
+                     'varieties' => $varieties,
+                     'user_id' => null,
+                     'students' => User::getAllUsers(),
+                 ]
+            ]);
     }
 
-    public function home() {
+
+    public function studentHome() {
         return view('students.home',
             ['data' =>
                  ['page' => 'students.home']

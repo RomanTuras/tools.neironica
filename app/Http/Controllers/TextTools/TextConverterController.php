@@ -14,6 +14,9 @@ class TextConverterController extends Controller
    */
   public function index()
   {
-    return view('texttools.textconverter');
+    return view('texttools.textconverter',
+        ['data' =>
+             ['page' => 'texttools']
+        ]);
   }
 }

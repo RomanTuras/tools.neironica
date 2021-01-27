@@ -204,7 +204,7 @@
 
 {{--  Words from database--}}
   <select class="font-select" id="data" style="display: none">
-    <option id="data" value="{{ $words }}"></option>
+    <option id="data" value="{{ $data['words'] }}"></option>
   </select>
 
   <div class="container">

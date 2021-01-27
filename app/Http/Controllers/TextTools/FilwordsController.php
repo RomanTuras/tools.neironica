@@ -14,6 +14,9 @@ class FilwordsController extends Controller
      */
     public function index()
     {
-        return view('texttools.filwords');
+        return view('texttools.filwords',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 }

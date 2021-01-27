@@ -14,6 +14,9 @@ class SudokuController extends Controller
      */
     public function index()
     {
-        return view('texttools.sudoku');
+        return view('texttools.sudoku',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 }

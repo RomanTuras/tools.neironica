@@ -20,7 +20,10 @@ class GeneratorController extends Controller
      */
     public function numbers()
     {
-        return view('texttools.numbers');
+        return view('texttools.numbers',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 
     /**
@@ -29,7 +32,10 @@ class GeneratorController extends Controller
      */
     public function count()
     {
-        return view('texttools.count');
+        return view('texttools.count',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 
     /**
@@ -38,7 +44,10 @@ class GeneratorController extends Controller
      */
     public function configuration()
     {
-        return view('texttools.configuration');
+        return view('texttools.configuration',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 
     /**
@@ -47,7 +56,10 @@ class GeneratorController extends Controller
      */
     public function arrange()
     {
-        return view('texttools.arrange');
+        return view('texttools.arrange',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 
     /**
@@ -63,7 +75,14 @@ class GeneratorController extends Controller
 
         $words = trim(mb_strtolower($words[0]));
 
-        return view('texttools.encoding-alphabet', ['words' => $words]);
+        return view('texttools.encoding-alphabet',
+            [
+                'data' =>
+                    [
+                        'page' => 'texttools',
+                        'words' => $words
+                    ]
+            ]);
     }
 
     /**
@@ -72,6 +91,9 @@ class GeneratorController extends Controller
      */
     public function encodingNumbers()
     {
-        return view('texttools.encoding-numbers');
+        return view('texttools.encoding-numbers',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 }

@@ -66,6 +66,22 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .start-btn {
+                border: 1px solid #cecece;
+                padding: 10px 40px;
+                border-radius: 20px;
+                font-size: 18px;
+                font-family: 'Nunito', sans-serif;
+                font-weight: 200;
+                text-decoration: none;
+                color: #636b6f;
+                transition: all 1s ease;
+            }
+            .start-btn:hover {
+                color: #000;
+                background-color: #efefef;
+            }
+
         </style>
     </head>
     <body>
@@ -73,11 +89,6 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        @if (\App\User::getRole() == 'admin') {{-- Menu items for administrator --}}
-                            <a href="{{ url('/texttools') }}">{{ __('appbar.start') }}</a>
-                        @elseif (\App\User::getRole() == 'student') {{-- Menu items for teachers --}}
-                            <a href="{{ url('/students') }}">{{ __('appbar.start') }}</a>
-                        @endif
 
                     @else
                         <a href="{{ route('login') }}">{{ __('auth.login') }}</a>
@@ -95,7 +106,14 @@
                 </div>
                 <div class="container">
                     @auth
-                        <p>Разбуди свой интеллект!</p>
+                        <p style="margin-bottom: 40px;">Разбуди свой интеллект!</p>
+                        @can('isAdmin')
+                            <a href="{{ url('/admin') }}" class="start-btn">НАЧАЛО РАБОТЫ</a>
+                        @elsecan('isTeacher')
+                            <a href="{{ url('/teacher') }}" class="start-btn">НАЧАЛО РАБОТЫ</a>
+                        @elsecan('isStudent')
+                            <a href="{{ url('/student') }}" class="start-btn">НАЧАЛО РАБОТЫ</a>
+                        @endcan
                     @else
                         <p>Зарегистрируйтесь или войдите для дальнейшей работы</p>
                     @endauth

@@ -2,8 +2,19 @@
     <main role="main">
         <div class="container">
             <div class="container text-center my-section">
-                <h1>Добавить в словарь</h1>
+                <h1 v-if="isOneStudentPage">Добавить в словарь</h1>
+                <h1 v-else>Студенты</h1>
             </div>
+
+            <div v-if="!isOneStudentPage" class="row">
+                <div class="col-md-8 offset-md-2 my-card">
+                    <label class="my-title" for="selectStudent">Выберите имя студента:</label>
+                    <select v-model="selectedStudent" id="selectStudent" class="custom-select custom-select-lg mb-3">
+                        <option v-for="student in data.students" v-bind:value="student" class="menu-item">{{ student.name }}, {{ student.email }}</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-5 my-card">
                     <label class="my-title" for="selectLanguage">Язык:</label>
@@ -97,7 +108,8 @@
 
             <div class="row my-card">
                 <div class="col-md-12 text-center">
-                    <h3>Мой словарь:</h3>
+                    <h3 v-if="isOneStudentPage">Мой словарь:</h3>
+                    <h3 v-else>Словарь студента: {{ selectedStudent.name }}</h3>
                 </div>
                 <div class="col-md-10 offset-md-1">
                     <button v-if="vocabularyList.length > 0" @click="editTranslation" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;"></i></button>
@@ -130,6 +142,7 @@
             selectedVariety: '1',
             selectedVocabularyString: [],
             selectedTheme: [],
+            selectedStudent: [],
             inputEditTheme: '',
             inputNewTheme: '',
             inputText: '',
@@ -144,14 +157,20 @@
             isEditTranslateMode: false,
             isEditThemePressed: false,
             vocabularyList: [],
+            isOneStudentPage: true, //Trigger is component for One user or for Teacher with list users
         }),
         props: {
             data: {}
         },
         mounted() {
-            this.getThemes()
+            this.getThemes();
+            this.isOneStudentPage = this.data.students.length === 0;
         },
         watch: {
+            selectedStudent: function() {
+                this.data.userId = this.selectedStudent.id;
+                this.getThemes();
+            },
             selectedLang: function() {
                 this.getVocabulary();
             },
@@ -263,6 +282,11 @@
     main {
         background-color: #e6f5f1;
         padding-bottom: 100px;
+        margin-top: -23px;
+        margin-bottom: -30px;
+    }
+    h1 {
+        padding-top: 20px;
     }
     .my-card {
         margin-bottom: 50px;

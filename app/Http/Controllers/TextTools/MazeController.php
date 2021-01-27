@@ -14,6 +14,9 @@ class MazeController extends Controller
    */
   public function index()
   {
-      return view('texttools.maze');
+      return view('texttools.maze',
+          ['data' =>
+               ['page' => 'texttools']
+          ]);
   }
 }

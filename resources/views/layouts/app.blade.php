@@ -30,29 +30,8 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="../img/@2x/favicon.png" width="16" height="16" class="d-inline-block align-top" alt="">
-                    {{ config('app.name', 'Neironica') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-{{--                Creating App Bar--}}
-                @if(isset($data))
-                    @if($data['page'] == 'students.home')
-                        @include('appbars.home-student')
-                    @elseif($data['page'] == 'students.vocabulary' || $data['page'] == 'students.vocabulary-exercise')
-                        @include('appbars.vocabulary')
-                        @endif
-                    @else
-                @include('appbars.start')
-                    @endif
-
-            </div>
-        </nav>
+        @include('layouts.navbar')
 
         <main class="py-4">
             @yield('content')

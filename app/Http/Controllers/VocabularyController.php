@@ -14,25 +14,27 @@ class VocabularyController extends Controller
         $vc = new VocabularyApiController();
         $languages = $vc->getLanguages();
         $varieties = $vc->getVarieties();
-        return view('students.vocabulary',
+        return view('layouts.vocabulary',
             ['data' =>
                  [
-                     'page' => 'students.vocabulary',
+                     'page' => 'vocabulary',
                      'languages' => $languages,
                      'varieties' => $varieties,
                      'user_id' => Auth::id(),
+                     'students' => [],
                  ]
             ]);
     }
+
 
     public function exercise() {
         $vc = new VocabularyApiController();
         $languages = $vc->getLanguages();
         $varieties = $vc->getVarieties();
-        return view('students.vocabulary-exercise',
+        return view('layouts.vocabulary-exercise',
             ['data' =>
                  [
-                     'page' => 'students.vocabulary-exercise',
+                     'page' => 'vocabulary',
                      'languages' => $languages,
                      'varieties' => $varieties,
                      'user_id' => Auth::id(),

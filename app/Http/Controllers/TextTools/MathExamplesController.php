@@ -14,6 +14,9 @@ class MathExamplesController extends Controller
      */
     public function index()
     {
-        return view('texttools.math-examples');
+        return view('texttools.math-examples',
+            ['data' =>
+                 ['page' => 'texttools']
+            ]);
     }
 }

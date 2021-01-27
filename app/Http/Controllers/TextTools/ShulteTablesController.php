@@ -14,6 +14,9 @@ class ShulteTablesController extends Controller
    */
   public function index()
   {
-      return view('texttools.shulte');
+      return view('texttools.shulte',
+          ['data' =>
+               ['page' => 'texttools']
+          ]);
   }
 }

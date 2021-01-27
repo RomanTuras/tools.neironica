@@ -2,9 +2,12 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
@@ -28,7 +31,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'role'
     ];
 
     /**
@@ -40,12 +43,38 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function vocabularyThemes(){
+    public function vocabularyThemes() {
         return $this->belongsToMany(VocabularyTheme::class);
     }
 
-    public function vocabularyTranslate(){
+    public function vocabularyTranslate() {
         return $this->belongsToMany(VocabularyTranslate::class);
+    }
+
+    /**
+     * Getting user by ID
+     * @param $id
+     *
+     * @return Model|Builder|object|null
+     */
+    public static function getUser($id) {
+        return DB::table('users')->where('id', '=', $id)->first();
+    }
+
+    /**
+     * Getting all users
+     * @return Collection
+     */
+    public static function getAllUsers() {
+        return DB::table('users')->orderBy('name')->get();
+    }
+
+    /**
+     * Getting all users, except admins role
+     * @return Collection
+     */
+    public static function getUsersForTeacher() {
+        return DB::table('users')->whereNotIn('role', ['admin'])->orderBy('name')->get();
     }
 
     /**

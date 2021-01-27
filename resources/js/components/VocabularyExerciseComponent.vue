@@ -160,6 +160,11 @@
     main {
         background-color: #e6f5f1;
         padding-bottom: 100px;
+        margin-top: -23px;
+        margin-bottom: -30px;
+    }
+    h1 {
+        padding-top: 20px;
     }
     .my-card {
         margin-bottom: 50px;

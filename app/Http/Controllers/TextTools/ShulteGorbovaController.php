@@ -14,6 +14,9 @@ class ShulteGorbovaController extends Controller
    */
   public function index()
   {
-      return view('texttools.shulte-gorbova');
+      return view('texttools.shulte-gorbova',
+          ['data' =>
+               ['page' => 'texttools']
+          ]);
   }
 }
