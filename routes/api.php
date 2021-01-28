@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function (){
     Route::post('/vocabulary-insert-theme/{user_id}/{language_id}/{name}', 'VocabularyApiController@insertTheme');
     Route::post('/vocabulary-insert-translation/{user_id}/{language_id}/{theme_id}/{variety_id}/{text_ru}/{transl}/{encode}', 'VocabularyApiController@insertTranslation');
+
+    Route::post('/vocabulary-copy-theme/{user_to}/{user_from}/{theme_name}/{theme_id}/{language_id}/{variety_id}', 'VocabularyApiController@copyTheme');
+
     Route::post('/vocabulary-update-translation/{id}/{text_ru}/{transl}/{encode}', 'VocabularyApiController@updateTranslation');
     Route::post('/vocabulary-update-theme/{theme_id}/{name}', 'VocabularyApiController@updateTheme');
 //    Route::post('/vocabulary-update-theme/{object}', 'VocabularyApiController@updateTheme');

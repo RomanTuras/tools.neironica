@@ -25,6 +25,13 @@ export default {
     async getThemes(user_id) {
         return apiClient("/api/vocabulary-get-themes/" + user_id);
     },
+    async copyTheme(user_to, user_from, theme_name, theme_id, language_id, variety_id) {
+        return await apiClient
+            .post("/api/vocabulary-copy-theme/" + user_to + '/' + user_from + '/' + theme_name + '/' + theme_id  + '/' + language_id + '/' + variety_id)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
     async updateTranslation(id, text_ru, transl, encode) {
         return await apiClient
             .post("/api/vocabulary-update-translation/" + id + '/' + text_ru + '/' + transl + '/' + encode)

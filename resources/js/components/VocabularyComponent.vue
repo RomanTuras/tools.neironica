@@ -9,7 +9,7 @@
             <div v-if="!isOneStudentPage" class="row">
                 <div class="col-md-8 offset-md-2 my-card">
                     <label class="my-title" for="selectStudent">Выберите имя студента:</label>
-                    <select v-model="selectedStudent" id="selectStudent" class="custom-select custom-select-lg mb-3">
+                    <select v-model="currentStudent" id="selectStudent" class="custom-select custom-select-lg mb-3">
                         <option v-for="student in data.students" v-bind:value="student" class="menu-item">{{ student.name }}, {{ student.email }}</option>
                     </select>
                 </div>
@@ -98,9 +98,33 @@
 
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <button :disabled="!selectedTheme.name" v-on:click="addTextTranslate" type="submit" class="btn my-btn" style="width: 90%; font-size: 18px">СОХРАНИТЬ В СЛОВАРЬ</button>
+                            <button :disabled="!selectedTheme.name" v-on:click="addTextTranslate" type="submit" class="btn my-btn" style="width: 90%; font-size: 18px">Сохранить в словарь</button>
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            <button data-toggle="collapse" data-target="#copy-theme-block" aria-expanded="false" aria-controls="copy-theme-block"
+                                    :disabled="!selectedTheme.name"
+                                    v-if="!isOneStudentPage" v-on:click="" type="submit" class="btn my-btn"
+                                    style="width: 90%; font-size: 18px; margin-top: 30px;">Копирование темы</button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div id="copy-theme-block" class="row collapse">
+                <div class="col-md-8 offset-md-2 my-card">
+                    <label class="my-title" for="studentForCopy">Выберите, кому добавить тему:</label>
+                    <select v-model="selectedStudentForCopy" id="studentForCopy" class="custom-select custom-select-lg mb-3">
+                        <option :disabled="currentStudent.id === student.id"
+                                v-for="student in data.students"
+                                v-bind:value="student"
+                                class="menu-item">{{ student.name }}, {{ student.email }}</option>
+                    </select>
+                </div>
+                <div class="col-md-8 offset-md-2 my-card text-center" style="padding-top: 20px; padding-bottom: 30px;">
+                    <h4 v-if="selectedStudentForCopy.name">Внимание, тема "{{ selectedTheme.name }}" будет добавлена студенту {{ selectedStudentForCopy.name }}</h4>
+                    <h4 v-else>Студент не выбран</h4>
+                    <button :disabled="!selectedStudentForCopy.name" v-on:click="copyTheme" type="submit" class="btn my-btn" style="width: 90%; font-size: 18px; margin-top: 30px;">ДОБАВИТЬ</button>
                 </div>
             </div>
 
@@ -109,7 +133,7 @@
             <div class="row my-card">
                 <div class="col-md-12 text-center">
                     <h3 v-if="isOneStudentPage">Мой словарь:</h3>
-                    <h3 v-else>Словарь студента: {{ selectedStudent.name }}</h3>
+                    <h3 v-else>Словарь студента: {{ currentStudent.name }}</h3>
                 </div>
                 <div class="col-md-10 offset-md-1">
                     <button v-if="vocabularyList.length > 0" @click="editTranslation" type="button" class="btn my-btn" style="float: right; margin-bottom: 15px"><i class="fa fa-edit" style="font-size: 18px;"></i></button>
@@ -129,8 +153,32 @@
                 </div>
             </div>
 
-
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: bold;">
+                            <i v-if="isModalErrorWindow" id="error-icon" class="fa fa-times-circle" aria-hidden="true"></i>
+                            <i v-else id="success-icon" class="fa fa-check-circle" aria-hidden="true"></i>
+                            {{ modalTitle }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ modalMsg }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </main>
 </template>
 
@@ -140,9 +188,13 @@
         data: () => ({
             selectedLang: '1',
             selectedVariety: '1',
+            themeId: 0,
             selectedVocabularyString: [],
             selectedTheme: [],
-            selectedStudent: [],
+            currentStudent: [],
+            selectedStudentForCopy: [],
+            themes: [],
+            vocabularyList: [],
             inputEditTheme: '',
             inputNewTheme: '',
             inputText: '',
@@ -151,24 +203,27 @@
             alertEditThemeName: '',
             alertAddNewTheme: '',
             alertAddText: '',
-            themes: [],
-            themeId: 0,
             isEditBlock: false,
             isEditTranslateMode: false,
             isEditThemePressed: false,
-            vocabularyList: [],
+            isCopyThemeBlockOpen: false,
             isOneStudentPage: true, //Trigger is component for One user or for Teacher with list users
+            isModalErrorWindow: true,
+            modalMsg: '',
+            modalTitle: '',
         }),
         props: {
             data: {}
         },
         mounted() {
+            // $('#resultModal').modal('show');
+            // this.modalTitle = this.isModalErrorWindow ? 'Ошибка' : 'Успешно';
             this.getThemes();
             this.isOneStudentPage = this.data.students.length === 0;
         },
         watch: {
-            selectedStudent: function() {
-                this.data.userId = this.selectedStudent.id;
+            currentStudent: function() {
+                this.data.userId = this.currentStudent.id;
                 this.getThemes();
             },
             selectedLang: function() {
@@ -210,6 +265,20 @@
             },
             onThemeClick: function() {
                 this.getVocabulary()
+            },
+            copyTheme: function() {
+                let userToId = this.selectedStudentForCopy.id;
+                let userFromId = this.data.userId;
+                let themeName = this.selectedTheme.name;
+                let themeId = this.selectedTheme.id;
+                let languageId = this.selectedLang;
+                let varietyId = this.selectedVariety;
+                ApiServices.copyTheme(userToId, userFromId, themeName, themeId, languageId, varietyId).then( response => {
+                    this.modalMsg = response.data.data.response;
+                    this.isModalErrorWindow = response.data.data.error;
+                    this.modalTitle = this.isModalErrorWindow ? 'Ошибка!' : 'Успешно!';
+                    $('#resultModal').modal('show');
+                });
             },
             editTranslation: function() {
                 this.isEditTranslateMode = true;
@@ -321,6 +390,16 @@
     }
     select option:after {
         background: #2a9055;
+    }
+    #error-icon {
+        font-size: 24px;
+        color: red;
+        margin-right: 30px;
+    }
+    #success-icon {
+        font-size: 24px;
+        color: green;
+        margin-right: 30px;
     }
 
 </style>

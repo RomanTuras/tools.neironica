@@ -41,14 +41,50 @@ class VocabularyApiController extends Controller
 
     /**
      * Insert a new theme
+     *
      * @param $userId
      * @param $languageId
      * @param $name
+     *
+     * @return int
      */
     public function insertTheme($userId, $languageId, $name) {
         $name = htmlentities($name, ENT_QUOTES, 'UTF-8', false);
         $vt = new VocabularyTheme();
-        $vt->insertTheme($userId, $languageId, $name);
+        return $vt->insertTheme($userId, $languageId, $name);
+    }
+
+    /**
+     * Copying theme to user
+     * @param $userTo
+     * @param $userFrom
+     * @param $themeName
+     * @param $themeId
+     * @param $languageId
+     * @param $varietyId
+     *
+     * @return array
+     */
+    public function copyTheme($userTo, $userFrom, $themeName, $themeId, $languageId, $varietyId) {
+        $vt = new VocabularyTheme();
+        if ($vt->isThemeNameExist($userTo, $themeName)){
+            $error = true;
+            $response = "Ошибка! Пользователь уже имеет тему с таким названием!";
+        } else {
+            $insertedThemeId = $this->insertTheme($userTo, $languageId, $themeName);
+            $vocabularyList = $this->getUserVocabulary($userFrom, $languageId, $themeId, $varietyId);
+            foreach ($vocabularyList as $row) {
+                $this->insertTranslation($userTo, $languageId, $insertedThemeId, $varietyId, $row->text_ru, $row->translation, $row->encoding);
+            }
+            $error = false;
+            $response = 'Данные успешно скопированы!';
+        }
+        return [
+            'data' => [
+                'error' => $error,
+                'response' => $response,
+            ]
+        ];
     }
 
 

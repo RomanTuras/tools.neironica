@@ -31,13 +31,16 @@ class VocabularyTheme extends Model
 
     /**
      * Inserting a new theme
+     *
      * @param $userId
      * @param $languageId
      * @param $name
+     *
+     * @return int
      */
     public function insertTheme($userId, $languageId, $name) {
-        DB::table('vocabulary_theme')
-            ->insert(['name'=>$name, 'user_id'=>$userId, 'language_id'=>$languageId]);
+        return DB::table('vocabulary_theme')
+                 ->insertGetId(['name'=>$name, 'user_id'=>$userId, 'language_id'=>$languageId]);
     }
 
     /**
