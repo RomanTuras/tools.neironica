@@ -55,6 +55,14 @@ class VocabularyTheme extends Model
     }
 
     /**
+     * Deleting all user themes
+     * @param $userId
+     */
+    public function deleteUsersThemes($userId) {
+        DB::table('vocabulary_theme')->where('user_id', '=', $userId)->delete();
+    }
+
+    /**
      * Checking is theme name exist by user ID
      * @param $userId
      * @param $name

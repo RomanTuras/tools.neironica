@@ -67,5 +67,4 @@ Route::group(['prefix' => 'admin', 'namespace'=>'TextTools'], function () {
 
 Route::group(['prefix' => 'admin/users', 'middleware'=>['admin']], function () {
     Route::get('/', 'UsersController@index');
-    Route::get('/user-review/{id}', 'UsersController@userReview');
 });

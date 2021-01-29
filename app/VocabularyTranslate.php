@@ -77,4 +77,12 @@ class VocabularyTranslate extends Model
             ->update(['text_ru' => $textRu, 'translation' => $transl, 'encoding' => $encode, 'updated_at' => now()]);
     }
 
+    /**
+     * Deleting all user themes
+     * @param $userId
+     */
+    public function deleteUsersTranslation($userId) {
+        DB::table('vocabulary_translate')->where('user_id', '=', $userId)->delete();
+    }
+
 }

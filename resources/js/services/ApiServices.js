@@ -25,6 +25,23 @@ export default {
     async getThemes(user_id) {
         return apiClient("/api/vocabulary-get-themes/" + user_id);
     },
+    async getUsers() {
+        return apiClient("/api/users/");
+    },
+    async deleteUser(userId) {
+        return await apiClient
+            .post("/api/users/delete-user/" + userId)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
+    async changeUserRole(userId, role) {
+        return await apiClient
+            .post("/api/users/change-role/" + userId + '/' + role)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
     async copyTheme(user_to, user_from, theme_name, theme_id, language_id, variety_id) {
         return await apiClient
             .post("/api/vocabulary-copy-theme/" + user_to + '/' + user_from + '/' + theme_name + '/' + theme_id  + '/' + language_id + '/' + variety_id)

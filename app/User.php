@@ -70,11 +70,24 @@ class User extends Authenticatable
     }
 
     /**
-     * Getting all users, except admins role
-     * @return Collection
+     * Change user role
+     * @param $userId
+     * @param $role
      */
-    public static function getUsersForTeacher() {
-        return DB::table('users')->whereNotIn('role', ['admin'])->orderBy('name')->get();
+    public function updateUserRole($userId, $role) {
+        DB::table('users')->where('id', '=', $userId)->update(['role' => $role]);
+    }
+
+    /**
+     * Delete user and all his data
+     * @param $userId
+     */
+    public function deleteUser($userId) {
+        $vt = new VocabularyTheme();
+        $vt->deleteUsersThemes($userId);
+        $vTrans = new VocabularyTranslate();
+        $vTrans->deleteUsersTranslation($userId);
+        DB::table('users')->where('id', '=', $userId)->delete();
     }
 
     /**
