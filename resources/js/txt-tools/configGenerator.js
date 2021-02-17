@@ -170,7 +170,7 @@ $(function () {
                         item = `<img src="${imageUrl}" />`;
                         i++;
                     }else item = `<img class="img-hidden" src="${imageUrl}" />`;
-                    table += `<th class="cell-opened">${item}</th>`;
+                    table += `<th class="cell-opened" style="background: white;">${item}</th>`;
                     counter++;
                 });
                 table += '</tr>';
