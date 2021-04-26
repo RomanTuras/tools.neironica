@@ -175,8 +175,9 @@ $(function () {
             table += '<tr>';
             let col = 0;
             for (let j=0; j<word.length; j++){
-                table += `<th class="cell-math" style="text-align: center;">`;
+                table += `<th class="cell-math" style="text-align: center; font-size: 30px;">`;
                 table += word.charAt(j);
+                table += `</br>`;
                 table += getImagesByLetters( wordToLower.charAt(j), encodeSet, false);
                 table += `</th>`;
                 col++;
