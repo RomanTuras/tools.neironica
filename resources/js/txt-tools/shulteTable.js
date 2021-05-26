@@ -6,19 +6,28 @@
  * - RandomizeHelper.js
  * - ShuffleHelper.js
  */
+
 $(function() {
+  //default settings for "Shulte Table"
+  let settingsObject = JSON.parse('{"fontFamily": "Arial","fontSize": "18","inputType": "1","cellPaddingX": "17","cellPaddingY": "17","rows": 3,"cols": 3,"bgImage": false,"inputColorSchema": "no","isBold": false,"isColored": false,"fontColor": "#0000ff" }');
+
   if ($("#shulte-table").length) {
     const key = "shulte-table";
-    let settingsObject = { //default settings for "Shulte Table"
-      'fontFamily': 'Arial',
-      'fontSize': 18,
-      'inputType': 1,
-      'cellPaddingX': 17,
-      'cellPaddingY': 17
-    };
+    if (LocalStorageHelper.getFontSettings(key) != null) {
+      if (LocalStorageHelper.getFontSettings(key).hasOwnProperty('rows')) {
+        settingsObject = LocalStorageHelper.getFontSettings(key);
+      }
+    }
     setupControls(key, settingsObject);
     startShulte();
     listenIvents(key, settingsObject);
+
+
+    let val = $("#inputColorSchema").val();
+    let listColors = val.split(',');
+    paintTableBackground("#shulte-table", listColors);
+    let isColored = $("#checkboxColored").prop("checked") === true;
+    styleTable(isColored);
   }
 });
 
@@ -29,8 +38,7 @@ function startShulte() {
   $("#generate-shulte").unbind().click(function() {
     let rows = $("#inputRowsShulte").val();
     let cols = $("#inputColsShulte").val();
-    let isColored = $("#checkboxColored").prop("checked");
-
+    let isColored = $("#checkboxColored").prop("checked") === true;
     let type = $("#inputType").val();
     let offset = 0;
     let isError = false;
@@ -92,6 +100,13 @@ function setupControls(key, settingsObject) {
   let cellPaddingX = settingsObject.cellPaddingX;
   let cellPaddingY = settingsObject.cellPaddingY;
   let inputType = settingsObject.inputType;
+  let rows = settingsObject.rows;
+  let cols =settingsObject.cols;
+  let bgImage = settingsObject.bgImage;
+  let colorSchema = settingsObject.inputColorSchema;
+  let isBold = settingsObject.isBold;
+  let isColored = settingsObject.isColored;
+  let fontColor = settingsObject.fontColor;
 
   if (LocalStorageHelper.getFontSettings(key) != null) {
     fontFamily = LocalStorageHelper.getFontSettings(key).fontFamily;
@@ -99,6 +114,13 @@ function setupControls(key, settingsObject) {
     cellPaddingX = LocalStorageHelper.getFontSettings(key).cellPaddingX;
     cellPaddingY = LocalStorageHelper.getFontSettings(key).cellPaddingY;
     inputType = LocalStorageHelper.getFontSettings(key).inputType;
+    rows = LocalStorageHelper.getFontSettings(key).rows;
+    cols = LocalStorageHelper.getFontSettings(key).cols;
+    bgImage = LocalStorageHelper.getFontSettings(key).bgImage;
+    fontColor = LocalStorageHelper.getFontSettings(key).fontColor;
+    colorSchema = LocalStorageHelper.getFontSettings(key).inputColorSchema;
+    isBold = LocalStorageHelper.getFontSettings(key).isBold;
+    isColored = LocalStorageHelper.getFontSettings(key).isColored;
   }
 
   $("#inputFontNameShulte").val(fontFamily);
@@ -106,6 +128,13 @@ function setupControls(key, settingsObject) {
   $("#paddingRangeShulteX").val(cellPaddingX);
   $("#paddingRangeShulteY").val(cellPaddingY);
   $("#inputType").val(inputType);
+  $("#inputRowsShulte").val(rows);
+  $("#inputColsShulte").val(cols);
+  $("#inputColorSchema").val(colorSchema);
+  if (bgImage) $("#inputBgImage").val(bgImage);
+  $("#checkboxColored").prop("checked", isColored);
+  $("#checkboxBoldShulte").prop("checked", isBold);
+  $("#inputFontColorShulte").val(fontColor);
 }
 
 /**
@@ -114,6 +143,31 @@ function setupControls(key, settingsObject) {
  * @param {json} settingsObject 
  */
 function listenIvents(key, settingsObject) {
+
+  $("#inputBgImage").on('change', function() {
+    settingsObject.bgImage = this.value;
+    LocalStorageHelper.saveFontSettings(key, this.settingsObject);
+  });
+
+  $("#inputColorSchema").on('change', function() {
+    settingsObject.inputColorSchema = this.value;
+    LocalStorageHelper.saveFontSettings(key, this.settingsObject);
+  });
+
+  $("#inputFontColorShulte").on('change', function() {
+    settingsObject.fontColor = this.value;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+  });
+
+  $("#inputColsShulte").on('change', function() {
+    settingsObject.cols = this.value;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+  });
+
+  $("#inputRowsShulte").on('change', function() {
+    settingsObject.rows = this.value;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+  });
 
   // Set selected font size
   $("#inputFontSizeShulte").on('change', function() {
@@ -163,19 +217,27 @@ function listenIvents(key, settingsObject) {
   //Bold text - checkbox event handler
   $("#checkboxBoldShulte").change(function() {
     if ($("#checkboxBoldShulte").prop("checked") === true) {
+      settingsObject.isBold = true;
       $(".cell").css("font-weight", "bold");
     } else {
+      settingsObject.isBold = false;
       $(".cell").css("font-weight", "normal");
     }
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
 
   $("#checkboxColored").change(function() {
-    paintTableColor("#shulte-table", $("#checkboxColored").prop("checked"));
+    let isColored = $("#checkboxColored").prop("checked");
+    settingsObject.isColored = isColored;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+    paintTableColor("#shulte-table", isColored);
   });
 
   //Background color -  event handler
   $("#inputColorSchema").change(function() {
     let listColors = this.value.split(',');
+    settingsObject.colorSchema = listColors;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
     paintTableBackground("#shulte-table", listColors);
   });
 
@@ -183,6 +245,8 @@ function listenIvents(key, settingsObject) {
   //St background image
   $("#inputBgImage").change(function() {
     let pathImage = this.value;
+    settingsObject.bgImage = pathImage;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
     $("table").css('background-image', `url('${pathImage}')`);
   })
 }
@@ -312,7 +376,8 @@ function styleTable(isColored) {
   }
   let listColors = $("#inputColorSchema").val().split(',');
   paintTableBackground("#shulte-table", listColors);
-  paintTableColor("#shulte-table" ,isColored)
+
+  if (isColored) paintTableColor("#shulte-table" ,isColored);
 
   let pathImage = $("#inputBgImage").val();
   $("table").css('background-image', `url('${pathImage}')`);

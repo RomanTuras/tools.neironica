@@ -39,6 +39,7 @@
                   <label class="input-group-text" for="inputRows">Table</label>
                 </div>
                 <select class="rows-select" id="inputRows">
+                  <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
@@ -63,6 +64,7 @@
                   <label class="input-group-text" for="inputCols">:</label>
                 </div>
                 <select class="rows-select" id="inputCols">
+                  <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
@@ -124,6 +126,7 @@
               <label class="input-group-text" for="inputBgColor">Bg color</label>
             </div>
             <select class="color-select" id="inputBgColor">
+              <option value="white" style="color: #0000ff">White</option>
               <option value="#0000ff" style="color: #0000ff">#0000ff</option>
               <option value="#000839" style="color: #000839">#000839</option>
               <option value="#002bdc" style="color: #002bdc">#002bdc</option>
