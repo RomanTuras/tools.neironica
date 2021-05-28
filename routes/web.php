@@ -15,6 +15,11 @@ Auth::routes();
 //    return 'DONE, exit code: '.$exitCode;
 //});
 
+Route::get('/puzzle', function (){
+    return view('puzzle');
+});
+
+
 Route::group(['middleware'=>['auth']], function () {
     Route::get('/student', 'StudentController@studentHome');
     Route::get('/vocabulary', 'VocabularyController@index');
