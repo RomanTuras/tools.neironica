@@ -34,7 +34,19 @@ Route::middleware('auth:api')->group(function (){
     Route::get('/users', 'UsersController@getUsers');
 });
 
+Route::middleware('auth:api')->group(function (){
+    Route::post('/puzzle-insert-folder/{name}', 'PuzzleController@insertFolderName');
+    Route::post('/puzzle-update-folder-name/{id}/{name}', 'PuzzleController@updateFolderName');
+    Route::get('/puzzle-folders', 'PuzzleController@getPuzzleFolders');
+    Route::get('/puzzle/{folderId}', 'PuzzleController@getAllPuzzles');
+    Route::post('/puzzle/store-image/{folderId}', 'PuzzleController@storeImage');
+    Route::post('/puzzle/store-puzzle-image/{folderId}', 'PuzzleController@insertNewPuzzleImage');
+    Route::post('/puzzle/update-puzzle-image/{puzzleId}/{folderId}', 'PuzzleController@updatePuzzleImage');
+    Route::delete('/puzzle/delete-puzzle/{puzzleId}/{folderId}', 'PuzzleController@deletePuzzle');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 

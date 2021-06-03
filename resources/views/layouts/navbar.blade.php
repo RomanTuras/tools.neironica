@@ -40,6 +40,18 @@
                     </div>
                 </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPuzzle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Пазлы
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownPuzzle">
+                            <a class="dropdown-item" href="{{ url('/puzzle') }}">Играть</a>
+                                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'teacher')
+                                    <a class="dropdown-item" href="{{ url('/puzzle-manage') }}">Управление</a>
+                                @endif
+                        </div>
+                    </li>
+
 
                 <li id="menu-user-item" class="dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

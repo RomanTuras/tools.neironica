@@ -1,12 +1,23 @@
 import axios from "axios"
 
+const baseUrl = `http://127.0.0.1:8000/`;
+// const baseUrl = `http://tools.neironica.com/`;
 const apiClient = axios.create({
-    baseURL: `http://tools.neironica.com/`,
-    // baseURL: `http://127.0.0.1:8000/`,
+    baseURL: baseUrl,
     withCredentials: false, // This is the default
     headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+    },
+    timeout: 10000,
+});
+
+const apiClientForFile = axios.create({
+    baseURL: baseUrl,
+    withCredentials: false, // This is the default
+    headers: {
+        Accept: "multipart/form-data",
+        "Content-Type": "multipart/form-data",
     },
     timeout: 10000,
 });
@@ -89,6 +100,62 @@ export default {
                 }
                 return error.response;
             });
-    }
+    },
+    async insertFolderName(name) {
+        return await apiClient
+            .post("/api/puzzle-insert-folder/" + name)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
+    async updateFolderName(id, name) {
+        return await apiClient
+            .post("/api/puzzle-update-folder-name/" + id + '/' + name)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
+    async getPuzzleFolders() {
+        return await apiClient
+            .get("/api/puzzle-folders")
+            .catch(function(error) {
+            return error.response;
+        });
+    },
+    async uploadImage(formData, folderId) {//Storing a folder image
+        return await apiClientForFile
+            .post("api/puzzle/store-image/" + folderId, formData)
+            .catch(function (error) {
+                return error.response;
+            });
+    },
+    async uploadPuzzleImage(formData, folderId) {//Storing a puzzle image
+        return await apiClientForFile
+            .post("api/puzzle/store-puzzle-image/" + folderId, formData)
+            .catch(function (error) {
+                return error.response;
+            });
+    },
+    async updatePuzzleImage(formData, folderId, puzzleId) {//Storing a puzzle image
+        return await apiClientForFile
+            .post("api/puzzle/update-puzzle-image/" + puzzleId + '/' + folderId, formData)
+            .catch(function (error) {
+                return error.response;
+            });
+    },
+    async getAllPuzzles(folderId) {
+        return await apiClient
+            .get("/api/puzzle/" + folderId)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
+    async deletePuzzle(puzzleId, folderId) {
+        return await apiClient
+            .delete("/api/puzzle/delete-puzzle/" + puzzleId + '/' + folderId)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
 }
 
