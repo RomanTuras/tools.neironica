@@ -10,15 +10,25 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Route::get('/clear-cache', function() {
-//    $exitCode = Artisan::call('config:cache');
-//    return 'DONE, exit code: '.$exitCode;
-//});
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE, exit code: '.$exitCode;
+});
 
 Route::get('/puzzle', function (){
     return view('puzzle');
 });
 
+Route::get('/phpinfo', function (){
+    phpinfo();
+});
+
+Route::get('/puzzle/folders', 'PuzzleController@getFolders');
+Route::get('/puzzle/puzzles/{folder_id}', 'PuzzleController@getPuzzles');
+Route::get('/puzzle/{id}', 'PuzzleController@getPuzzleImage');
+Route::get('/puzzle-manage', 'PuzzleController@index')->middleware('can:isTeacher');
+Route::get('/puzzle-manage', 'PuzzleController@index')->middleware('can:isAdmin');
 
 Route::group(['middleware'=>['auth']], function () {
     Route::get('/student', 'StudentController@studentHome');
