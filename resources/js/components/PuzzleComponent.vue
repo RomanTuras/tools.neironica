@@ -268,6 +268,7 @@
                         ApiServices.updatePuzzleImage(formData, folderId, puzzleId).then(response => {
                             if (!response.data.error) {
                                 this.getPuzzles();
+                                this.isPuzzleSpinnerRunning = false;
                             }
                             this.alertUploadPuzzleFile = response.data.response;
                         });

@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const baseUrl = `http://127.0.0.1:8000/`;
-// const baseUrl = `http://tools.neironica.com/`;
+// const baseUrl = `http://127.0.0.1:8000/`;
+const baseUrl = `http://tools.neironica.com/`;
 const apiClient = axios.create({
     baseURL: baseUrl,
     withCredentials: false, // This is the default

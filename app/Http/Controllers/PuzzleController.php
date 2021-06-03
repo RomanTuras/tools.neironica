@@ -15,7 +15,9 @@ class PuzzleController extends Controller {
 
     const MY_PATH = 'assets/images/';
     const PREVIEW_IMAGE_WIDTH = 200;
+    const PREVIEW_IMAGE_HEIGHT = 120;
     const IMAGE_WIDTH = 800;
+    const IMAGE_HEIGHT = 480;
 
     /**
      * Getting puzzle manage page
@@ -57,6 +59,66 @@ class PuzzleController extends Controller {
     }
 
     /**
+     * Deleting file if exist
+     * @param $path
+     * @param $fileName
+     */
+    private function deleteFile($path, $fileName) {
+        if (File::exists($path . '/' . $fileName)) {
+            unlink($path . '/' . $fileName);
+        }
+    }
+
+    /**
+     * Resizing image depend on is it Preview or not
+     *
+     * @param $isPreview
+     * @param $requestImage
+     * @param $uploadPath
+     * @param $uploadFileName
+     *
+     * @return array
+     */
+    private function resizeImage($isPreview, $requestImage, $uploadPath, $uploadFileName){
+        $img = Image::make($requestImage);
+        $height = $img->height();
+        $width = $img->width();
+        $isLandscape = $width > $height;
+        $ratio = round($width / $height, 2);
+
+        if ($isPreview) { //Small Image
+            if ($isLandscape) {
+                $newWidth = self::PREVIEW_IMAGE_WIDTH;
+                $newHeight = $newWidth / $ratio;
+            } else {//Portrait
+                $newHeight = self::PREVIEW_IMAGE_HEIGHT;
+                $newWidth = $newHeight * $ratio;
+            }
+        } else {//FullSize Image
+            if ($isLandscape) {
+                $newWidth = self::IMAGE_WIDTH;
+                $newHeight = $newWidth / $ratio;
+            } else {//Portrait
+                $newHeight = self::IMAGE_HEIGHT;
+                $newWidth = $newHeight * $ratio;
+            }
+        }
+        $newHeight = round($newHeight, 0);
+        $newWidth = round($newWidth, 0);
+
+        $img->resize($newWidth, $newHeight, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($uploadPath.'/'.$uploadFileName);
+
+        return [
+            'width' => $newWidth,
+            'height' => $newHeight,
+            'ratio' => $ratio,
+        ];
+
+    }
+
+    /**
      * Updating a puzzle image
      * @param  Request  $request
      * @param $puzzleId
@@ -70,45 +132,26 @@ class PuzzleController extends Controller {
         $imageName = time() . '.jpg';
         $previewImageName = 'preview_' . time() . '.jpg';
         $alias = $pf->getAlias($folderId)->alias;
+        $uploadPath = public_path(self::MY_PATH . '/' . $alias);
 
-        $image = $request->file;
-        $img = Image::make($image->path());
+        $this->resizeImage(true, $request->file, $uploadPath, $previewImageName);
+        $imageSize = $this->resizeImage(false, $request->file, $uploadPath, $imageName);
 
-        $upload_path = public_path(self::MY_PATH . '/' . $alias);
-
-        $height = $img->height();
-        $width = $img->width();
-        $ratio = round($width / $height, 2);
-        $newHeight = round(self::IMAGE_WIDTH / $ratio, 0);
-
-        $img->resize(self::IMAGE_WIDTH, $newHeight, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($upload_path.'/'.$imageName);
-
-        $img->resize(self::PREVIEW_IMAGE_WIDTH, self::PREVIEW_IMAGE_WIDTH / $ratio, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($upload_path.'/'.$previewImageName);
-
-
-        if (File::exists($upload_path . '/' . $imageName)
-            && File::exists($upload_path . '/' . $previewImageName)) {
+        if (File::exists($uploadPath . '/' . $imageName)
+            && File::exists($uploadPath . '/' . $previewImageName)) {
 
             $puzzle = $p->getPuzzle($puzzleId);
-            if (File::exists($upload_path . '/' . $puzzle->image)) {
-                unlink($upload_path . '/' . $puzzle->image);
-            }
-            if (File::exists($upload_path . '/' . $puzzle->preview_image)) {
-                unlink($upload_path . '/' . $puzzle->preview_image);
-            }
+            $this->deleteFile($uploadPath, $puzzle->image);
+            $this->deleteFile($uploadPath, $puzzle->preview_image);
 
             $error = false;
             $p->updatePuzzleImage(
                 $puzzleId,
                 $imageName,
                 $previewImageName,
-                $width,
-                $newHeight,
-                $ratio
+                $imageSize['width'],
+                $imageSize['height'],
+                $imageSize['ratio']
             );
             $response = 'Успешно обновлено!';
         } else {
@@ -134,36 +177,21 @@ class PuzzleController extends Controller {
         $imageName = time() . '.jpg';
         $previewImageName = 'preview_' . time() . '.jpg';
         $alias = $pf->getAlias($folderId)->alias;
+        $uploadPath = public_path(self::MY_PATH . '/' . $alias);
 
-        $image = $request->file;
-        $img = Image::make($image->path());
+        $this->resizeImage(true, $request->file, $uploadPath, $previewImageName);
+        $imageSize = $this->resizeImage(false, $request->file, $uploadPath, $imageName);
 
-        $upload_path = public_path(self::MY_PATH . '/' . $alias);
-
-        $height = $img->height();
-        $width = $img->width();
-        $ratio = round($width / $height, 2);
-        $newHeight = round(self::IMAGE_WIDTH / $ratio, 0);
-
-        $img->resize(self::IMAGE_WIDTH, $newHeight, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($upload_path.'/'.$imageName);
-
-        $img->resize(self::PREVIEW_IMAGE_WIDTH, self::PREVIEW_IMAGE_WIDTH / $ratio, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($upload_path.'/'.$previewImageName);
-
-
-        if (File::exists($upload_path . '/' . $imageName)
-        && File::exists($upload_path . '/' . $previewImageName)) {
+        if (File::exists($uploadPath . '/' . $imageName)
+        && File::exists($uploadPath . '/' . $previewImageName)) {
             $error = false;
             $p->insertNewPuzzle(
                 $folderId,
                 $imageName,
                 $previewImageName,
-                $width,
-                $newHeight,
-                $ratio
+                $imageSize['width'],
+                $imageSize['height'],
+                $imageSize['ratio']
             );
             $pf->incrementPuzzles($folderId);
             $response = 'Успешно загружено!';
@@ -191,29 +219,16 @@ class PuzzleController extends Controller {
         $alias = $pf->getAlias($folderId)->alias;
 
         $oldImageName = $pf->getImageName($folderId)->image;
+        $uploadPath = public_path(self::MY_PATH . '/' . $alias);
 
-        $image = $request->file;
-        $img = Image::make($image->path());
+        $imageSize = $this->resizeImage(true, $request->file, $uploadPath, $imageName);
 
-        $upload_path = public_path(self::MY_PATH . '/' . $alias);
-
-        $height = $img->height();
-        $width = $img->width();
-        $ratio = round($width / $height, 2);
-        $newHeight = round(self::PREVIEW_IMAGE_WIDTH / $ratio, 0);
-
-        $img->resize(self::PREVIEW_IMAGE_WIDTH, $newHeight, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($upload_path.'/'.$imageName);
-
-        if (File::exists($upload_path . '/' . $imageName)) {
+        if (File::exists($uploadPath . '/' . $imageName)) {
             $error = false;
             $pf->updateFolderImage($folderId, $imageName);
 
             if ($oldImageName != null){
-                if (File::exists($upload_path . '/' . $oldImageName)) {
-                    unlink($upload_path . '/' . $oldImageName);//Deleting a previous filename
-                }
+                $this->deleteFile($uploadPath, $oldImageName);
             }
 
             $response = 'Успешно загружено!';
