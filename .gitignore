@@ -15,3 +15,4 @@ npm-debug.log
 yarn-error.log
 package-lock.json_old
 package.json_old
+resources/views/texttools/filwords.blade.php.old
