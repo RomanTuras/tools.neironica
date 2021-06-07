@@ -57178,8 +57178,8 @@ $(function () {
     }
 
     setupControls(key, settingsObject);
-    startShulte();
-    listenIvents(key, settingsObject);
+    startShulte(key, settingsObject);
+    listenIvents(settingsObject);
     var val = $("#inputColorSchema").val();
     var listColors = val.split(',');
     paintTableBackground("#shulte-table", listColors);
@@ -57187,12 +57187,42 @@ $(function () {
     styleTable(isColored);
   }
 });
+
+function saveControls(key, settingsObject) {
+  var fontFamily = $("#inputFontNameShulte").val();
+  var fontSize = $("#inputFontSizeShulte").val();
+  var cellPaddingX = $("#paddingRangeShulteX").val();
+  var cellPaddingY = $("#paddingRangeShulteY").val();
+  var inputType = $("#inputType").val();
+  var rows = $("#inputRowsShulte").val();
+  var cols = $("#inputColsShulte").val();
+  var bgImage = $("#inputBgImage").val();
+  var colorSchema = $("#inputColorSchema").val();
+  var isBold = $("#checkboxBoldShulte").prop("checked");
+  var isColored = $("#checkboxColored").prop("checked");
+  var fontColor = $("#inputFontColorShulte").val();
+  settingsObject.fontFamily = fontFamily;
+  settingsObject.fontSize = fontSize;
+  settingsObject.cellPaddingX = cellPaddingX;
+  settingsObject.cellPaddingY = cellPaddingY;
+  settingsObject.inputType = inputType;
+  settingsObject.rows = rows;
+  settingsObject.cols = cols;
+  settingsObject.bgImage = bgImage;
+  settingsObject.colorSchema = colorSchema;
+  settingsObject.isBold = isBold;
+  settingsObject.isColored = isColored;
+  settingsObject.fontColor = fontColor;
+  LocalStorageHelper.saveFontSettings(key, settingsObject);
+}
 /**
  * Processing Shulte table
  */
 
-function startShulte() {
+
+function startShulte(key, settingsObject) {
   $("#generate-shulte").unbind().click(function () {
+    saveControls(key, settingsObject);
     var rows = $("#inputRowsShulte").val();
     var cols = $("#inputColsShulte").val();
     var isColored = $("#checkboxColored").prop("checked") === true;
@@ -57294,7 +57324,7 @@ function setupControls(key, settingsObject) {
     cols = LocalStorageHelper.getFontSettings(key).cols;
     bgImage = LocalStorageHelper.getFontSettings(key).bgImage;
     fontColor = LocalStorageHelper.getFontSettings(key).fontColor;
-    colorSchema = LocalStorageHelper.getFontSettings(key).inputColorSchema;
+    colorSchema = LocalStorageHelper.getFontSettings(key).colorSchema;
     isBold = LocalStorageHelper.getFontSettings(key).isBold;
     isColored = LocalStorageHelper.getFontSettings(key).isColored;
   }
@@ -57319,44 +57349,16 @@ function setupControls(key, settingsObject) {
  */
 
 
-function listenIvents(key, settingsObject) {
-  $("#inputBgImage").on('change', function () {
-    settingsObject.bgImage = this.value;
-    LocalStorageHelper.saveFontSettings(key, this.settingsObject);
-  });
-  $("#inputColorSchema").on('change', function () {
-    settingsObject.inputColorSchema = this.value;
-    LocalStorageHelper.saveFontSettings(key, this.settingsObject);
-  });
-  $("#inputFontColorShulte").on('change', function () {
-    settingsObject.fontColor = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  });
-  $("#inputColsShulte").on('change', function () {
-    settingsObject.cols = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  });
-  $("#inputRowsShulte").on('change', function () {
-    settingsObject.rows = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  }); // Set selected font size
-
+function listenIvents(settingsObject) {
+  // Set selected font size
   $("#inputFontSizeShulte").on('change', function () {
     var fontSize = this.value;
     $(".cell").css("font-size", fontSize + "px");
-    settingsObject.fontSize = fontSize;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); // Set selected font family
 
   $("#inputFontNameShulte").on('change', function () {
     var fontName = this.value;
     $(".cell").css("font-family", fontName);
-    settingsObject.fontFamily = fontName;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  });
-  $("#inputType").on('change', function () {
-    settingsObject.inputType = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); // Set selected font size
 
   $("#inputFontColorShulte").on('change', function () {
@@ -57368,47 +57370,33 @@ function listenIvents(key, settingsObject) {
     var cellPaddingX = this.value;
     $(".cell").css("padding-left", cellPaddingX + "px");
     $(".cell").css("padding-right", cellPaddingX + "px");
-    settingsObject.cellPaddingX = cellPaddingX;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); // Set selected paddingY
 
   $("#paddingRangeShulteY").on('change', function () {
     var cellPaddingY = this.value;
     $(".cell").css("padding-top", cellPaddingY + "px");
     $(".cell").css("padding-bottom", cellPaddingY + "px");
-    settingsObject.cellPaddingY = cellPaddingY;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); //Bold text - checkbox event handler
 
   $("#checkboxBoldShulte").change(function () {
     if ($("#checkboxBoldShulte").prop("checked") === true) {
-      settingsObject.isBold = true;
       $(".cell").css("font-weight", "bold");
     } else {
-      settingsObject.isBold = false;
       $(".cell").css("font-weight", "normal");
     }
-
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   });
   $("#checkboxColored").change(function () {
     var isColored = $("#checkboxColored").prop("checked");
-    settingsObject.isColored = isColored;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
     paintTableColor("#shulte-table", isColored);
   }); //Background color -  event handler
 
   $("#inputColorSchema").change(function () {
     var listColors = this.value.split(',');
-    settingsObject.colorSchema = listColors;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
     paintTableBackground("#shulte-table", listColors);
   }); //St background image
 
   $("#inputBgImage").change(function () {
     var pathImage = this.value;
-    settingsObject.bgImage = pathImage;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
     $("table").css('background-image', "url('".concat(pathImage, "')"));
   });
 }
