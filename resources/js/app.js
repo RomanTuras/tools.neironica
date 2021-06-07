@@ -9,6 +9,7 @@ Vue.component('user-action-component', require('./components/UserActionComponent
 Vue.component('vocabulary-component', require('./components/VocabularyComponent.vue').default);
 Vue.component('vocabulary-exercise-component', require('./components/VocabularyExerciseComponent.vue').default);
 Vue.component('puzzle-component', require('./components/PuzzleComponent').default);
+Vue.component('fil-word-component', require('./components/tools/FilWordsComponent').default);
 
 const app = new Vue({
     el: '#app',
