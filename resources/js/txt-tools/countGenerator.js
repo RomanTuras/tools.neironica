@@ -3,11 +3,18 @@ $(function () {
     if($("#count").length){
         function startCount() {
 
-            let settings = { //default settings for "sudoku-examples"
-                'fontName': 'Arial',
-                'fontSize': 18,
-                'padding': 50,
+            let settingsObject = {
+                'inputFontName': 'Arial',
+                'inputFontSize': 18,
+                'inputImageSet': 'Airplanes-4,4',
+                'paddingRange': 50,
+                'inputX': 3,
+                'inputY': 3,
+                'checkboxBold': false,
+                'checkboxGrid': true,
+                'inputNumberImages': 2,
             };
+
             const key = "count";
 
             let table = [];
@@ -16,10 +23,11 @@ $(function () {
             const generateCount = "#generate-count";
             const answersCount = "#answers-count";
             const answersContent = "#answers-content";
-            const inputX = "#inputX";
-            const inputY = "#inputY";
+
+            const mInputX = "#inputX";
+            const mInputY = "#inputY";
             const inputNumberImages = "#inputNumberImages";
-            const inputImageSet = "#inputImageSet";
+            const mInputImageSet = "#inputImageSet";
             const inputFontName = "#inputFontName";
             const inputFontSize = "#inputFontSize";
             const checkboxBold = "#checkboxBold";
@@ -32,21 +40,48 @@ $(function () {
              * Setting controls from local storage or by default
              */
             function setupControlsSudokuExamples() {
-                if (LocalStorageHelper.getFontSettings(key) != null) {
-                    settings.fontName = LocalStorageHelper.getFontSettings(key).fontName;
-                    settings.fontSize = LocalStorageHelper.getFontSettings(key).fontSize;
-                    settings.padding = LocalStorageHelper.getFontSettings(key).padding;
+                if (LocalStorageHelper.getFontSettings(key) != null
+                    && LocalStorageHelper.getFontSettings(key).hasOwnProperty('inputImageSet')
+                    && LocalStorageHelper.getFontSettings(key).inputImageSet != null) {
+                    settingsObject.inputX = LocalStorageHelper.getFontSettings(key).inputX;
+                    settingsObject.inputY = LocalStorageHelper.getFontSettings(key).inputY;
+                    settingsObject.inputFontName = LocalStorageHelper.getFontSettings(key).inputFontName;
+                    settingsObject.inputImageSet = LocalStorageHelper.getFontSettings(key).inputImageSet;
+                    settingsObject.inputFontSize = LocalStorageHelper.getFontSettings(key).inputFontSize;
+                    settingsObject.checkboxBold = LocalStorageHelper.getFontSettings(key).checkboxBold;
+                    settingsObject.checkboxGrid = LocalStorageHelper.getFontSettings(key).checkboxGrid;
+                    settingsObject.paddingRange = LocalStorageHelper.getFontSettings(key).paddingRange;
+                    // settingsObject.inputNumberImages = LocalStorageHelper.getFontSettings(key).inputNumberImages;
                 }
-                $(inputFontName).val(settings.fontName);
-                $(inputFontSize).val(settings.fontSize);
-                $(paddingRange).val(settings.padding);
+                $(mInputX).val(settingsObject.inputX);
+                $(mInputY).val(settingsObject.inputY);
+                $(inputFontName).val(settingsObject.inputFontName);
+                $(mInputImageSet).val(settingsObject.inputImageSet);
+                $(inputFontSize).val(settingsObject.inputFontSize);
+                $(paddingRange).val(settingsObject.paddingRange);
+                // $(inputNumberImages).val(settingsObject.inputNumberImages);
+                $(checkboxBold).prop("checked", settingsObject.checkboxBold);
+                $(checkboxGrid).prop("checked", settingsObject.checkboxGrid);
+                console.log(settingsObject);
             }
             setupControlsSudokuExamples();
 
+            function saveControls() {
+                settingsObject.inputX = $(mInputX).val();
+                settingsObject.inputY = $(mInputY).val();
+                // settingsObject.inputNumberImages = $(inputNumberImages).val();
+                settingsObject.inputImageSet = $(mInputImageSet).val();
+                settingsObject.inputFontName = $(inputFontName).val();
+                settingsObject.inputFontSize = $(inputFontSize).val();
+                settingsObject.checkboxBold = $(checkboxBold).prop("checked");
+                settingsObject.checkboxGrid = $(checkboxGrid).prop("checked");
+                settingsObject.paddingRange = $(paddingRange).val();
+                LocalStorageHelper.saveFontSettings(key, settingsObject);
+            }
             //values of the controls
-            let tableX = $(inputX).val();
-            let tableY = $(inputY).val();
-            let imagesConfig = $(inputImageSet).val().split(',');
+            let tableX = $(mInputX).val();
+            let tableY = $(mInputY).val();
+            let imagesConfig = $(mInputImageSet).val().split(',');
             let imageSet = imagesConfig[0]; //Name of the image set
             let quantityImagesInSet = imagesConfig[1]; //Quantity images from current set
             $(inputNumberImages).html(getRangeOfQuantityImages(quantityImagesInSet));
@@ -57,16 +92,16 @@ $(function () {
             let isFontBold = !!$(checkboxBold).prop("checked");
             let isGridEnabled = !!$(checkboxGrid).prop("checked");
 
-            $(inputX).change(function () {
+            $(mInputX).change(function () {
                 tableX= this.value.split(',');
             });
-            $(inputY).change(function () {
+            $(mInputY).change(function () {
                 tableY= this.value.split(',');
             });
             $(inputNumberImages).change(function () {
                 numberImages= this.value.split(',');
             });
-            $(inputImageSet).change(function () {
+            $(mInputImageSet).change(function () {
                 imagesConfig = this.value.split(',');
                 imageSet = imagesConfig[0];
                 quantityImagesInSet = imagesConfig[1];
@@ -88,20 +123,14 @@ $(function () {
                     "width": padding/100*90+"px",
                     "padding": padding/100*10+"px"
                 });
-                settings.padding = padding;
-                LocalStorageHelper.saveFontSettings(key, settings);
             });
             $(inputFontSize).on('change', function(){
                 fontSize = this.value;
                 $("th").css("font-size", fontSize + "px");
-                settings.fontSize = fontSize;
-                LocalStorageHelper.saveFontSettings(key, settings);
             });
             $(inputFontName).on('change', function(){
                 fontName = this.value;
                 $("th").css("font-family", fontName);
-                settings.fontName = fontName;
-                LocalStorageHelper.saveFontSettings(key, settings);
             });
             $(checkboxBold).change(function () {
                 isFontBold = $(checkboxBold).prop("checked");
@@ -121,6 +150,7 @@ $(function () {
              * Generate Count Table
              */
             $(generateCount).click(function () {
+                saveControls(key, settingsObject);
                 table = SudokuHelper.getFilledTableByRangeOfNumbers(numberImages, tableX, tableY);
                 if (quantityImagesInSet < numberImages) {
                     alert(`В выбранном наборе ${quantityImagesInSet} картинок, пожалуйста уменьшите значение N`);
