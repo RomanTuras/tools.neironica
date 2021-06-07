@@ -56777,6 +56777,37 @@ $(function () {
     shulteGorbova.setupControls();
   }
 
+  function start() {
+    saveControls();
+    generateTable();
+  }
+
+  function saveControls() {
+    var fontFamily = $("#inputFontName").val();
+    var fontSize = $("#inputFontSize").val();
+    var cellPaddingX = $("#paddingRangeX").val();
+    var cellPaddingY = $("#paddingRangeY").val();
+    var inputType = $("#inputType").val();
+    var rows = $("#inputRows").val();
+    var cols = $("#inputCols").val();
+    var bgColor = $("#inputBgColor").val();
+    var isGorbova = $("#checkboxIsGorbova").prop("checked");
+    var isBold = $("#checkboxBold").prop("checked");
+    var colorSchema = $("#inputColorFontSchema").val();
+    settingsObject.fontFamily = fontFamily;
+    settingsObject.fontSize = fontSize;
+    settingsObject.cellPaddingX = cellPaddingX;
+    settingsObject.cellPaddingY = cellPaddingY;
+    settingsObject.inputType = inputType;
+    settingsObject.rows = rows;
+    settingsObject.cols = cols;
+    settingsObject.bgColor = bgColor;
+    settingsObject.isGorbova = isGorbova;
+    settingsObject.isBold = isBold;
+    settingsObject.colorSchema = colorSchema;
+    LocalStorageHelper.saveFontSettings(key, settingsObject);
+  }
+
   function generateTable() {
     var shulteGorbova = new ShulteGorbova();
     var isGorbovaAlgorithm = $("#checkboxIsGorbova").prop("checked");
@@ -56851,80 +56882,43 @@ $(function () {
    */
 
 
-  $("#generate-shulte-gorbova").unbind().click(generateTable);
-  $("#inputRows").on('change', function () {
-    settingsObject.rows = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  });
-  $("#inputCols").on('change', function () {
-    settingsObject.cols = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  });
+  $("#generate-shulte-gorbova").unbind().click(start);
   $("#inputColorFontSchema").on('change', function () {
-    settingsObject.colorSchema = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
     generateTable();
   }); // Set selected font size
 
   $("#inputFontSize").on('change', function () {
     var fontSize = this.value;
     $(".cell").css("font-size", fontSize + "px");
-    settingsObject.fontSize = fontSize;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); // Set selected font family
 
   $("#inputFontName").on('change', function () {
     var fontName = this.value;
     $(".cell").css("font-family", fontName);
-    settingsObject.fontFamily = fontName;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  });
-  $("#inputType").on('change', function () {
-    settingsObject.inputType = this.value;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); // Set selected paddingX
 
   $("#paddingRangeX").on('change', function () {
     var cellPaddingX = this.value;
     $(".cell").css("padding-left", cellPaddingX + "px");
     $(".cell").css("padding-right", cellPaddingX + "px");
-    settingsObject.cellPaddingX = cellPaddingX;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); // Set selected paddingY
 
   $("#paddingRangeY").on('change', function () {
     var cellPaddingY = this.value;
     $(".cell").css("padding-top", cellPaddingY + "px");
     $(".cell").css("padding-bottom", cellPaddingY + "px");
-    settingsObject.cellPaddingY = cellPaddingY;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); //Bold text - checkbox event handler
 
   $("#checkboxBold").change(function () {
     if ($("#checkboxBold").prop("checked") == true) {
-      settingsObject.isBold = true;
       $(".cell").css("font-weight", "bold");
     } else {
-      settingsObject.isBold = false;
       $(".cell").css("font-weight", "normal");
     }
-
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
-  });
-  $("#checkboxIsGorbova").change(function () {
-    if ($("#checkboxIsGorbova").prop("checked") == true) {
-      settingsObject.isGorbova = true;
-    } else {
-      settingsObject.isGorbova = false;
-    }
-
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
   }); //Set backgroung color
 
   $("#inputBgColor").change(function () {
     var color = this.value;
-    settingsObject.bgColor = color;
-    LocalStorageHelper.saveFontSettings(key, settingsObject);
     ShulteGorbova.paintBgTable(color);
   }); //Switch between Shulte algorithm and Gorbova
 
