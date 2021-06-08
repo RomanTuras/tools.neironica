@@ -11,6 +11,7 @@ $(function () {
             let settingsMazeObject = { //default settings for "Maze"
                 'wall': 3,
                 'tunnel': 10,
+                'inputPoint': 'left-bottom'
             };
             const keyMaze = "maze-generator";
             let wallColor = $("#inputWallColor").val();
@@ -29,6 +30,7 @@ $(function () {
             // }
 
             $("#generate-maze").click(function () {
+                saveControls();
                 $("#maze-canvas").css("background", bgColor);
                 mapGen("#maze-canvas", widthMaze, heightMaze, 0, 0, wallColor, point);
             });
@@ -56,15 +58,15 @@ $(function () {
                 setStartPount(point)
             });
 
-            $("#rangeWallMaze").change(function () {
-                settingsMazeObject.wall = parseInt(this.value);
-                LocalStorageHelper.saveFontSettings(keyMaze, settingsMazeObject);
-            });
-
-            $("#rangeTunnelMaze").change(function () {
-                settingsMazeObject.tunnel = parseInt(this.value);
-                LocalStorageHelper.saveFontSettings(keyMaze, settingsMazeObject);
-            });
+            // $("#rangeWallMaze").change(function () {
+            //     // settingsMazeObject.wall = parseInt(this.value);
+            //     // LocalStorageHelper.saveFontSettings(keyMaze, settingsMazeObject);
+            // });
+            //
+            // $("#rangeTunnelMaze").change(function () {
+            //     // settingsMazeObject.tunnel = parseInt(this.value);
+            //     // LocalStorageHelper.saveFontSettings(keyMaze, settingsMazeObject);
+            // });
 
             function setStartPount(point) {
                 switch (point) {
@@ -87,19 +89,27 @@ $(function () {
             }
 
 
-
             /**
              * Setting controls from local storage or by default
              */
             function setupControlsMaze() {
-                if (LocalStorageHelper.getFontSettings(keyMaze) != null) {
-                    settingsMazeObject.wall = LocalStorageHelper.getFontSettings(keyMaze).wall;
-                    settingsMazeObject.tunnel = LocalStorageHelper.getFontSettings(keyMaze).tunnel;
+                if (LocalStorageHelper.getFontSettings(keyMaze) != null
+                    && LocalStorageHelper.getFontSettings(keyMaze).hasOwnProperty('inputPoint')) {
+                    settingsMazeObject.wall = parseInt(LocalStorageHelper.getFontSettings(keyMaze).wall);
+                    settingsMazeObject.tunnel = parseInt(LocalStorageHelper.getFontSettings(keyMaze).tunnel);
+                    settingsMazeObject.inputPoint = LocalStorageHelper.getFontSettings(keyMaze).inputPoint;
                 }
                 $("#rangeWallMaze").val(settingsMazeObject.wall);
                 $("#rangeTunnelMaze").val(settingsMazeObject.tunnel);
+                $("#inputPoint").val(settingsMazeObject.inputPoint);
+                setStartPount($("#inputPoint").val());
+            }
 
-
+            function saveControls() {
+                settingsMazeObject.wall = parseInt($("#rangeWallMaze").val());
+                settingsMazeObject.tunnel = parseInt($("#rangeTunnelMaze").val());
+                settingsMazeObject.inputPoint = $("#inputPoint").val();
+                LocalStorageHelper.saveFontSettings(keyMaze, settingsMazeObject);
             }
 
             function mapGen(b, c, e, a, m, wallColor, point) {
