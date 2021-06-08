@@ -11,6 +11,15 @@ $(function () {
             let settingsMathExamplesObject = { //default settings for "math-examples"
                 'fontName': 'Arial',
                 'fontSize': 18,
+                'firstNumberType': '1,9',
+                'secondNumberType': '1,9',
+                'inputOperation': 'plus',
+                'columnsNumber': '1',
+                'examplesNumber': '1',
+                'isNegativeResult': false,
+                'textColor': '#0000ff',
+                'isBold': false,
+                'paddingRange': 3
             };
             const keyMathExamples = "math-examples";
 
@@ -32,14 +41,49 @@ $(function () {
              * Setting controls from local storage or by default
              */
             function setupControlsMathExamples() {
-                if (LocalStorageHelper.getFontSettings(keyMathExamples) != null) {
+                if (LocalStorageHelper.getFontSettings(keyMathExamples) != null
+                    && LocalStorageHelper.getFontSettings(keyMathExamples).hasOwnProperty('firstNumberType')) {
                     settingsMathExamplesObject.fontName = LocalStorageHelper.getFontSettings(keyMathExamples).fontName;
                     settingsMathExamplesObject.fontSize = LocalStorageHelper.getFontSettings(keyMathExamples).fontSize;
+                    settingsMathExamplesObject.firstNumberType = LocalStorageHelper.getFontSettings(keyMathExamples).firstNumberType;
+                    settingsMathExamplesObject.secondNumberType = LocalStorageHelper.getFontSettings(keyMathExamples).secondNumberType;
+                    settingsMathExamplesObject.inputOperation = LocalStorageHelper.getFontSettings(keyMathExamples).inputOperation;
+                    settingsMathExamplesObject.columnsNumber = LocalStorageHelper.getFontSettings(keyMathExamples).columnsNumber;
+                    settingsMathExamplesObject.examplesNumber = LocalStorageHelper.getFontSettings(keyMathExamples).examplesNumber;
+                    settingsMathExamplesObject.isNegativeResult = LocalStorageHelper.getFontSettings(keyMathExamples).isNegativeResult;
+                    settingsMathExamplesObject.textColor = LocalStorageHelper.getFontSettings(keyMathExamples).textColor;
+                    settingsMathExamplesObject.isBold = LocalStorageHelper.getFontSettings(keyMathExamples).isBold;
+                    settingsMathExamplesObject.paddingRange = LocalStorageHelper.getFontSettings(keyMathExamples).paddingRange;
                 }
                 $(inputFontNameMath).val(settingsMathExamplesObject.fontName);
                 $(inputFontSizeMath).val(settingsMathExamplesObject.fontSize);
+                $(inputFirstNumberType).val(settingsMathExamplesObject.firstNumberType);
+                $(inputSecondNumberType).val(settingsMathExamplesObject.secondNumberType);
+                $(inputOperation).val(settingsMathExamplesObject.inputOperation);
+                $(inputColumnsNumber).val(settingsMathExamplesObject.columnsNumber);
+                $(inputExamplesNumber).val(settingsMathExamplesObject.examplesNumber);
+                $(inputTextColor).val(settingsMathExamplesObject.textColor);
+                $(paddingRangeMath).val(settingsMathExamplesObject.paddingRange);
+                $(checkBoxNegativeResult).prop("checked",settingsMathExamplesObject.isNegativeResult);
+                $(checkBoxBold).prop("checked",settingsMathExamplesObject.isBold);
             }
             setupControlsMathExamples();
+
+            function saveControls(){
+                settingsMathExamplesObject.fontName = $(inputFontNameMath).val();
+                settingsMathExamplesObject.fontSize = $(inputFontSizeMath).val();
+                settingsMathExamplesObject.firstNumberType = $(inputFirstNumberType).val();
+                settingsMathExamplesObject.secondNumberType = $(inputSecondNumberType).val();
+                settingsMathExamplesObject.inputOperation = $(inputOperation).val();
+                settingsMathExamplesObject.columnsNumber = $(inputColumnsNumber).val();
+                settingsMathExamplesObject.examplesNumber = $(inputExamplesNumber).val();
+                settingsMathExamplesObject.isNegativeResult = $(checkBoxNegativeResult).prop("checked");
+                settingsMathExamplesObject.textColor = $(inputTextColor).val();
+                settingsMathExamplesObject.isBold = $(checkBoxBold).prop("checked");
+                settingsMathExamplesObject.paddingRange = $(paddingRangeMath).val();
+
+                LocalStorageHelper.saveFontSettings(keyMathExamples, settingsMathExamplesObject);
+            }
 
             //values of the controls
             let operation = $(inputOperation).val();
@@ -85,14 +129,10 @@ $(function () {
             $(inputFontSizeMath).on('change', function(){
                 fontSize = this.value;
                 $("th").css("font-size", fontSize + "px");
-                settingsMathExamplesObject.fontSize = fontSize;
-                LocalStorageHelper.saveFontSettings(keyMathExamples, settingsMathExamplesObject);
             });
             $(inputFontNameMath).on('change', function(){
                 fontName = this.value;
                 $("th").css("font-family", fontName);
-                settingsMathExamplesObject.fontName = fontName;
-                LocalStorageHelper.saveFontSettings(keyMathExamples, settingsMathExamplesObject);
             });
             $(checkBoxBold).change(function () {
                 isFontBold = $(checkBoxBold).prop("checked");
@@ -107,6 +147,7 @@ $(function () {
              * Generate a new math examples
              */
             $(start).click(function () {
+                saveControls();
                 let totalExamples = parseInt(examplesNumber) * parseInt(columnsNumber);
                 resultList = getListExamples(operation, totalExamples, firstNumberRange, secondNumberRange, isNegativeResult);
                 showTable(resultList, columnsNumber, examplesNumber);
