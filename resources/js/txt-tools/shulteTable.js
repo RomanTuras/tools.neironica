@@ -52,7 +52,7 @@ function saveControls(key, settingsObject){
   settingsObject.rows = rows;
   settingsObject.cols = cols;
   settingsObject.bgImage = bgImage;
-  settingsObject.colorSchema = colorSchema;
+  settingsObject.inputColorSchema = colorSchema;
   settingsObject.isBold = isBold;
   settingsObject.isColored = isColored;
   settingsObject.fontColor = fontColor;
@@ -138,7 +138,8 @@ function setupControls(key, settingsObject) {
   let isColored = settingsObject.isColored;
   let fontColor = settingsObject.fontColor;
 
-  if (LocalStorageHelper.getFontSettings(key) != null) {
+  if (LocalStorageHelper.getFontSettings(key) != null
+  && LocalStorageHelper.getFontSettings(key).hasOwnProperty('inputColorSchema')) {
     fontFamily = LocalStorageHelper.getFontSettings(key).fontFamily;
     fontSize = LocalStorageHelper.getFontSettings(key).fontSize;
     cellPaddingX = LocalStorageHelper.getFontSettings(key).cellPaddingX;
@@ -148,7 +149,7 @@ function setupControls(key, settingsObject) {
     cols = LocalStorageHelper.getFontSettings(key).cols;
     bgImage = LocalStorageHelper.getFontSettings(key).bgImage;
     fontColor = LocalStorageHelper.getFontSettings(key).fontColor;
-    colorSchema = LocalStorageHelper.getFontSettings(key).colorSchema;
+    colorSchema = LocalStorageHelper.getFontSettings(key).inputColorSchema;
     isBold = LocalStorageHelper.getFontSettings(key).isBold;
     isColored = LocalStorageHelper.getFontSettings(key).isColored;
   }
@@ -355,7 +356,11 @@ function styleTable(isColored) {
   } else {
     $(".cell").css("font-weight", "normal");
   }
-  let listColors = $("#inputColorSchema").val().split(',');
+  let listColors = "no";
+  if ($("#inputColorSchema").val() !== "no") {
+    listColors = $("#inputColorSchema").val().split(",");
+  }
+
   paintTableBackground("#shulte-table", listColors);
 
   if (isColored) paintTableColor("#shulte-table" ,isColored);

@@ -62,7 +62,6 @@ $(function () {
                 // $(inputNumberImages).val(settingsObject.inputNumberImages);
                 $(checkboxBold).prop("checked", settingsObject.checkboxBold);
                 $(checkboxGrid).prop("checked", settingsObject.checkboxGrid);
-                console.log(settingsObject);
             }
             setupControlsSudokuExamples();
 
