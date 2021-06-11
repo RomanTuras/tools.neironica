@@ -258,6 +258,7 @@
                                             width: settings.padding + 'px',
                                             height: settings.padding + 'px',
                                             fontWeight: settings.isBold ? 'bold' : 'normal',
+                                            fontFamily: 'Arial',
                                         }">
                                     {{ char === '@' ? (settings.isEmptyCell ? '  ' : randomChar()) : char  }}
                                 </td>
@@ -271,7 +272,13 @@
         <div v-if="isAnswers" id="answers">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <span v-for="word in words" v-bind:style="{ fontSize: settings.fontSize + 'px', fontWeight: settings.isBold ? 'bold' : 'normal'}">
+                    <span
+                            v-for="word in words"
+                            v-bind:style="{
+                                fontSize: settings.fontSize + 'px',
+                                fontWeight: settings.isBold ? 'bold' : 'normal',
+                                fontFamily: 'Arial',
+                            }">
                         {{ settings.isUpperCase ? word.toUpperCase() : word.toLowerCase() }} <br>
                     </span>
                 </div>
