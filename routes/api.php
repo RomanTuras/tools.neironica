@@ -45,6 +45,11 @@ Route::middleware('auth:api')->group(function (){
     Route::delete('/puzzle/delete-puzzle/{puzzleId}/{folderId}', 'PuzzleController@deletePuzzle');
 });
 
+//FilWords
+Route::middleware('auth:api')->group(function () {
+    Route::get('/filwords/words/{quantity}/{minLength}/{maxLength}', 'FillWordsController@getRandomWords');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

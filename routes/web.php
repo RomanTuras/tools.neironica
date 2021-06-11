@@ -10,11 +10,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('config:cache');
-    return 'DONE, exit code: '.$exitCode;
-});
+//Route::get('/clear-cache', function() {
+//    $exitCode = Artisan::call('config:clear');
+//    $exitCode = Artisan::call('config:cache');
+//    return 'DONE, exit code: '.$exitCode;
+//});
+
+//FillWords
+//Route::get('/words', 'FillWordsController@fillWords');
 
 Route::get('/puzzle', function (){
     return view('puzzle');

@@ -157,5 +157,12 @@ export default {
                 return error.response;
             });
     },
+    async getRandomWords(quantity, minLength, maxLength) {
+        return await apiClient
+            .get("/api/filwords/words/" + quantity + '/' + minLength + '/' + maxLength)
+            .catch(function(error) {
+                return error.response;
+            });
+    },
 }
 
