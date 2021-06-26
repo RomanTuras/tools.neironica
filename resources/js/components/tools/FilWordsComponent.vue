@@ -111,6 +111,26 @@
                                         <option value="#00a8cc" style="color: #00a8cc">#00a8cc</option>
                                         <option value="#00bcd4" style="color: #00bcd4">#00bcd4</option>
                                         <option value="#01c5c4" style="color: #01c5c4">#01c5c4</option>
+                                        <option value="#fff3e6" style="color: #fff3e6">#fff3e6</option>
+                                        <option value="#f5f4f4" style="color: #f5f4f4">#f5f4f4</option>
+                                        <option value="#f8f1f1" style="color: #f8f1f1">#f8f1f1</option>
+                                        <option value="#eff8ff" style="color: #eff8ff">#eff8ff</option>
+                                        <option value="#ffe6e6" style="color: #ffe6e6">#ffe6e6</option>
+                                        <option value="#ffe0d8" style="color: #ffe0d8">#ffe0d8</option>
+                                        <option value="#fcf8ec" style="color: #fcf8ec">#fcf8ec</option>
+                                        <option value="#f4eeed" style="color: #f4eeed">#f4eeed</option>
+                                        <option value="#fffaa4" style="color: #fffaa4">#fffaa4</option>
+                                        <option value="#c6fced" style="color: #c6fced">#c6fced</option>
+                                        <option value="#f8f1f1" style="color: #f8f1f1">#f8f1f1</option>
+                                        <option value="#fff8c1" style="color: #fff8c1">#fff8c1</option>
+                                        <option value="#fbf6f0" style="color: #fbf6f0">#fbf6f0</option>
+                                        <option value="#fceef5" style="color: #fceef5">#fceef5</option>
+                                        <option value="#fcf1f1" style="color: #fcf1f1">#fcf1f1</option>
+                                        <option value="#f1f6f9" style="color: #f1f6f9">#f1f6f9</option>
+                                        <option value="#fff8cd" style="color: #fff8cd">#fff8cd</option>
+                                        <option value="#f6f5f5" style="color: #f6f5f5">#f6f5f5</option>
+                                        <option value="#e8ffff" style="color: #e8ffff">#e8ffff</option>
+                                        <option value="#fff0f0" style="color: #fff0f0">#fff0f0</option>
                                     </select>
                                 </div>
                             </div>
