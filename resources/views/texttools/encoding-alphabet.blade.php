@@ -219,7 +219,7 @@
   <div id="result-content" class="container">
     <div class="row">
       <div class="col-md-12">
-      <h5 class="tools-title border-c">Задание:</h5>
+{{--      <h5 class="tools-title border-c">Задание:</h5>--}}
         <div id="result"></div>
       </div>
     </div>
